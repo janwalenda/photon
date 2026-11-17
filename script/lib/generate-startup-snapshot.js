@@ -6,6 +6,13 @@ const terser = require('terser');
 const CONFIG = require('../config');
 
 module.exports = function(packagedAppPath) {
+  if (process.platform === 'darwin' && process.arch === 'arm64') {
+    // The startup snapshot has never supported Apple Silicon builds (mksnapshot
+    // writes a differently named blob). Photon starts without it until the
+    // Electron upgrade (#9) re-enables the snapshot.
+    console.log('Skipping startup snapshot on darwin-arm64');
+    return Promise.resolve();
+  }
   const snapshotScriptPath = path.join(CONFIG.buildOutputPath, 'startup.js');
   const coreModules = new Set([
     'electron',

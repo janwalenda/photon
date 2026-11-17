@@ -1,0 +1,24 @@
+{
+  "name": "tree-sitter",
+  "version": "0.17.1",
+  "description": "Incremental parsers for node",
+  "author": "Max Brunsfeld",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/tree-sitter/node-tree-sitter.git"
+  },
+  "keywords": [
+    "parser",
+    "lexer"
+  ],
+  "main": "index.js",
+  "types": "tree-sitter.d.ts",
+  "dependencies": {
+    "nan": "^2.14.0",
+    "prebuild-install": "^5.0.0"
+  },
+  "scripts": {
+    "install": "prebuild-install || node-gyp rebuild"
+  }
+}
