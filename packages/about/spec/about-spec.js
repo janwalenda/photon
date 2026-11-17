@@ -2,7 +2,7 @@ describe('About', () => {
   let workspaceElement;
 
   beforeEach(async () => {
-    let storage = {};
+    const storage = {};
 
     spyOn(window.localStorage, 'setItem').andCallFake((key, value) => {
       storage[key] = value;
@@ -16,7 +16,7 @@ describe('About', () => {
   });
 
   it('deserializes correctly', () => {
-    let deserializedAboutView = atom.deserializers.deserialize({
+    const deserializedAboutView = atom.deserializers.deserialize({
       deserializer: 'AboutView',
       uri: 'atom://about'
     });
@@ -35,7 +35,7 @@ describe('About', () => {
       expect(workspaceElement.querySelector('.about')).not.toExist();
       await atom.workspace.open('atom://about');
 
-      let aboutElement = workspaceElement.querySelector('.about');
+      const aboutElement = workspaceElement.querySelector('.about');
       expect(aboutElement).toBeVisible();
     });
   });
@@ -45,8 +45,8 @@ describe('About', () => {
       await atom.workspace.open('atom://about');
       jasmine.attachToDOM(workspaceElement);
 
-      let aboutElement = workspaceElement.querySelector('.about');
-      let versionContainer = aboutElement.querySelector('.atom');
+      const aboutElement = workspaceElement.querySelector('.about');
+      const versionContainer = aboutElement.querySelector('.atom');
       versionContainer.click();
       expect(atom.clipboard.read()).toBe(atom.getVersion());
     });
@@ -57,9 +57,9 @@ describe('About', () => {
       await atom.workspace.open('atom://about');
       jasmine.attachToDOM(workspaceElement);
 
-      let aboutElement = workspaceElement.querySelector('.about');
-      let showMoreElement = aboutElement.querySelector('.show-more-expand');
-      let moreInfoElement = workspaceElement.querySelector('.show-more');
+      const aboutElement = workspaceElement.querySelector('.about');
+      const showMoreElement = aboutElement.querySelector('.show-more-expand');
+      const moreInfoElement = workspaceElement.querySelector('.show-more');
       showMoreElement.click();
       expect(moreInfoElement).toBeVisible();
     });
@@ -70,8 +70,8 @@ describe('About', () => {
       await atom.workspace.open('atom://about');
       jasmine.attachToDOM(workspaceElement);
 
-      let aboutElement = workspaceElement.querySelector('.about');
-      let versionContainer = aboutElement.querySelector('.electron');
+      const aboutElement = workspaceElement.querySelector('.about');
+      const versionContainer = aboutElement.querySelector('.electron');
       versionContainer.click();
       expect(atom.clipboard.read()).toBe(process.versions.electron);
     });
@@ -82,8 +82,8 @@ describe('About', () => {
       await atom.workspace.open('atom://about');
       jasmine.attachToDOM(workspaceElement);
 
-      let aboutElement = workspaceElement.querySelector('.about');
-      let versionContainer = aboutElement.querySelector('.chrome');
+      const aboutElement = workspaceElement.querySelector('.about');
+      const versionContainer = aboutElement.querySelector('.chrome');
       versionContainer.click();
       expect(atom.clipboard.read()).toBe(process.versions.chrome);
     });
@@ -94,8 +94,8 @@ describe('About', () => {
       await atom.workspace.open('atom://about');
       jasmine.attachToDOM(workspaceElement);
 
-      let aboutElement = workspaceElement.querySelector('.about');
-      let versionContainer = aboutElement.querySelector('.node');
+      const aboutElement = workspaceElement.querySelector('.about');
+      const versionContainer = aboutElement.querySelector('.node');
       versionContainer.click();
       expect(atom.clipboard.read()).toBe(process.version);
     });

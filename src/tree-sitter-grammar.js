@@ -147,10 +147,13 @@ const preprocessScopes = value =>
   typeof value === 'string'
     ? value
     : Array.isArray(value)
-    ? value.map(preprocessScopes)
-    : value.match
-    ? { match: new RegExp(value.match), scopes: preprocessScopes(value.scopes) }
-    : Object.assign({}, value, { scopes: preprocessScopes(value.scopes) });
+      ? value.map(preprocessScopes)
+      : value.match
+        ? {
+            match: new RegExp(value.match),
+            scopes: preprocessScopes(value.scopes)
+          }
+        : Object.assign({}, value, { scopes: preprocessScopes(value.scopes) });
 
 const NODE_NAME_REGEX = /[\w_]+/;
 

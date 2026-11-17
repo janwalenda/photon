@@ -58,14 +58,14 @@ export function deactivate() {
 }
 
 export function consumeStatusBar(statusBar) {
-  let statusBarItem = new StatusBarItem();
+  const statusBarItem = new StatusBarItem();
   let currentBufferDisposable = null;
   let tooltipDisposable = null;
 
   const updateTile = _.debounce(buffer => {
     getLineEndings(buffer).then(lineEndings => {
       if (lineEndings.size === 0) {
-        let defaultLineEnding = getDefaultLineEnding();
+        const defaultLineEnding = getDefaultLineEnding();
         buffer.setPreferredLineEnding(defaultLineEnding);
         lineEndings = new Set().add(defaultLineEnding);
       }
@@ -78,7 +78,7 @@ export function consumeStatusBar(statusBar) {
       if (currentBufferDisposable) currentBufferDisposable.dispose();
 
       if (editor && editor.getBuffer) {
-        let buffer = editor.getBuffer();
+        const buffer = editor.getBuffer();
         updateTile(buffer);
         currentBufferDisposable = buffer.onDidChange(({ oldText, newText }) => {
           if (!statusBarItem.hasLineEnding('\n')) {
@@ -125,7 +125,7 @@ export function consumeStatusBar(statusBar) {
     );
   });
 
-  let tile = statusBar.addRightTile({ item: statusBarItem, priority: 200 });
+  const tile = statusBar.addRightTile({ item: statusBarItem, priority: 200 });
   disposables.add(new Disposable(() => tile.destroy()));
 }
 
@@ -164,7 +164,7 @@ function getLineEndings(buffer) {
 
 export function setLineEnding(item, lineEnding) {
   if (item && item.getBuffer) {
-    let buffer = item.getBuffer();
+    const buffer = item.getBuffer();
     buffer.setPreferredLineEnding(lineEnding);
     buffer.setText(buffer.getText().replace(LineEndingRegExp, lineEnding));
   }

@@ -386,7 +386,7 @@ module.exports = class TextEditorComponent {
     this.derivedDimensionsCache = {};
     this.updateModelSoftWrapColumn();
     if (this.pendingAutoscroll) {
-      let { screenRange, options } = this.pendingAutoscroll;
+      const { screenRange, options } = this.pendingAutoscroll;
       this.autoscrollVertically(screenRange, options);
       this.requestHorizontalMeasurement(
         screenRange.start.row,
@@ -500,7 +500,7 @@ module.exports = class TextEditorComponent {
       }
     }
 
-    let attributes = {};
+    const attributes = {};
     if (model.isMini()) {
       attributes.mini = '';
     }
@@ -599,7 +599,7 @@ module.exports = class TextEditorComponent {
   }
 
   renderContent() {
-    let style = {
+    const style = {
       contain: 'strict',
       overflow: 'hidden',
       backgroundColor: 'inherit'
@@ -878,7 +878,7 @@ module.exports = class TextEditorComponent {
     const newClassList = ['editor'];
     if (this.focused) newClassList.push('is-focused');
     if (model.isMini()) newClassList.push('mini');
-    for (var i = 0; i < model.selections.length; i++) {
+    for (let i = 0; i < model.selections.length; i++) {
       if (!model.selections[i].isEmpty()) {
         newClassList.push('has-selection');
         break;
@@ -1045,10 +1045,11 @@ module.exports = class TextEditorComponent {
     this.textDecorationsByMarker.clear();
     this.textDecorationBoundaries.length = 0;
 
-    const decorationsByMarker = this.props.model.decorationManager.decorationPropertiesByMarkerForScreenRowRange(
-      this.getRenderedStartRow(),
-      this.getRenderedEndRow()
-    );
+    const decorationsByMarker =
+      this.props.model.decorationManager.decorationPropertiesByMarkerForScreenRowRange(
+        this.getRenderedStartRow(),
+        this.getRenderedEndRow()
+      );
 
     decorationsByMarker.forEach((decorations, marker) => {
       const screenRange = marker.getScreenRange();
@@ -1127,9 +1128,8 @@ module.exports = class TextEditorComponent {
       decorationsToRender = this.decorationsToRender.lines;
     } else {
       const gutterName = decoration.gutterName || 'line-number';
-      decorationsToRender = this.decorationsToRender.lineNumbers.get(
-        gutterName
-      );
+      decorationsToRender =
+        this.decorationsToRender.lineNumbers.get(gutterName);
       if (!decorationsToRender) {
         decorationsToRender = [];
         this.decorationsToRender.lineNumbers.set(
@@ -1297,13 +1297,11 @@ module.exports = class TextEditorComponent {
       return;
 
     const tileStartRow = this.tileStartRowForRow(row);
-    const screenLine = this.renderedScreenLines[
-      row - this.getRenderedStartRow()
-    ];
+    const screenLine =
+      this.renderedScreenLines[row - this.getRenderedStartRow()];
 
-    let decorationsByScreenLine = this.decorationsToRender.blocks.get(
-      tileStartRow
-    );
+    let decorationsByScreenLine =
+      this.decorationsToRender.blocks.get(tileStartRow);
     if (!decorationsByScreenLine) {
       decorationsByScreenLine = new Map();
       this.decorationsToRender.blocks.set(
@@ -1352,7 +1350,7 @@ module.exports = class TextEditorComponent {
     );
 
     // Combine adjacent boundaries with the same position
-    for (let i = 0; i < this.textDecorationBoundaries.length; ) {
+    for (let i = 0; i < this.textDecorationBoundaries.length;) {
       const boundary = this.textDecorationBoundaries[i];
       const nextBoundary = this.textDecorationBoundaries[i + 1];
       if (nextBoundary && nextBoundary.position.isEqual(boundary.position)) {
@@ -1462,9 +1460,8 @@ module.exports = class TextEditorComponent {
 
   addTextDecorationStart(row, column, className, style) {
     const renderedStartRow = this.getRenderedStartRow();
-    let decorationStarts = this.decorationsToRender.text[
-      row - renderedStartRow
-    ];
+    let decorationStarts =
+      this.decorationsToRender.text[row - renderedStartRow];
     if (!decorationStarts) {
       decorationStarts = [];
       this.decorationsToRender.text[row - renderedStartRow] = decorationStarts;
@@ -1710,7 +1707,7 @@ module.exports = class TextEditorComponent {
     }
 
     if (this.getPlatform() !== 'darwin' && event.shiftKey) {
-      let temp = wheelDeltaX;
+      const temp = wheelDeltaX;
       wheelDeltaX = wheelDeltaY;
       wheelDeltaY = temp;
     }
@@ -1976,9 +1973,8 @@ module.exports = class TextEditorComponent {
     if (platform === 'darwin' && ctrlKey) return;
 
     if (target && target.matches('.fold-marker')) {
-      const bufferPosition = model.bufferPositionForScreenPosition(
-        screenPosition
-      );
+      const bufferPosition =
+        model.bufferPositionForScreenPosition(screenPosition);
       model.destroyFoldsContainingBufferPositions([bufferPosition], false);
       return;
     }
@@ -1990,9 +1986,8 @@ module.exports = class TextEditorComponent {
     switch (detail) {
       case 1:
         if (addOrRemoveSelection) {
-          const existingSelection = model.getSelectionAtScreenPosition(
-            screenPosition
-          );
+          const existingSelection =
+            model.getSelectionAtScreenPosition(screenPosition);
           if (existingSelection) {
             if (model.hasMultipleCursors()) existingSelection.destroy();
           } else {
@@ -2105,9 +2100,8 @@ module.exports = class TextEditorComponent {
       }
     }
 
-    const initialScreenRange = model.screenRangeForBufferRange(
-      initialBufferRange
-    );
+    const initialScreenRange =
+      model.screenRangeForBufferRange(initialBufferRange);
     this.handleMouseDragUntilMouseUp({
       didDrag: event => {
         this.autoscrollOnMouseDrag(event, true);
@@ -2169,12 +2163,8 @@ module.exports = class TextEditorComponent {
   }
 
   autoscrollOnMouseDrag({ clientX, clientY }, verticalOnly = false) {
-    let {
-      top,
-      bottom,
-      left,
-      right
-    } = this.refs.scrollContainer.getBoundingClientRect(); // Using var to avoid deopt on += assignments below
+    let { top, bottom, left, right } =
+      this.refs.scrollContainer.getBoundingClientRect(); // Using var to avoid deopt on += assignments below
     top += MOUSE_DRAG_AUTOSCROLL_MARGIN;
     bottom -= MOUSE_DRAG_AUTOSCROLL_MARGIN;
     left += MOUSE_DRAG_AUTOSCROLL_MARGIN;
@@ -2219,7 +2209,8 @@ module.exports = class TextEditorComponent {
   }
 
   pixelPositionForMouseEvent({ clientX, clientY }) {
-    const scrollContainerRect = this.refs.scrollContainer.getBoundingClientRect();
+    const scrollContainerRect =
+      this.refs.scrollContainer.getBoundingClientRect();
     clientX = Math.min(
       scrollContainerRect.right,
       Math.max(scrollContainerRect.left, clientX)
@@ -2262,10 +2253,13 @@ module.exports = class TextEditorComponent {
 
   startCursorBlinking() {
     if (!this.cursorsBlinking) {
-      this.cursorBlinkIntervalHandle = window.setInterval(() => {
-        this.cursorsBlinkedOff = !this.cursorsBlinkedOff;
-        this.scheduleUpdate(true);
-      }, (this.props.cursorBlinkPeriod || CURSOR_BLINK_PERIOD) / 2);
+      this.cursorBlinkIntervalHandle = window.setInterval(
+        () => {
+          this.cursorsBlinkedOff = !this.cursorsBlinkedOff;
+          this.scheduleUpdate(true);
+        },
+        (this.props.cursorBlinkPeriod || CURSOR_BLINK_PERIOD) / 2
+      );
       this.cursorsBlinking = true;
       this.scheduleUpdate(true);
     }
@@ -2341,12 +2335,12 @@ module.exports = class TextEditorComponent {
     const horizontalScrollMargin = this.getHorizontalAutoscrollMargin();
 
     const gutterContainerWidth = this.getGutterContainerWidth();
-    let left =
+    const left =
       this.pixelLeftForRowAndColumn(
         screenRange.start.row,
         screenRange.start.column
       ) + gutterContainerWidth;
-    let right =
+    const right =
       this.pixelLeftForRowAndColumn(
         screenRange.end.row,
         screenRange.end.column
@@ -2405,7 +2399,8 @@ module.exports = class TextEditorComponent {
   // potential changes in the editor's width into the model before proceeding.
   updateModelSoftWrapColumn() {
     const { model } = this.props;
-    const newEditorWidthInChars = this.getScrollContainerClientWidthInBaseCharacters();
+    const newEditorWidthInChars =
+      this.getScrollContainerClientWidthInBaseCharacters();
     if (newEditorWidthInChars !== model.getEditorWidthInChars()) {
       this.suppressUpdates = true;
 
@@ -2447,10 +2442,14 @@ module.exports = class TextEditorComponent {
       1,
       this.refs.characterMeasurementLine.getBoundingClientRect().height
     );
-    this.measurements.baseCharacterWidth = this.refs.normalWidthCharacterSpan.getBoundingClientRect().width;
-    this.measurements.doubleWidthCharacterWidth = this.refs.doubleWidthCharacterSpan.getBoundingClientRect().width;
-    this.measurements.halfWidthCharacterWidth = this.refs.halfWidthCharacterSpan.getBoundingClientRect().width;
-    this.measurements.koreanCharacterWidth = this.refs.koreanCharacterSpan.getBoundingClientRect().width;
+    this.measurements.baseCharacterWidth =
+      this.refs.normalWidthCharacterSpan.getBoundingClientRect().width;
+    this.measurements.doubleWidthCharacterWidth =
+      this.refs.doubleWidthCharacterSpan.getBoundingClientRect().width;
+    this.measurements.halfWidthCharacterWidth =
+      this.refs.halfWidthCharacterSpan.getBoundingClientRect().width;
+    this.measurements.koreanCharacterWidth =
+      this.refs.koreanCharacterSpan.getBoundingClientRect().width;
 
     this.props.model.setLineHeightInPixels(this.measurements.lineHeight);
     this.props.model.setDefaultCharWidth(
@@ -2466,8 +2465,8 @@ module.exports = class TextEditorComponent {
     let dimensionsChanged = false;
 
     if (this.refs.gutterContainer) {
-      const gutterContainerWidth = this.refs.gutterContainer.element
-        .offsetWidth;
+      const gutterContainerWidth =
+        this.refs.gutterContainer.element.offsetWidth;
       if (gutterContainerWidth !== this.measurements.gutterContainerWidth) {
         dimensionsChanged = true;
         this.measurements.gutterContainerWidth = gutterContainerWidth;
@@ -2480,8 +2479,8 @@ module.exports = class TextEditorComponent {
       this.refs.gutterContainer &&
       this.refs.gutterContainer.refs.lineNumberGutter
     ) {
-      const lineNumberGutterWidth = this.refs.gutterContainer.refs
-        .lineNumberGutter.element.offsetWidth;
+      const lineNumberGutterWidth =
+        this.refs.gutterContainer.refs.lineNumberGutter.element.offsetWidth;
       if (lineNumberGutterWidth !== this.measurements.lineNumberGutterWidth) {
         dimensionsChanged = true;
         this.measurements.lineNumberGutterWidth = lineNumberGutterWidth;
@@ -2518,8 +2517,10 @@ module.exports = class TextEditorComponent {
       this.measurements.verticalScrollbarWidth = 0;
       this.measurements.horizontalScrollbarHeight = 0;
     } else {
-      this.measurements.verticalScrollbarWidth = this.refs.verticalScrollbar.getRealScrollbarWidth();
-      this.measurements.horizontalScrollbarHeight = this.refs.horizontalScrollbar.getRealScrollbarHeight();
+      this.measurements.verticalScrollbarWidth =
+        this.refs.verticalScrollbar.getRealScrollbarWidth();
+      this.measurements.horizontalScrollbarHeight =
+        this.refs.horizontalScrollbar.getRealScrollbarHeight();
     }
   }
 
@@ -2713,9 +2714,8 @@ module.exports = class TextEditorComponent {
     if (column === 0) return 0;
     const screenLine = this.renderedScreenLineForRow(row);
     if (screenLine) {
-      const horizontalPositionsByColumn = this.horizontalPixelPositionsByScreenLineId.get(
-        screenLine.id
-      );
+      const horizontalPositionsByColumn =
+        this.horizontalPixelPositionsByScreenLineId.get(screenLine.id);
       if (horizontalPositionsByColumn) {
         return horizontalPositionsByColumn.get(column);
       }
@@ -3449,7 +3449,7 @@ class DummyScrollbarComponent {
 
     const innerStyle = {};
     if (orientation === 'horizontal') {
-      let right = verticalScrollbarWidth || 0;
+      const right = verticalScrollbarWidth || 0;
       outerStyle.bottom = 0;
       outerStyle.left = 0;
       outerStyle.right = right + 'px';
@@ -3460,7 +3460,7 @@ class DummyScrollbarComponent {
       innerStyle.height = '15px';
       innerStyle.width = (scrollWidth || 0) + 'px';
     } else {
-      let bottom = horizontalScrollbarHeight || 0;
+      const bottom = horizontalScrollbarHeight || 0;
       outerStyle.right = 0;
       outerStyle.top = 0;
       outerStyle.bottom = bottom + 'px';
@@ -3486,7 +3486,7 @@ class DummyScrollbarComponent {
   }
 
   didMouseDown(event) {
-    let { bottom, right } = this.element.getBoundingClientRect();
+    const { bottom, right } = this.element.getBoundingClientRect();
     const clickedOnScrollbar =
       this.props.orientation === 'horizontal'
         ? event.clientY >= bottom - this.getRealScrollbarHeight()
@@ -3615,22 +3615,22 @@ class GutterContainerComponent {
         labelFn: gutter.labelFn,
         onMouseDown: gutter.onMouseDown,
         onMouseMove: gutter.onMouseMove,
-        rootComponent: rootComponent,
+        rootComponent,
         startRow: renderedStartRow,
         endRow: renderedEndRow,
-        rowsPerTile: rowsPerTile,
-        maxDigits: maxDigits,
-        keys: keys,
-        bufferRows: bufferRows,
-        screenRows: screenRows,
-        softWrappedFlags: softWrappedFlags,
-        foldableFlags: foldableFlags,
+        rowsPerTile,
+        maxDigits,
+        keys,
+        bufferRows,
+        screenRows,
+        softWrappedFlags,
+        foldableFlags,
         decorations: decorationsToRender.lineNumbers.get(gutter.name) || [],
         blockDecorations: decorationsToRender.blocks,
-        didMeasureVisibleBlockDecoration: didMeasureVisibleBlockDecoration,
+        didMeasureVisibleBlockDecoration,
         height: scrollHeight,
         width,
-        lineHeight: lineHeight,
+        lineHeight,
         showLineNumbers
       });
     } else {
@@ -3749,12 +3749,10 @@ class LineNumberGutterComponent {
           });
         }
 
-        const tileTop = rootComponent.pixelPositionBeforeBlocksForRow(
-          tileStartRow
-        );
-        const tileBottom = rootComponent.pixelPositionBeforeBlocksForRow(
-          tileEndRow
-        );
+        const tileTop =
+          rootComponent.pixelPositionBeforeBlocksForRow(tileStartRow);
+        const tileBottom =
+          rootComponent.pixelPositionBeforeBlocksForRow(tileEndRow);
         const tileHeight = tileBottom - tileTop;
         const tileWidth = width != null && width > 0 ? width + 'px' : '';
 
@@ -3832,12 +3830,10 @@ class LineNumberGutterComponent {
       oldTileStartRow < oldProps.endRow ||
       newTileStartRow < newProps.endRow
     ) {
-      let oldTileBlockDecorations = oldProps.blockDecorations.get(
-        oldTileStartRow
-      );
-      let newTileBlockDecorations = newProps.blockDecorations.get(
-        newTileStartRow
-      );
+      const oldTileBlockDecorations =
+        oldProps.blockDecorations.get(oldTileStartRow);
+      const newTileBlockDecorations =
+        newProps.blockDecorations.get(newTileStartRow);
 
       if (oldTileBlockDecorations && newTileBlockDecorations) {
         if (oldTileBlockDecorations.size !== newTileBlockDecorations.size)
@@ -4092,12 +4088,8 @@ class CursorsAndInputComponent {
   }
 
   render() {
-    const {
-      lineHeight,
-      decorationsToRender,
-      scrollHeight,
-      scrollWidth
-    } = this.props;
+    const { lineHeight, decorationsToRender, scrollHeight, scrollWidth } =
+      this.props;
 
     const className = this.getCursorsClassName();
     const cursorHeight = lineHeight + 'px';
@@ -4194,7 +4186,7 @@ class CursorsAndInputComponent {
         compositionupdate: didCompositionUpdate,
         compositionend: didCompositionEnd
       },
-      tabIndex: tabIndex,
+      tabIndex,
       style: {
         position: 'absolute',
         width: '1px',
@@ -4340,12 +4332,10 @@ class LinesTileComponent {
         newScreenLineIndex++;
         lineComponentIndex++;
       } else {
-        const oldScreenLineIndexInNewScreenLines = newScreenLines.indexOf(
-          oldScreenLine
-        );
-        const newScreenLineIndexInOldScreenLines = oldScreenLines.indexOf(
-          newScreenLine
-        );
+        const oldScreenLineIndexInNewScreenLines =
+          newScreenLines.indexOf(oldScreenLine);
+        const newScreenLineIndexInOldScreenLines =
+          oldScreenLines.indexOf(newScreenLine);
         if (
           newScreenLineIndex < oldScreenLineIndexInNewScreenLines &&
           oldScreenLineIndexInNewScreenLines < newScreenLinesEndIndex
@@ -4389,9 +4379,8 @@ class LinesTileComponent {
             oldScreenLineIndex++;
           }
         } else {
-          const oldScreenLineComponent = this.lineComponents[
-            lineComponentIndex
-          ];
+          const oldScreenLineComponent =
+            this.lineComponents[lineComponentIndex];
           // eslint-disable-next-line no-redeclare
           var newScreenLineComponent = new LineComponent({
             screenLine: newScreenLines[newScreenLineIndex],
@@ -5114,7 +5103,7 @@ function debounce(fn, wait) {
     }
   }
 
-  return function() {
+  return function () {
     timestamp = Date.now();
     if (!timeout) timeout = setTimeout(later, wait);
   };

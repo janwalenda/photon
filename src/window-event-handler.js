@@ -13,14 +13,12 @@ module.exports = class WindowEventHandler {
     this.handleEnterFullScreen = this.handleEnterFullScreen.bind(this);
     this.handleLeaveFullScreen = this.handleLeaveFullScreen.bind(this);
     this.handleWindowBeforeunload = this.handleWindowBeforeunload.bind(this);
-    this.handleWindowToggleFullScreen = this.handleWindowToggleFullScreen.bind(
-      this
-    );
+    this.handleWindowToggleFullScreen =
+      this.handleWindowToggleFullScreen.bind(this);
     this.handleWindowClose = this.handleWindowClose.bind(this);
     this.handleWindowReload = this.handleWindowReload.bind(this);
-    this.handleWindowToggleDevTools = this.handleWindowToggleDevTools.bind(
-      this
-    );
+    this.handleWindowToggleDevTools =
+      this.handleWindowToggleDevTools.bind(this);
     this.handleWindowToggleMenuBar = this.handleWindowToggleMenuBar.bind(this);
     this.handleLinkClick = this.handleLinkClick.bind(this);
     this.handleDocumentContextmenu = this.handleDocumentContextmenu.bind(this);
@@ -134,7 +132,7 @@ module.exports = class WindowEventHandler {
   on(target, eventName, handler) {
     target.on(eventName, handler);
     this.subscriptions.add(
-      new Disposable(function() {
+      new Disposable(function () {
         target.removeListener(eventName, handler);
       })
     );
@@ -143,7 +141,7 @@ module.exports = class WindowEventHandler {
   addEventListener(target, eventName, handler) {
     target.addEventListener(eventName, handler);
     this.subscriptions.add(
-      new Disposable(function() {
+      new Disposable(function () {
         target.removeEventListener(eventName, handler);
       })
     );
@@ -166,7 +164,7 @@ module.exports = class WindowEventHandler {
   }
 
   eachTabIndexedElement(callback) {
-    for (let element of this.document.querySelectorAll('[tabindex]')) {
+    for (const element of this.document.querySelectorAll('[tabindex]')) {
       if (element.disabled) {
         continue;
       }
@@ -187,7 +185,7 @@ module.exports = class WindowEventHandler {
     let nextTabIndex = Infinity;
     let lowestElement = null;
     let lowestTabIndex = Infinity;
-    this.eachTabIndexedElement(function(element, tabIndex) {
+    this.eachTabIndexedElement(function (element, tabIndex) {
       if (tabIndex < lowestTabIndex) {
         lowestTabIndex = tabIndex;
         lowestElement = element;
@@ -216,7 +214,7 @@ module.exports = class WindowEventHandler {
     let previousTabIndex = -Infinity;
     let highestElement = null;
     let highestTabIndex = -Infinity;
-    this.eachTabIndexedElement(function(element, tabIndex) {
+    this.eachTabIndexedElement(function (element, tabIndex) {
       if (tabIndex > highestTabIndex) {
         highestTabIndex = tabIndex;
         highestElement = element;

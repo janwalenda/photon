@@ -47,13 +47,13 @@ module.exports = class Project extends Model {
   }
 
   destroyed() {
-    for (let buffer of this.buffers.slice()) {
+    for (const buffer of this.buffers.slice()) {
       buffer.destroy();
     }
-    for (let repository of this.repositories.slice()) {
+    for (const repository of this.repositories.slice()) {
       if (repository != null) repository.destroy();
     }
-    for (let path in this.watcherPromisesByPath) {
+    for (const path in this.watcherPromisesByPath) {
       this.watcherPromisesByPath[path].then(watcher => {
         watcher.dispose();
       });
@@ -69,7 +69,7 @@ module.exports = class Project extends Model {
     this.subscriptions.dispose();
     this.subscriptions = new CompositeDisposable();
 
-    for (let buffer of this.buffers) {
+    for (const buffer of this.buffers) {
       if (buffer != null) buffer.destroy();
     }
     this.buffers = [];
@@ -81,7 +81,7 @@ module.exports = class Project extends Model {
   }
 
   destroyUnretainedBuffers() {
-    for (let buffer of this.getBuffers()) {
+    for (const buffer of this.getBuffers()) {
       if (!buffer.isRetained()) buffer.destroy();
     }
   }
@@ -143,13 +143,13 @@ module.exports = class Project extends Model {
     };
 
     const bufferPromises = [];
-    for (let bufferState of state.buffers) {
+    for (const bufferState of state.buffers) {
       bufferPromises.push(handleBufferState(bufferState));
     }
 
     return Promise.all(bufferPromises).then(buffers => {
       this.buffers = buffers.filter(Boolean);
-      for (let buffer of this.buffers) {
+      for (const buffer of this.buffers) {
         this.grammarRegistry.maintainLanguageMode(buffer);
         this.subscribeToBuffer(buffer);
       }
@@ -162,7 +162,7 @@ module.exports = class Project extends Model {
       deserializer: 'Project',
       paths: this.getPaths(),
       buffers: _.compact(
-        this.buffers.map(function(buffer) {
+        this.buffers.map(function (buffer) {
           if (buffer.isRetained()) {
             const isUnloading = options.isUnloading === true;
             return buffer.serialize({
@@ -208,7 +208,7 @@ module.exports = class Project extends Model {
   //
   // Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
   observeBuffers(callback) {
-    for (let buffer of this.getBuffers()) {
+    for (const buffer of this.getBuffers()) {
       callback(buffer);
     }
     return this.onDidAddBuffer(callback);
@@ -368,13 +368,13 @@ module.exports = class Project extends Model {
   //   * `exact` If `true`, only add a `projectPath` if it names an existing directory. If `false` and any `projectPath`
   //     is a file or does not exist, its parent directory will be added instead. Default: `false`.
   setPaths(projectPaths, options = {}) {
-    for (let repository of this.repositories) {
+    for (const repository of this.repositories) {
       if (repository != null) repository.destroy();
     }
     this.rootDirectories = [];
     this.repositories = [];
 
-    for (let path in this.watcherPromisesByPath) {
+    for (const path in this.watcherPromisesByPath) {
       this.watcherPromisesByPath[path].then(watcher => {
         watcher.dispose();
       });
@@ -382,7 +382,7 @@ module.exports = class Project extends Model {
     this.watcherPromisesByPath = {};
 
     const missingProjectPaths = [];
-    for (let projectPath of projectPaths) {
+    for (const projectPath of projectPaths) {
       try {
         this.addPath(projectPath, {
           emitEvent: false,
@@ -433,7 +433,7 @@ module.exports = class Project extends Model {
       }
     }
 
-    for (let existingDirectory of this.getDirectories()) {
+    for (const existingDirectory of this.getDirectories()) {
       if (existingDirectory.getPath() === directory.getPath()) {
         return;
       }
@@ -457,7 +457,7 @@ module.exports = class Project extends Model {
         ? Promise.resolve(directory.onDidChangeFiles(didChangeCallback))
         : watchPath(directory.getPath(), {}, didChangeCallback);
 
-    for (let watchedPath in this.watcherPromisesByPath) {
+    for (const watchedPath in this.watcherPromisesByPath) {
       if (!this.rootDirectories.find(dir => dir.getPath() === watchedPath)) {
         this.watcherPromisesByPath[watchedPath].then(watcher => {
           watcher.dispose();
@@ -466,7 +466,7 @@ module.exports = class Project extends Model {
     }
 
     let repo = null;
-    for (let provider of this.repositoryProviders) {
+    for (const provider of this.repositoryProviders) {
       if (provider.repositoryForDirectorySync) {
         repo = provider.repositoryForDirectorySync(directory);
       }
@@ -485,7 +485,7 @@ module.exports = class Project extends Model {
   }
 
   getProvidedDirectoryForProjectPath(projectPath) {
-    for (let provider of this.directoryProviders) {
+    for (const provider of this.directoryProviders) {
       if (typeof provider.directoryForURISync === 'function') {
         const directory = provider.directoryForURISync(projectPath);
         if (directory) {
@@ -499,9 +499,8 @@ module.exports = class Project extends Model {
   getDirectoryForProjectPath(projectPath) {
     let directory = this.getProvidedDirectoryForProjectPath(projectPath);
     if (directory == null) {
-      directory = this.defaultDirectoryProvider.directoryForURISync(
-        projectPath
-      );
+      directory =
+        this.defaultDirectoryProvider.directoryForURISync(projectPath);
     }
     return directory;
   }
@@ -604,7 +603,7 @@ module.exports = class Project extends Model {
   relativizePath(fullPath) {
     let result = [null, fullPath];
     if (fullPath != null) {
-      for (let rootDirectory of this.rootDirectories) {
+      for (const rootDirectory of this.rootDirectories) {
         const relativePath = rootDirectory.relativize(fullPath);
         if (relativePath != null && relativePath.length < result[1].length) {
           result = [rootDirectory.getPath(), relativePath];
@@ -837,7 +836,7 @@ module.exports = class Project extends Model {
     }
     const callback = args.shift();
 
-    for (let buffer of this.getBuffers()) {
+    for (const buffer of this.getBuffers()) {
       callback(buffer);
     }
     if (subscriber) {

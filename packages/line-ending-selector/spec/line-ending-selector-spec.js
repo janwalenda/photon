@@ -209,7 +209,7 @@ describe('line ending selector', () => {
           expect(
             lineEndingSelector.element.contains(document.activeElement)
           ).toBe(true);
-          let listItems = lineEndingSelector.element.querySelectorAll('li');
+          const listItems = lineEndingSelector.element.querySelectorAll('li');
           expect(listItems[0].textContent).toBe('LF');
           expect(listItems[1].textContent).toBe('CRLF');
         });
@@ -229,7 +229,7 @@ describe('line ending selector', () => {
           expect(
             lineEndingSelector.element.contains(document.activeElement)
           ).toBe(true);
-          let listItems = lineEndingSelector.element.querySelectorAll('li');
+          const listItems = lineEndingSelector.element.querySelectorAll('li');
           expect(listItems[0].textContent).toBe('LF');
           expect(listItems[1].textContent).toBe('CRLF');
         });
@@ -314,10 +314,23 @@ describe('line ending selector', () => {
         );
 
         waitsFor(done => {
-          editor.setTextInBufferRange([[0, 0], [0, 0]], '... ');
-          editor.setTextInBufferRange([[0, Infinity], [1, 0]], '\r\n', {
-            normalizeLineEndings: false
-          });
+          editor.setTextInBufferRange(
+            [
+              [0, 0],
+              [0, 0]
+            ],
+            '... '
+          );
+          editor.setTextInBufferRange(
+            [
+              [0, Infinity],
+              [1, 0]
+            ],
+            '\r\n',
+            {
+              normalizeLineEndings: false
+            }
+          );
           lineEndingTile.onDidChange(done);
         });
 
@@ -359,7 +372,13 @@ describe('line ending selector', () => {
         });
 
         runs(() => {
-          editor.setTextInBufferRange([[0, 0], [0, 0]], '\n');
+          editor.setTextInBufferRange(
+            [
+              [0, 0],
+              [0, 0]
+            ],
+            '\n'
+          );
         });
 
         waits(100);

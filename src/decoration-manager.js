@@ -43,8 +43,8 @@ module.exports = class DecorationManager {
       decorations.forEach(decoration => allDecorations.push(decoration));
     });
     if (propertyFilter != null) {
-      allDecorations = allDecorations.filter(function(decoration) {
-        for (let key in propertyFilter) {
+      allDecorations = allDecorations.filter(function (decoration) {
+        for (const key in propertyFilter) {
           const value = propertyFilter[key];
           if (decoration.properties[key] !== value) return false;
         }
@@ -76,8 +76,8 @@ module.exports = class DecorationManager {
     const result = [];
     result.push(...Array.from(this.overlayDecorations));
     if (propertyFilter != null) {
-      return result.filter(function(decoration) {
-        for (let key in propertyFilter) {
+      return result.filter(function (decoration) {
+        for (const key in propertyFilter) {
           const value = propertyFilter[key];
           if (decoration.properties[key] !== value) {
             return false;
@@ -97,9 +97,8 @@ module.exports = class DecorationManager {
       const markers = markerLayer.findMarkers({
         intersectsScreenRowRange: [startScreenRow, endScreenRow - 1]
       });
-      const layerDecorations = this.layerDecorationsByMarkerLayer.get(
-        markerLayer
-      );
+      const layerDecorations =
+        this.layerDecorationsByMarkerLayer.get(markerLayer);
       const hasMarkerDecorations =
         this.markerDecorationCountsByLayer.get(markerLayer) > 0;
 
@@ -107,9 +106,8 @@ module.exports = class DecorationManager {
         const marker = markers[i];
         if (!marker.isValid()) continue;
 
-        let decorationPropertiesForMarker = decorationPropertiesByMarker.get(
-          marker
-        );
+        let decorationPropertiesForMarker =
+          decorationPropertiesByMarker.get(marker);
         if (decorationPropertiesForMarker == null) {
           decorationPropertiesForMarker = [];
           decorationPropertiesByMarker.set(
@@ -180,9 +178,8 @@ module.exports = class DecorationManager {
             });
           }
 
-          const layerDecorations = this.layerDecorationsByMarkerLayer.get(
-            layer
-          );
+          const layerDecorations =
+            this.layerDecorationsByMarkerLayer.get(layer);
           if (layerDecorations) {
             layerDecorations.forEach(layerDecoration => {
               const properties =

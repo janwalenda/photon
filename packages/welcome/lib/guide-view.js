@@ -15,9 +15,8 @@ export default class GuideView {
     this.didClickStylingButton = this.didClickStylingButton.bind(this);
     this.didClickInitScriptButton = this.didClickInitScriptButton.bind(this);
     this.didClickSnippetsButton = this.didClickSnippetsButton.bind(this);
-    this.didExpandOrCollapseSection = this.didExpandOrCollapseSection.bind(
-      this
-    );
+    this.didExpandOrCollapseSection =
+      this.didExpandOrCollapseSection.bind(this);
     etch.initialize(this);
   }
 
@@ -271,7 +270,7 @@ export default class GuideView {
                 <p>Uncomment some of the examples or try out your own.</p>
                 <p className="welcome-note">
                   <strong>Next time:</strong> You can open your init script from
-                  Menu > {this.getApplicationMenuName()}.
+                  Menu {'>'} {this.getApplicationMenuName()}.
                 </p>
               </div>
             </details>
@@ -311,7 +310,7 @@ export default class GuideView {
                 </p>
                 <p className="welcome-note">
                   <strong>Next time:</strong> You can open your snippets in Menu
-                  > {this.getApplicationMenuName()}.
+                  {'>'} {this.getApplicationMenuName()}.
                 </p>
               </div>
             </details>

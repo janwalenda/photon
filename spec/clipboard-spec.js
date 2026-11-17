@@ -17,14 +17,14 @@ describe('Clipboard', () => {
   });
 
   describe('line endings', () => {
-    let originalPlatform = process.platform;
+    const originalPlatform = process.platform;
 
     const eols = new Map([
       ['win32', '\r\n'],
       ['darwin', '\n'],
       ['linux', '\n']
     ]);
-    for (let [platform, eol] of eols) {
+    for (const [platform, eol] of eols) {
       it(`converts line endings to the OS's native line endings on ${platform}`, () => {
         Object.defineProperty(process, 'platform', { value: platform });
 

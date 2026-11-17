@@ -12,7 +12,7 @@ const macEntitlementsPath = path.join(
   'entitlements.plist'
 );
 
-module.exports = async function(packagedAppPath) {
+module.exports = async function (packagedAppPath) {
   if (
     !process.env.ATOM_MAC_CODE_SIGNING_CERT_DOWNLOAD_URL &&
     !process.env.ATOM_MAC_CODE_SIGNING_CERT_PATH

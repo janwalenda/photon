@@ -1061,7 +1061,7 @@ describe('Project', () => {
       return new Promise((resolve, reject) => {
         let expireTimeoutId;
         checkCallback = () => {
-          for (let event of events) {
+          for (const event of events) {
             remaining.delete(event.path);
           }
           if (remaining.size === 0) {

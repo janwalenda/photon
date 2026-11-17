@@ -75,7 +75,7 @@ module.exports = class ReopenProjectMenuManager {
       .getJumpListSettings()
       .removedItems.map(i => i.description);
     if (removed.length === 0) return;
-    for (let project of this.historyManager.getProjects()) {
+    for (const project of this.historyManager.getProjects()) {
       if (
         removed.includes(
           ReopenProjectMenuManager.taskDescription(project.paths)
@@ -154,7 +154,7 @@ module.exports = class ReopenProjectMenuManager {
           submenu: projects.map((project, index) => ({
             label: this.createLabel(project),
             command: 'application:reopen-project',
-            commandDetail: { index: index, paths: project.paths }
+            commandDetail: { index, paths: project.paths }
           }))
         }
       ]

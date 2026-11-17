@@ -3,8 +3,8 @@
 const StateStore = require('../src/state-store.js');
 
 describe('StateStore', () => {
-  let databaseName = `test-database-${Date.now()}`;
-  let version = 1;
+  const databaseName = `test-database-${Date.now()}`;
+  const version = 1;
 
   it('can save, load, and delete states', () => {
     const store = new StateStore(databaseName, version);
@@ -54,7 +54,7 @@ describe('StateStore', () => {
       };
 
       spyOn(IDBObjectStore.prototype, 'get').andCallFake(key => {
-        let request = {};
+        const request = {};
         process.nextTick(() => request.onerror(fakeErrorEvent));
         return request;
       });

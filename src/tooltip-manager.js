@@ -151,7 +151,7 @@ module.exports = class TooltipManager {
     }
     this.tooltips.get(target).push(tooltip);
 
-    const hideTooltip = function() {
+    const hideTooltip = function () {
       tooltip.leave({ currentTarget: target });
       tooltip.hide();
     };

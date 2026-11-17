@@ -76,8 +76,10 @@ function getChannel(version) {
 function getAppName(channel) {
   return channel === 'stable'
     ? 'Atom'
-    : `Atom ${process.env.ATOM_CHANNEL_DISPLAY_NAME ||
-        channel.charAt(0).toUpperCase() + channel.slice(1)}`;
+    : `Atom ${
+        process.env.ATOM_CHANNEL_DISPLAY_NAME ||
+        channel.charAt(0).toUpperCase() + channel.slice(1)
+      }`;
 }
 
 function getExecutableName(channel, appName) {

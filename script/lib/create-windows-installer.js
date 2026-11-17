@@ -47,9 +47,9 @@ module.exports = packagedAppPath => {
       fs.renameSync(releasesPath, `${releasesPath}-x64`);
     }
 
-    let appName =
+    const appName =
       CONFIG.channel === 'stable' ? 'atom' : `atom-${CONFIG.channel}`;
-    for (let nupkgPath of glob.sync(
+    for (const nupkgPath of glob.sync(
       `${CONFIG.buildOutputPath}/${appName}-*.nupkg`
     )) {
       if (!nupkgPath.includes(CONFIG.computedAppVersion)) {

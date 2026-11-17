@@ -79,7 +79,7 @@ TextEditor.setScheduler(global.atom.views);
 global.atom.preloadPackages();
 
 // Like sands through the hourglass, so are the days of our lives.
-module.exports = function({ blobStore }) {
+module.exports = function ({ blobStore }) {
   const { updateProcessEnv } = require('./update-process-env');
   const path = require('path');
   require('./window');
@@ -106,9 +106,9 @@ module.exports = function({ blobStore }) {
     env: process.env
   });
 
-  return global.atom.startEditorWindow().then(function() {
+  return global.atom.startEditorWindow().then(function () {
     // Workaround for focus getting cleared upon window creation
-    const windowFocused = function() {
+    const windowFocused = function () {
       window.removeEventListener('focus', windowFocused);
       setTimeout(() => document.querySelector('atom-workspace').focus(), 0);
     };

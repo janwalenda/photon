@@ -1,6 +1,6 @@
 const spawnSync = require('./spawn-sync');
 
-module.exports = function(packagedAppPath) {
+module.exports = function (packagedAppPath) {
   const result = spawnSync('security', [
     'find-certificate',
     '-c',

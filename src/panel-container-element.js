@@ -104,7 +104,7 @@ class PanelContainerElement extends HTMLElement {
   }
 
   hideAllPanelsExcept(excludedPanel) {
-    for (let panel of this.model.getPanels()) {
+    for (const panel of this.model.getPanels()) {
       if (panel !== excludedPanel) {
         panel.hide();
       }

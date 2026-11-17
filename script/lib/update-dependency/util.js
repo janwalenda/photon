@@ -5,7 +5,7 @@ const util = repositoryRootPath => {
   const packageJsonFilePath = path.join(repositoryRootPath, 'package.json');
   const packageJSON = require(packageJsonFilePath);
   return {
-    updatePackageJson: async function({
+    updatePackageJson: async function ({
       moduleName,
       installed,
       latest,
@@ -24,26 +24,24 @@ const util = repositoryRootPath => {
             searchString = packageJson;
           }
         }
-        updatePackageJson.dependencies[
-          moduleName
-        ] = updatePackageJson.dependencies[moduleName].replace(
-          searchString,
-          latest
-        );
+        updatePackageJson.dependencies[moduleName] =
+          updatePackageJson.dependencies[moduleName].replace(
+            searchString,
+            latest
+          );
       }
       if (updatePackageJson.packageDependencies[moduleName]) {
-        updatePackageJson.packageDependencies[
-          moduleName
-        ] = updatePackageJson.packageDependencies[moduleName].replace(
-          new RegExp(installed),
-          latest
-        );
+        updatePackageJson.packageDependencies[moduleName] =
+          updatePackageJson.packageDependencies[moduleName].replace(
+            new RegExp(installed),
+            latest
+          );
       }
       return new Promise((resolve, reject) => {
         fs.writeFile(
           packageJsonFilePath,
           JSON.stringify(updatePackageJson, null, 2),
-          function(err) {
+          function (err) {
             if (err) {
               return reject(err);
             }

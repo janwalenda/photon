@@ -85,7 +85,7 @@ export default class GitDiffView {
     }
 
     // Don't cache the path unless we know we need it.
-    let editorPath = this.editor.getPath();
+    const editorPath = this.editor.getPath();
 
     this.repository = await repositoryForPath(editorPath);
     if (this.repository !== null) {
@@ -258,9 +258,15 @@ export default class GitDiffView {
   }
 
   markRange(startRow, endRow, klass) {
-    const marker = this.editor.markBufferRange([[startRow, 0], [endRow, 0]], {
-      invalidate: 'never'
-    });
+    const marker = this.editor.markBufferRange(
+      [
+        [startRow, 0],
+        [endRow, 0]
+      ],
+      {
+        invalidate: 'never'
+      }
+    );
     this.editor.decorateMarker(marker, { type: 'line-number', class: klass });
     return marker;
   }

@@ -230,11 +230,11 @@ describe('Pane', () => {
       const itemB = new Item('B');
       pane.addItem(itemA, { pending: true });
 
-      pane.onDidAddItem(function({ item }) {
+      pane.onDidAddItem(function ({ item }) {
         if (item === itemB) eventOrder.push('add');
       });
 
-      pane.onDidRemoveItem(function({ item }) {
+      pane.onDidRemoveItem(function ({ item }) {
         if (item === itemA) eventOrder.push('remove');
       });
 
@@ -376,7 +376,7 @@ describe('Pane', () => {
 
     it('is called when the pending item changes', () => {
       pane.setPendingItem('fake item one');
-      pane.onItemDidTerminatePendingState(function(item) {
+      pane.onItemDidTerminatePendingState(function (item) {
         callbackCalled = true;
         expect(item).toEqual('fake item one');
       });
@@ -386,7 +386,7 @@ describe('Pane', () => {
 
     it('has access to the new pending item via ::getPendingItem', () => {
       pane.setPendingItem('fake item one');
-      pane.onItemDidTerminatePendingState(function(item) {
+      pane.onItemDidTerminatePendingState(function (item) {
         callbackCalled = true;
         expect(pane.getPendingItem()).toEqual('fake item two');
       });
@@ -749,7 +749,7 @@ describe('Pane', () => {
       describe("when the 'core.destroyEmptyPanes' config option is false (the default)", () => {
         it('does not destroy the pane, but leaves it in place with empty items', () => {
           expect(atom.config.get('core.destroyEmptyPanes')).toBe(false);
-          for (let item of pane.getItems()) {
+          for (const item of pane.getItems()) {
             pane.destroyItem(item);
           }
           expect(pane.isDestroyed()).toBe(false);
@@ -762,7 +762,7 @@ describe('Pane', () => {
       describe("when the 'core.destroyEmptyPanes' config option is true", () => {
         it('destroys the pane', () => {
           atom.config.set('core.destroyEmptyPanes', true);
-          for (let item of pane.getItems()) {
+          for (const item of pane.getItems()) {
             pane.destroyItem(item);
           }
           expect(pane.isDestroyed()).toBe(true);
@@ -928,15 +928,15 @@ describe('Pane', () => {
         };
 
         waitsFor(done => {
-          const subscription = atom.notifications.onDidAddNotification(function(
-            notification
-          ) {
-            expect(notification.getType()).toBe('warning');
-            expect(notification.getMessage()).toContain('Permission denied');
-            expect(notification.getMessage()).toContain('/foo');
-            subscription.dispose();
-            done();
-          });
+          const subscription = atom.notifications.onDidAddNotification(
+            function (notification) {
+              expect(notification.getType()).toBe('warning');
+              expect(notification.getMessage()).toContain('Permission denied');
+              expect(notification.getMessage()).toContain('/foo');
+              subscription.dispose();
+              done();
+            }
+          );
           pane.saveActiveItem();
         });
       });
@@ -952,15 +952,15 @@ describe('Pane', () => {
         };
 
         waitsFor(done => {
-          const subscription = atom.notifications.onDidAddNotification(function(
-            notification
-          ) {
-            expect(notification.getType()).toBe('warning');
-            expect(notification.getMessage()).toContain('Permission denied');
-            expect(notification.getMessage()).toContain('/foo');
-            subscription.dispose();
-            done();
-          });
+          const subscription = atom.notifications.onDidAddNotification(
+            function (notification) {
+              expect(notification.getType()).toBe('warning');
+              expect(notification.getMessage()).toContain('Permission denied');
+              expect(notification.getMessage()).toContain('/foo');
+              subscription.dispose();
+              done();
+            }
+          );
           pane.saveActiveItem();
         });
       });
@@ -1015,15 +1015,15 @@ describe('Pane', () => {
         };
 
         waitsFor(done => {
-          const subscription = atom.notifications.onDidAddNotification(function(
-            notification
-          ) {
-            expect(notification.getType()).toBe('warning');
-            expect(notification.getMessage()).toContain('Permission denied');
-            expect(notification.getMessage()).toContain('/foo');
-            subscription.dispose();
-            done();
-          });
+          const subscription = atom.notifications.onDidAddNotification(
+            function (notification) {
+              expect(notification.getType()).toBe('warning');
+              expect(notification.getMessage()).toContain('Permission denied');
+              expect(notification.getMessage()).toContain('/foo');
+              subscription.dispose();
+              done();
+            }
+          );
           pane.saveActiveItemAs();
         });
       });

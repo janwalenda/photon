@@ -19,9 +19,8 @@ module.exports = {
   },
 
   consumeStatusBar(statusBar) {
-    this.updatePackageDependenciesStatusView = new UpdatePackageDependenciesStatusView(
-      statusBar
-    );
+    this.updatePackageDependenciesStatusView =
+      new UpdatePackageDependenciesStatusView(statusBar);
   },
 
   update() {

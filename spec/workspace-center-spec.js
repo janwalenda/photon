@@ -10,18 +10,16 @@ describe('WorkspaceCenter', () => {
       const observed = [];
 
       const editorAddedBeforeRegisteringObserver = new TextEditor();
-      const nonEditorItemAddedBeforeRegisteringObserver = document.createElement(
-        'div'
-      );
+      const nonEditorItemAddedBeforeRegisteringObserver =
+        document.createElement('div');
       pane.activateItem(editorAddedBeforeRegisteringObserver);
       pane.activateItem(nonEditorItemAddedBeforeRegisteringObserver);
 
       workspaceCenter.observeTextEditors(editor => observed.push(editor));
 
       const editorAddedAfterRegisteringObserver = new TextEditor();
-      const nonEditorItemAddedAfterRegisteringObserver = document.createElement(
-        'div'
-      );
+      const nonEditorItemAddedAfterRegisteringObserver =
+        document.createElement('div');
       pane.activateItem(editorAddedAfterRegisteringObserver);
       pane.activateItem(nonEditorItemAddedAfterRegisteringObserver);
 

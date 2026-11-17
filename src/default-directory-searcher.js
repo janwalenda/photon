@@ -93,8 +93,8 @@ module.exports = class DefaultDirectorySearcher {
     const rootPaths = directories.map(directory => directory.getPath());
     let isCancelled = false;
     const directorySearch = new DirectorySearch(rootPaths, regex, options);
-    const promise = new Promise(function(resolve, reject) {
-      directorySearch.then(resolve, function() {
+    const promise = new Promise(function (resolve, reject) {
+      directorySearch.then(resolve, function () {
         if (isCancelled) {
           resolve();
         } else {

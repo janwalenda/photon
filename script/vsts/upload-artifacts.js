@@ -48,7 +48,7 @@ if (!assets || assets.length === 0) {
 }
 
 async function uploadArtifacts() {
-  let releaseForVersion = await releaseNotes.getRelease(
+  const releaseForVersion = await releaseNotes.getRelease(
     releaseVersion,
     process.env.GITHUB_TOKEN
   );
@@ -122,9 +122,7 @@ async function uploadArtifacts() {
     console.log(`New release notes:\n\n${newReleaseNotes}`);
 
     const releaseSha = !isNightlyRelease
-      ? spawnSync('git', ['rev-parse', 'HEAD'])
-          .stdout.toString()
-          .trimEnd()
+      ? spawnSync('git', ['rev-parse', 'HEAD']).stdout.toString().trimEnd()
       : 'master'; // Nightly tags are created in atom/atom-nightly-releases so the SHA is irrelevant
 
     console.log(`Creating GitHub release v${releaseVersion}`);

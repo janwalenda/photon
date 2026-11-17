@@ -22,7 +22,7 @@ function getElectronInstallEnv() {
   });
 }
 
-module.exports = function(packagePath, ci, stdioOptions) {
+module.exports = function (packagePath, ci, stdioOptions) {
   childProcess.execFileSync(
     CONFIG.getNpmBinPath(),
     ['--loglevel=error', '--no-fund', '--no-audit', ci ? 'ci' : 'install'],

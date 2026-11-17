@@ -5,7 +5,7 @@ const electronLink = require('electron-link');
 const terser = require('terser');
 const CONFIG = require('../config');
 
-module.exports = function(packagedAppPath) {
+module.exports = function (packagedAppPath) {
   if (process.platform === 'darwin' && process.arch === 'arm64') {
     // The startup snapshot has never supported Apple Silicon builds (mksnapshot
     // writes a differently named blob). Photon starts without it until the
@@ -328,7 +328,7 @@ module.exports = function(packagedAppPath) {
     }
 
     const snapshotBinaries = ['v8_context_snapshot.bin', 'snapshot_blob.bin'];
-    for (let snapshotBinary of snapshotBinaries) {
+    for (const snapshotBinary of snapshotBinaries) {
       let destinationPath = path.join(
         startupBlobDestinationPath,
         snapshotBinary

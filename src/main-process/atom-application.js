@@ -670,7 +670,7 @@ module.exports = class AtomApplication extends EventEmitter {
         const window = this.focusedWindow();
         if (window) window.minimize();
       });
-      this.on('application:zoom', function() {
+      this.on('application:zoom', function () {
         const window = this.focusedWindow();
         if (window) window.maximize();
       });
@@ -698,7 +698,7 @@ module.exports = class AtomApplication extends EventEmitter {
     );
 
     this.configFile.onDidChange(settings => {
-      for (let window of this.getAllWindows()) {
+      for (const window of this.getAllWindows()) {
         window.didChangeUserSettings(settings);
       }
       this.config.resetUserSettings(settings);
@@ -814,7 +814,7 @@ module.exports = class AtomApplication extends EventEmitter {
 
     this.disposable.add(
       ipcHelpers.on(ipcMain, 'did-change-history-manager', event => {
-        for (let atomWindow of this.getAllWindows()) {
+        for (const atomWindow of this.getAllWindows()) {
           const { webContents } = atomWindow.browserWindow;
           if (webContents !== event.sender)
             webContents.send('did-change-history-manager');
@@ -1391,9 +1391,8 @@ module.exports = class AtomApplication extends EventEmitter {
       }
 
       if (!windowInitializationScript) {
-        windowInitializationScript = require.resolve(
-          '../initialize-application-window'
-        );
+        windowInitializationScript =
+          require.resolve('../initialize-application-window');
       }
       if (!resourcePath) resourcePath = this.resourcePath;
       if (!windowDimensions)
@@ -1435,7 +1434,7 @@ module.exports = class AtomApplication extends EventEmitter {
 
   // Kill all processes associated with opened windows.
   killAllProcesses() {
-    for (let window of this.waitSessionsByWindow.keys()) {
+    for (const window of this.waitSessionsByWindow.keys()) {
       this.killProcessesForWindow(window);
     }
   }
@@ -1620,9 +1619,8 @@ module.exports = class AtomApplication extends EventEmitter {
       }
 
       if (!windowInitializationScript) {
-        windowInitializationScript = require.resolve(
-          '../initialize-application-window'
-        );
+        windowInitializationScript =
+          require.resolve('../initialize-application-window');
       }
 
       const windowDimensions = this.getDimensionsForNewWindow();
@@ -1654,9 +1652,8 @@ module.exports = class AtomApplication extends EventEmitter {
     safeMode,
     env
   ) {
-    const packagePath = this.getPackageManager(devMode).resolvePackagePath(
-      packageName
-    );
+    const packagePath =
+      this.getPackageManager(devMode).resolvePackagePath(packageName);
     const windowInitializationScript = path.resolve(
       packagePath,
       packageUrlMain
@@ -1715,7 +1712,7 @@ module.exports = class AtomApplication extends EventEmitter {
 
     const timeoutInSeconds = Number.parseFloat(timeout);
     if (!Number.isNaN(timeoutInSeconds)) {
-      const timeoutHandler = function() {
+      const timeoutHandler = function () {
         console.log(
           `The test suite has timed out because it has been running for more than ${timeoutInSeconds} seconds.`
         );
@@ -1736,7 +1733,7 @@ module.exports = class AtomApplication extends EventEmitter {
 
     const testPaths = [];
     if (pathsToOpen != null) {
-      for (let pathToOpen of pathsToOpen) {
+      for (const pathToOpen of pathsToOpen) {
         testPaths.push(path.resolve(executedFrom, fs.normalize(pathToOpen)));
       }
     }
@@ -1802,7 +1799,7 @@ module.exports = class AtomApplication extends EventEmitter {
 
     const benchmarkPaths = [];
     if (pathsToOpen != null) {
-      for (let pathToOpen of pathsToOpen) {
+      for (const pathToOpen of pathsToOpen) {
         benchmarkPaths.push(
           path.resolve(executedFrom, fs.normalize(pathToOpen))
         );

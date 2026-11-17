@@ -33,7 +33,7 @@ module.exports = class PackageWatcher extends Watcher {
     const onFolder = () => true;
     fs.traverseTreeSync(stylesheetsPath, onFile, onFolder);
 
-    for (let stylesheet of stylesheetPaths) {
+    for (const stylesheet of stylesheetPaths) {
       watchPath(stylesheet);
     }
   }

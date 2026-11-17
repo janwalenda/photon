@@ -70,11 +70,13 @@ class StylesElement extends HTMLElement {
       return;
     }
 
-    for (let child of Array.from(Array.prototype.slice.call(this.children))) {
+    for (const child of Array.from(Array.prototype.slice.call(this.children))) {
       this.styleElementRemoved(child);
     }
     this.context = this.getAttribute('context');
-    for (let styleElement of Array.from(this.styleManager.getStyleElements())) {
+    for (const styleElement of Array.from(
+      this.styleManager.getStyleElements()
+    )) {
       this.styleElementAdded(styleElement);
     }
   }
@@ -96,7 +98,7 @@ class StylesElement extends HTMLElement {
 
     const { priority } = styleElement;
     if (priority != null) {
-      for (let child of this.children) {
+      for (const child of this.children) {
         if (child.priority > priority) {
           insertBefore = child;
           break;
@@ -128,9 +130,8 @@ class StylesElement extends HTMLElement {
       return;
     }
 
-    const styleElementClone = this.styleElementClonesByOriginalElement.get(
-      styleElement
-    );
+    const styleElementClone =
+      this.styleElementClonesByOriginalElement.get(styleElement);
     styleElementClone.textContent = styleElement.textContent;
     this.emitter.emit('did-update-style-element', styleElementClone);
   }

@@ -180,12 +180,10 @@ module.exports = class Workspace extends Model {
     this.updateWindowTitle = this.updateWindowTitle.bind(this);
     this.updateDocumentEdited = this.updateDocumentEdited.bind(this);
     this.didDestroyPaneItem = this.didDestroyPaneItem.bind(this);
-    this.didChangeActivePaneOnPaneContainer = this.didChangeActivePaneOnPaneContainer.bind(
-      this
-    );
-    this.didChangeActivePaneItemOnPaneContainer = this.didChangeActivePaneItemOnPaneContainer.bind(
-      this
-    );
+    this.didChangeActivePaneOnPaneContainer =
+      this.didChangeActivePaneOnPaneContainer.bind(this);
+    this.didChangeActivePaneItemOnPaneContainer =
+      this.didChangeActivePaneItemOnPaneContainer.bind(this);
     this.didActivatePaneContainer = this.didActivatePaneContainer.bind(this);
 
     this.enablePersistence = params.enablePersistence;
@@ -412,7 +410,7 @@ module.exports = class Workspace extends Model {
       state.packagesWithActiveGrammars != null
         ? state.packagesWithActiveGrammars
         : [];
-    for (let packageName of packagesWithActiveGrammars) {
+    for (const packageName of packagesWithActiveGrammars) {
       const pkg = this.packageManager.getLoadedPackage(packageName);
       if (pkg != null) {
         pkg.loadGrammarsSync();
@@ -464,7 +462,7 @@ module.exports = class Workspace extends Model {
       }
 
       packageNames.push(packageName);
-      for (let scopeName of includedGrammarScopes != null
+      for (const scopeName of includedGrammarScopes != null
         ? includedGrammarScopes
         : []) {
         addGrammar(this.grammarRegistry.grammarForScopeName(scopeName));
@@ -472,12 +470,12 @@ module.exports = class Workspace extends Model {
     };
 
     const editors = this.getTextEditors();
-    for (let editor of editors) {
+    for (const editor of editors) {
       addGrammar(editor.getGrammar());
     }
 
     if (editors.length > 0) {
-      for (let grammar of this.grammarRegistry.getGrammars()) {
+      for (const grammar of this.grammarRegistry.getGrammars()) {
         if (grammar.injectionSelector) {
           addGrammar(grammar);
         }
@@ -764,7 +762,7 @@ module.exports = class Workspace extends Model {
   //
   // Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
   observeTextEditors(callback) {
-    for (let textEditor of this.getTextEditors()) {
+    for (const textEditor of this.getTextEditors()) {
       callback(textEditor);
     }
     return this.onDidAddTextEditor(({ textEditor }) => callback(textEditor));
@@ -1590,9 +1588,7 @@ module.exports = class Workspace extends Model {
   // {::saveActivePaneItemAs} # will be called instead. This method does nothing
   // if the active item does not implement a `.save` method.
   saveActivePaneItem() {
-    return this.getCenter()
-      .getActivePane()
-      .saveActiveItem();
+    return this.getCenter().getActivePane().saveActiveItem();
   }
 
   // Prompt the user for a path and save the active pane item to it.
@@ -1601,9 +1597,7 @@ module.exports = class Workspace extends Model {
   // `.saveAs` on the item with the selected path. This method does nothing if
   // the active item does not implement a `.saveAs` method.
   saveActivePaneItemAs() {
-    this.getCenter()
-      .getActivePane()
-      .saveActiveItemAs();
+    this.getCenter().getActivePane().saveActiveItemAs();
   }
 
   // Destroy (close) the active pane item.
@@ -1688,7 +1682,7 @@ module.exports = class Workspace extends Model {
   //
   // Returns a {Pane} or `undefined` if no item exists with the given URI.
   paneForURI(uri) {
-    for (let location of this.getPaneContainers()) {
+    for (const location of this.getPaneContainers()) {
       const pane = location.paneForURI(uri);
       if (pane != null) {
         return pane;
@@ -1702,7 +1696,7 @@ module.exports = class Workspace extends Model {
   //
   // Returns a {Pane} or `undefined` if no pane exists for the given item.
   paneForItem(item) {
-    for (let location of this.getPaneContainers()) {
+    for (const location of this.getPaneContainers()) {
       const pane = location.paneForItem(item);
       if (pane != null) {
         return pane;
@@ -1722,9 +1716,7 @@ module.exports = class Workspace extends Model {
   // empty, or the current window if there is only the empty root pane.
   closeActivePaneItemOrEmptyPaneOrWindow() {
     if (this.getCenter().getActivePaneItem() != null) {
-      this.getCenter()
-        .getActivePane()
-        .destroyActiveItem();
+      this.getCenter().getActivePane().destroyActiveItem();
     } else if (this.getCenter().getPanes().length > 1) {
       this.getCenter().destroyActivePane();
     } else if (this.config.get('core.closeEmptyWindows')) {
@@ -2005,7 +1997,7 @@ module.exports = class Workspace extends Model {
   //
   // * `item` Item the panel contains
   panelForItem(item) {
-    for (let location in this.panelContainers) {
+    for (const location in this.panelContainers) {
       const container = this.panelContainers[location];
       const panel = container.panelForItem(item);
       if (panel != null) {
@@ -2082,7 +2074,7 @@ module.exports = class Workspace extends Model {
       const onPathsSearchedOption = options.onPathsSearched;
       let totalNumberOfPathsSearched = 0;
       const numberOfPathsSearchedForSearcher = new Map();
-      onPathsSearched = function(searcher, numberOfPathsSearched) {
+      onPathsSearched = function (searcher, numberOfPathsSearched) {
         const oldValue = numberOfPathsSearchedForSearcher.get(searcher);
         if (oldValue) {
           totalNumberOfPathsSearched -= oldValue;
@@ -2092,7 +2084,7 @@ module.exports = class Workspace extends Model {
         return onPathsSearchedOption(totalNumberOfPathsSearched);
       };
     } else {
-      onPathsSearched = function() {};
+      onPathsSearched = function () {};
     }
 
     // Kick off all of the searches and unify them into one Promise.
@@ -2128,7 +2120,7 @@ module.exports = class Workspace extends Model {
     });
     const searchPromise = Promise.all(allSearches);
 
-    for (let buffer of this.project.getBuffers()) {
+    for (const buffer of this.project.getBuffers()) {
       if (buffer.isModified()) {
         const filePath = buffer.getPath();
         if (!this.project.contains(filePath)) {
@@ -2148,7 +2140,7 @@ module.exports = class Workspace extends Model {
     // package relies on this behavior.
     let isCancelled = false;
     const cancellablePromise = new Promise((resolve, reject) => {
-      const onSuccess = function() {
+      const onSuccess = function () {
         if (isCancelled) {
           resolve('cancelled');
         } else {
@@ -2156,8 +2148,8 @@ module.exports = class Workspace extends Model {
         }
       };
 
-      const onFailure = function(error) {
-        for (let promise of allSearches) {
+      const onFailure = function (error) {
+        for (const promise of allSearches) {
           promise.cancel();
         }
         reject(error);

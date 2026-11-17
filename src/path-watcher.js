@@ -800,22 +800,22 @@ function stopAllWatchers() {
 }
 
 // Private: Show the currently active native watchers in a formatted {String}.
-watchPath.printWatchers = function() {
+watchPath.printWatchers = function () {
   return PathWatcherManager.active().print();
 };
 
 // Private: Access the active {NativeWatcherRegistry}.
-watchPath.getRegistry = function() {
+watchPath.getRegistry = function () {
   return PathWatcherManager.active().getRegistry();
 };
 
 // Private: Sample usage statistics for the active watcher.
-watchPath.status = function() {
+watchPath.status = function () {
   return PathWatcherManager.active().status();
 };
 
 // Private: Configure @atom/watcher ("experimental") directly.
-watchPath.configure = function(...args) {
+watchPath.configure = function (...args) {
   return watcher.configure(...args);
 };
 

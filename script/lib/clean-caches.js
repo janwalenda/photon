@@ -6,7 +6,7 @@ const path = require('path');
 
 const CONFIG = require('../config');
 
-module.exports = function() {
+module.exports = function () {
   const cachePaths = [
     path.join(CONFIG.repositoryRootPath, 'electron'),
     path.join(CONFIG.atomHomeDirPath, '.node-gyp'),
@@ -21,7 +21,7 @@ module.exports = function() {
     path.join(os.tmpdir(), 'atom-cached-atom-shells')
   ];
 
-  for (let path of cachePaths) {
+  for (const path of cachePaths) {
     console.log(`Cleaning ${path}`);
     fs.removeSync(path);
   }

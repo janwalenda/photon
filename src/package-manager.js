@@ -757,7 +757,7 @@ module.exports = class PackageManager {
   // Activate all the packages that should be activated.
   activate() {
     let promises = [];
-    for (let [activator, types] of this.packageActivators) {
+    for (const [activator, types] of this.packageActivators) {
       const packages = this.getLoadedPackagesForTypes(types);
       promises = promises.concat(activator.activatePackages(packages));
     }
@@ -930,7 +930,7 @@ module.exports = class PackageManager {
     return Promise.all([symlinkPromise, dirPromise]).then(values => {
       const [isSymLink, isDir] = values;
       if (!isSymLink && isDir) {
-        return fs.remove(directory, function() {});
+        return fs.remove(directory, function () {});
       }
     });
   }

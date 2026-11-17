@@ -1,10 +1,10 @@
 const DecorationManager = require('../src/decoration-manager');
 const TextEditor = require('../src/text-editor');
 
-describe('DecorationManager', function() {
+describe('DecorationManager', function () {
   let [decorationManager, buffer, editor, markerLayer1, markerLayer2] = [];
 
-  beforeEach(function() {
+  beforeEach(function () {
     buffer = atom.project.bufferForPathSync('sample.js');
     editor = new TextEditor({ buffer });
     markerLayer1 = editor.addMarkerLayer();
@@ -16,7 +16,7 @@ describe('DecorationManager', function() {
 
   afterEach(() => buffer.destroy());
 
-  describe('decorations', function() {
+  describe('decorations', function () {
     let [
       layer1Marker,
       layer2Marker,
@@ -24,21 +24,27 @@ describe('DecorationManager', function() {
       layer2MarkerDecoration,
       decorationProperties
     ] = [];
-    beforeEach(function() {
-      layer1Marker = markerLayer1.markBufferRange([[2, 13], [3, 15]]);
+    beforeEach(function () {
+      layer1Marker = markerLayer1.markBufferRange([
+        [2, 13],
+        [3, 15]
+      ]);
       decorationProperties = { type: 'line-number', class: 'one' };
       layer1MarkerDecoration = decorationManager.decorateMarker(
         layer1Marker,
         decorationProperties
       );
-      layer2Marker = markerLayer2.markBufferRange([[2, 13], [3, 15]]);
+      layer2Marker = markerLayer2.markBufferRange([
+        [2, 13],
+        [3, 15]
+      ]);
       layer2MarkerDecoration = decorationManager.decorateMarker(
         layer2Marker,
         decorationProperties
       );
     });
 
-    it('can add decorations associated with markers and remove them', function() {
+    it('can add decorations associated with markers and remove them', function () {
       expect(layer1MarkerDecoration).toBeDefined();
       expect(layer1MarkerDecoration.getProperties()).toBe(decorationProperties);
       expect(decorationManager.decorationsForScreenRowRange(2, 3)).toEqual({
@@ -56,12 +62,12 @@ describe('DecorationManager', function() {
       ).not.toBeDefined();
     });
 
-    it('will not fail if the decoration is removed twice', function() {
+    it('will not fail if the decoration is removed twice', function () {
       layer1MarkerDecoration.destroy();
       layer1MarkerDecoration.destroy();
     });
 
-    it('does not allow destroyed markers to be decorated', function() {
+    it('does not allow destroyed markers to be decorated', function () {
       layer1Marker.destroy();
       expect(() =>
         decorationManager.decorateMarker(layer1Marker, {
@@ -72,7 +78,7 @@ describe('DecorationManager', function() {
       expect(decorationManager.getOverlayDecorations()).toEqual([]);
     });
 
-    it('does not allow destroyed marker layers to be decorated', function() {
+    it('does not allow destroyed marker layers to be decorated', function () {
       const layer = editor.addMarkerLayer();
       layer.destroy();
       expect(() =>
@@ -81,7 +87,7 @@ describe('DecorationManager', function() {
     });
 
     describe('when a decoration is updated via Decoration::update()', () =>
-      it("emits an 'updated' event containing the new and old params", function() {
+      it("emits an 'updated' event containing the new and old params", function () {
         let updatedSpy;
         layer1MarkerDecoration.onDidChangeProperties(
           (updatedSpy = jasmine.createSpy())
@@ -91,10 +97,8 @@ describe('DecorationManager', function() {
           class: 'two'
         });
 
-        const {
-          oldProperties,
-          newProperties
-        } = updatedSpy.mostRecentCall.args[0];
+        const { oldProperties, newProperties } =
+          updatedSpy.mostRecentCall.args[0];
         expect(oldProperties).toEqual(decorationProperties);
         expect(newProperties.type).toBe('line-number');
         expect(newProperties.gutterName).toBe('line-number');
@@ -102,7 +106,7 @@ describe('DecorationManager', function() {
       }));
 
     describe('::getDecorations(properties)', () =>
-      it('returns decorations matching the given optional properties', function() {
+      it('returns decorations matching the given optional properties', function () {
         expect(decorationManager.getDecorations()).toEqual([
           layer1MarkerDecoration,
           layer2MarkerDecoration
@@ -117,14 +121,18 @@ describe('DecorationManager', function() {
   });
 
   describe('::decorateMarker', () =>
-    describe('when decorating gutters', function() {
+    describe('when decorating gutters', function () {
       let [layer1Marker] = [];
 
       beforeEach(
-        () => (layer1Marker = markerLayer1.markBufferRange([[1, 0], [1, 0]]))
+        () =>
+          (layer1Marker = markerLayer1.markBufferRange([
+            [1, 0],
+            [1, 0]
+          ]))
       );
 
-      it("creates a decoration that is both of 'line-number' and 'gutter' type when called with the 'line-number' type", function() {
+      it("creates a decoration that is both of 'line-number' and 'gutter' type when called with the 'line-number' type", function () {
         const decorationProperties = { type: 'line-number', class: 'one' };
         const layer1MarkerDecoration = decorationManager.decorateMarker(
           layer1Marker,
@@ -138,7 +146,7 @@ describe('DecorationManager', function() {
         expect(layer1MarkerDecoration.getProperties().class).toBe('one');
       });
 
-      it("creates a decoration that is only of 'gutter' type if called with the 'gutter' type and a 'gutterName'", function() {
+      it("creates a decoration that is only of 'gutter' type if called with the 'gutter' type and a 'gutterName'", function () {
         const decorationProperties = {
           type: 'gutter',
           gutterName: 'test-gutter',

@@ -11,11 +11,10 @@ module.exports = {
 
     const duplicatePackages = [];
     const names = atom.packages.getAvailablePackageNames();
-    for (let name of names) {
+    for (const name of names) {
       if (atom.packages.isBundledPackage(name)) {
-        const isDuplicatedPackage = await this.isInstalledAsCommunityPackage(
-          name
-        );
+        const isDuplicatedPackage =
+          await this.isInstalledAsCommunityPackage(name);
         if (isDuplicatedPackage) {
           duplicatePackages.push(name);
         }
@@ -28,7 +27,7 @@ module.exports = {
   async isInstalledAsCommunityPackage(name) {
     const availablePackagePaths = atom.packages.getPackageDirPaths();
 
-    for (let packagePath of availablePackagePaths) {
+    for (const packagePath of availablePackagePaths) {
       const candidate = path.join(packagePath, name);
 
       if (fs.existsSync(candidate)) {
@@ -44,7 +43,7 @@ module.exports = {
 
   realpath(path) {
     return new Promise((resolve, reject) => {
-      fs.realpath(path, function(error, realpath) {
+      fs.realpath(path, function (error, realpath) {
         if (error) {
           reject(error);
         } else {

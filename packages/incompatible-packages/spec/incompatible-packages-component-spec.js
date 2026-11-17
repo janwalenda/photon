@@ -15,7 +15,7 @@ describe('IncompatiblePackagesComponent', () => {
         isCompatible() {
           return false;
         },
-        rebuild: function() {
+        rebuild: function () {
           return new Promise(resolve => (this.resolveRebuild = resolve));
         },
         getBuildFailureOutput() {
@@ -75,11 +75,11 @@ describe('IncompatiblePackagesComponent', () => {
   describe('when packages have not finished loading', () => {
     it('delays rendering incompatible packages until the end of the tick', () => {
       waitsForPromise(async () => {
-        let component = new IncompatiblePackagesComponent({
+        const component = new IncompatiblePackagesComponent({
           getActivePackages: () => [],
           getLoadedPackages: () => packages
         });
-        let { element } = component;
+        const { element } = component;
 
         expect(
           element.querySelectorAll('.incompatible-package').length
@@ -98,13 +98,13 @@ describe('IncompatiblePackagesComponent', () => {
     it('does not render incompatible packages or the rebuild button', () => {
       waitsForPromise(async () => {
         expect(packages[2].isCompatible()).toBe(true);
-        let compatiblePackages = [packages[2]];
+        const compatiblePackages = [packages[2]];
 
-        let component = new IncompatiblePackagesComponent({
+        const component = new IncompatiblePackagesComponent({
           getActivePackages: () => compatiblePackages,
           getLoadedPackages: () => compatiblePackages
         });
-        let { element } = component;
+        const { element } = component;
 
         await etchScheduler.getNextUpdatePromise();
 
@@ -119,18 +119,18 @@ describe('IncompatiblePackagesComponent', () => {
   describe('when some packages previously failed to rebuild', () => {
     it('renders them with failed build status and error output', () => {
       waitsForPromise(async () => {
-        packages[1].getBuildFailureOutput = function() {
+        packages[1].getBuildFailureOutput = function () {
           return 'The build failed';
         };
 
-        let component = new IncompatiblePackagesComponent({
+        const component = new IncompatiblePackagesComponent({
           getActivePackages: () => packages,
           getLoadedPackages: () => packages
         });
-        let { element } = component;
+        const { element } = component;
 
         await etchScheduler.getNextUpdatePromise();
-        let packageElement = element.querySelector(
+        const packageElement = element.querySelector(
           '.incompatible-package:nth-child(2)'
         );
 
@@ -147,11 +147,11 @@ describe('IncompatiblePackagesComponent', () => {
   describe('when there are incompatible packages', () => {
     it('renders incompatible packages and the rebuild button', () => {
       waitsForPromise(async () => {
-        let component = new IncompatiblePackagesComponent({
+        const component = new IncompatiblePackagesComponent({
           getActivePackages: () => packages,
           getLoadedPackages: () => packages
         });
-        let { element } = component;
+        const { element } = component;
 
         await etchScheduler.getNextUpdatePromise();
 
@@ -165,11 +165,11 @@ describe('IncompatiblePackagesComponent', () => {
     describe('when the "Rebuild All" button is clicked', () => {
       it("rebuilds every incompatible package, updating each package's view with status", () => {
         waitsForPromise(async () => {
-          let component = new IncompatiblePackagesComponent({
+          const component = new IncompatiblePackagesComponent({
             getActivePackages: () => packages,
             getLoadedPackages: () => packages
           });
-          let { element } = component;
+          const { element } = component;
           jasmine.attachToDOM(element);
 
           await etchScheduler.getNextUpdatePromise();
@@ -228,11 +228,11 @@ describe('IncompatiblePackagesComponent', () => {
 
       it('displays a prompt to reload Atom when the packages finish rebuilding', () => {
         waitsForPromise(async () => {
-          let component = new IncompatiblePackagesComponent({
+          const component = new IncompatiblePackagesComponent({
             getActivePackages: () => packages,
             getLoadedPackages: () => packages
           });
-          let { element } = component;
+          const { element } = component;
           jasmine.attachToDOM(element);
           await etchScheduler.getNextUpdatePromise(); // view update
 
@@ -260,11 +260,11 @@ describe('IncompatiblePackagesComponent', () => {
     describe('when the "Package Settings" button is clicked', () => {
       it('opens the settings panel for the package', () => {
         waitsForPromise(async () => {
-          let component = new IncompatiblePackagesComponent({
+          const component = new IncompatiblePackagesComponent({
             getActivePackages: () => packages,
             getLoadedPackages: () => packages
           });
-          let { element } = component;
+          const { element } = component;
           jasmine.attachToDOM(element);
 
           await etchScheduler.getNextUpdatePromise();

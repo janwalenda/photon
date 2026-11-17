@@ -2,8 +2,8 @@
 const path = require('path');
 const BufferedNodeProcess = require('../src/buffered-node-process');
 
-describe('BufferedNodeProcess', function() {
-  it('executes the script in a new process', function() {
+describe('BufferedNodeProcess', function () {
+  it('executes the script in a new process', function () {
     const exit = jasmine.createSpy('exitCallback');
     let output = '';
     const stdout = lines => (output += lines);
@@ -16,14 +16,14 @@ describe('BufferedNodeProcess', function() {
 
     waitsFor(() => exit.callCount === 1);
 
-    runs(function() {
+    runs(function () {
       expect(output).toBe('hi');
       expect(error).toBe('');
       expect(args).toEqual(['hi']);
     });
   });
 
-  it('suppresses deprecations in the new process', function() {
+  it('suppresses deprecations in the new process', function () {
     const exit = jasmine.createSpy('exitCallback');
     let output = '';
     const stdout = lines => (output += lines);
@@ -39,7 +39,7 @@ describe('BufferedNodeProcess', function() {
 
     waitsFor(() => exit.callCount === 1);
 
-    runs(function() {
+    runs(function () {
       expect(output).toBe('hi');
       expect(error).toBe('');
     });

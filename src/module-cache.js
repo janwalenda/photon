@@ -56,14 +56,12 @@ const isCorePath = pathToCheck =>
 function loadDependencies(modulePath, rootPath, rootMetadata, moduleCache) {
   const fs = require('fs-plus');
 
-  for (let childPath of fs.listSync(path.join(modulePath, 'node_modules'))) {
+  for (const childPath of fs.listSync(path.join(modulePath, 'node_modules'))) {
     if (path.basename(childPath) === '.bin') continue;
     if (
       rootPath === modulePath &&
-      (rootMetadata.packageDependencies &&
-        rootMetadata.packageDependencies.hasOwnProperty(
-          path.basename(childPath)
-        ))
+      rootMetadata.packageDependencies &&
+      rootMetadata.packageDependencies.hasOwnProperty(path.basename(childPath))
     ) {
       continue;
     }
@@ -107,7 +105,7 @@ function loadFolderCompatibility(
   const metadata = JSON.parse(fs.readFileSync(metadataPath));
   const dependencies = metadata.dependencies || {};
 
-  for (let name in dependencies) {
+  for (const name in dependencies) {
     if (!semver.validRange(dependencies[name])) {
       delete dependencies[name];
     }
@@ -131,14 +129,12 @@ function loadFolderCompatibility(
     moduleCache.folders.push({ paths, dependencies });
   }
 
-  for (let childPath of fs.listSync(path.join(modulePath, 'node_modules'))) {
+  for (const childPath of fs.listSync(path.join(modulePath, 'node_modules'))) {
     if (path.basename(childPath) === '.bin') continue;
     if (
       rootPath === modulePath &&
-      (rootMetadata.packageDependencies &&
-        rootMetadata.packageDependencies.hasOwnProperty(
-          path.basename(childPath)
-        ))
+      rootMetadata.packageDependencies &&
+      rootMetadata.packageDependencies.hasOwnProperty(path.basename(childPath))
     ) {
       continue;
     }
@@ -259,7 +255,7 @@ function resolveModulePath(relativePath, parentModule) {
   const candidates = cache.dependencies[relativePath];
   if (candidates == null) return;
 
-  for (let version in candidates) {
+  for (const version in candidates) {
     const resolvedPath = candidates[version];
     if (Module._cache[resolvedPath] || isCorePath(resolvedPath)) {
       if (satisfies(version, range)) return resolvedPath;
@@ -283,7 +279,7 @@ function registerBuiltins(devMode) {
   }
 }
 
-exports.create = function(modulePath) {
+exports.create = function (modulePath) {
   const fs = require('fs-plus');
 
   modulePath = fs.realpathSync(modulePath);
@@ -305,11 +301,11 @@ exports.create = function(modulePath) {
   fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
 };
 
-exports.register = function({ resourcePath, devMode } = {}) {
+exports.register = function ({ resourcePath, devMode } = {}) {
   if (cache.registered) return;
 
   const originalResolveFilename = Module._resolveFilename;
-  Module._resolveFilename = function(relativePath, parentModule) {
+  Module._resolveFilename = function (relativePath, parentModule) {
     let resolvedPath = resolveModulePath(relativePath, parentModule);
     if (!resolvedPath) {
       resolvedPath = resolveFilePath(relativePath, parentModule);
@@ -323,7 +319,7 @@ exports.register = function({ resourcePath, devMode } = {}) {
   registerBuiltins(devMode);
 };
 
-exports.add = function(directoryPath, metadata) {
+exports.add = function (directoryPath, metadata) {
   // path.join isn't used in this function for speed since path.join calls
   // path.normalize and all the paths are already normalized here.
 
@@ -343,9 +339,8 @@ exports.add = function(directoryPath, metadata) {
       cache.dependencies[dependency.name] = {};
     }
     if (!cache.dependencies[dependency.name][dependency.version]) {
-      cache.dependencies[dependency.name][
-        dependency.version
-      ] = `${directoryPath}${path.sep}${dependency.path}`;
+      cache.dependencies[dependency.name][dependency.version] =
+        `${directoryPath}${path.sep}${dependency.path}`;
     }
   }
 
@@ -365,7 +360,7 @@ exports.add = function(directoryPath, metadata) {
     if (!cache.extensions[extension]) {
       cache.extensions[extension] = new Set();
     }
-    for (let filePath of paths) {
+    for (const filePath of paths) {
       cache.extensions[extension].add(`${directoryPath}${path.sep}${filePath}`);
     }
   }

@@ -5,7 +5,7 @@ import GitDiffView from './git-diff-view';
 import DiffListView from './diff-list-view';
 
 let diffListView = null;
-let diffViews = new Set();
+const diffViews = new Set();
 let subscriptions = null;
 
 export default {

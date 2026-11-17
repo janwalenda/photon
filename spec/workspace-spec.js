@@ -116,13 +116,8 @@ describe('Workspace', () => {
 
         runs(() => {
           expect(atom.workspace.getTextEditors().length).toBe(5);
-          const [
-            editor1,
-            editor2,
-            untitledEditor,
-            editor3,
-            editor4
-          ] = atom.workspace.getTextEditors();
+          const [editor1, editor2, untitledEditor, editor3, editor4] =
+            atom.workspace.getTextEditors();
           const firstDirectory = atom.project.getDirectories()[0];
           expect(firstDirectory).toBeDefined();
           expect(editor1.getPath()).toBe(firstDirectory.resolve('b'));
@@ -530,10 +525,7 @@ describe('Workspace', () => {
       it('opens the editor in the workspace center', async () => {
         await atom.workspace.open('sample.txt', { location: 'right' });
         expect(
-          atom.workspace
-            .getCenter()
-            .getActivePaneItem()
-            .getFileName()
+          atom.workspace.getCenter().getActivePaneItem().getFileName()
         ).toEqual('sample.txt');
       });
     });
@@ -1266,10 +1258,7 @@ describe('Workspace', () => {
       );
 
       atom.workspace.getActivePane().destroyActiveItem();
-      atom.workspace
-        .getLeftDock()
-        .getActivePane()
-        .activateItem(item);
+      atom.workspace.getLeftDock().getActivePane().activateItem(item);
       expect(atom.workspace.paneForItem(item)).toBe(
         atom.workspace.getLeftDock().getActivePane()
       );
@@ -2244,11 +2233,11 @@ describe('Workspace', () => {
     Ctor.prototype = HTMLElement.prototype;
     TestItemElement.prototype = new Ctor();
     TestItemElement.__super__ = HTMLElement.prototype;
-    TestItemElement.prototype.initialize = function(model) {
+    TestItemElement.prototype.initialize = function (model) {
       this.model = model;
       return this;
     };
-    TestItemElement.prototype.getModel = function() {
+    TestItemElement.prototype.getModel = function () {
       return this.model;
     };
 
@@ -2451,7 +2440,10 @@ describe('Workspace', () => {
             matchText: 'aaa',
             lineText: 'aaa bbb',
             lineTextOffset: 0,
-            range: [[0, 0], [0, 3]],
+            range: [
+              [0, 0],
+              [0, 3]
+            ],
             leadingContextLines: [],
             trailingContextLines: ['cc aa cc']
           });
@@ -2473,7 +2465,10 @@ describe('Workspace', () => {
             matchText: '$bill',
             lineText: 'dollar$bill',
             lineTextOffset: 0,
-            range: [[2, 6], [2, 11]],
+            range: [
+              [2, 6],
+              [2, 11]
+            ],
             leadingContextLines: ['cc aa cc'],
             trailingContextLines: []
           });
@@ -2543,7 +2538,10 @@ describe('Workspace', () => {
               matchText: '',
               lineText: 'bbb aaaa',
               lineTextOffset: 0,
-              range: [[0, 0], [0, 0]],
+              range: [
+                [0, 0],
+                [0, 0]
+              ],
               leadingContextLines: [],
               trailingContextLines: []
             });
@@ -2567,7 +2565,10 @@ describe('Workspace', () => {
                 matchText: 'first\nsecond',
                 lineText: 'first\nsecond\\nthird',
                 lineTextOffset: 0,
-                range: [[3, 0], [4, 6]],
+                range: [
+                  [3, 0],
+                  [4, 6]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2597,7 +2598,10 @@ describe('Workspace', () => {
                 matchText: 'first\nsecond',
                 lineText: 'first\nsecond\\nthird',
                 lineTextOffset: 0,
-                range: [[3, 0], [4, 6]],
+                range: [
+                  [3, 0],
+                  [4, 6]
+                ],
                 leadingContextLines: ['newline2', 'newline3'],
                 trailingContextLines: ['newline4', 'newline5']
               });
@@ -2623,7 +2627,10 @@ describe('Workspace', () => {
                 matchText: 'line1\nne',
                 lineText: 'newline1\nnewline2',
                 lineTextOffset: 0,
-                range: [[0, 3], [1, 2]],
+                range: [
+                  [0, 3],
+                  [1, 2]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2631,7 +2638,10 @@ describe('Workspace', () => {
                 matchText: 'line2\nne',
                 lineText: 'newline2\nnewline3',
                 lineTextOffset: 0,
-                range: [[1, 3], [2, 2]],
+                range: [
+                  [1, 3],
+                  [2, 2]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2639,7 +2649,10 @@ describe('Workspace', () => {
                 matchText: 'line4\nne',
                 lineText: 'newline4\nnewline5',
                 lineTextOffset: 0,
-                range: [[5, 3], [6, 2]],
+                range: [
+                  [5, 3],
+                  [6, 2]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2661,7 +2674,10 @@ describe('Workspace', () => {
                 matchText: 'second\\nthird',
                 lineText: 'second\\nthird',
                 lineTextOffset: 0,
-                range: [[4, 0], [4, 13]],
+                range: [
+                  [4, 0],
+                  [4, 13]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2683,7 +2699,10 @@ describe('Workspace', () => {
                 matchText: 'newline3\n',
                 lineText: 'newline3',
                 lineTextOffset: 0,
-                range: [[2, 0], [3, 0]],
+                range: [
+                  [2, 0],
+                  [3, 0]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2707,7 +2726,10 @@ describe('Workspace', () => {
                 matchText: 'aa',
                 lineText: 'cc aa cc',
                 lineTextOffset: 0,
-                range: [[1, 3], [1, 5]],
+                range: [
+                  [1, 3],
+                  [1, 5]
+                ],
                 leadingContextLines: [],
                 trailingContextLines: []
               });
@@ -2729,7 +2751,10 @@ describe('Workspace', () => {
             matchText: 'line with unico',
             lineText: 'ДДДДДДДДДДДДДДДДДД line with unicode',
             lineTextOffset: 0,
-            range: [[0, 19], [0, 34]],
+            range: [
+              [0, 19],
+              [0, 34]
+            ],
             leadingContextLines: [],
             trailingContextLines: []
           });
@@ -2755,7 +2780,10 @@ describe('Workspace', () => {
             matchText: 'asciiProperty=Foo',
             lineText: 'asciiProperty=Foo',
             lineTextOffset: 0,
-            range: [[0, 0], [0, 17]],
+            range: [
+              [0, 0],
+              [0, 17]
+            ],
             leadingContextLines: [],
             trailingContextLines: ['utf8Property=Fòò', 'latin1Property=F��']
           });
@@ -3154,7 +3182,10 @@ describe('Workspace', () => {
                     lineText: 'Hello world',
                     lineTextOffset: 0,
                     matchText: 'Hello',
-                    range: [[0, 0], [0, 5]]
+                    range: [
+                      [0, 0],
+                      [0, 5]
+                    ]
                   }
                 ]
               };
@@ -3496,7 +3527,13 @@ describe('Workspace', () => {
         );
 
         runs(() => {
-          editor.buffer.setTextInRange([[0, 0], [0, 0]], 'omg');
+          editor.buffer.setTextInRange(
+            [
+              [0, 0],
+              [0, 0]
+            ],
+            'omg'
+          );
           expect(editor.isModified()).toBeTruthy();
         });
 

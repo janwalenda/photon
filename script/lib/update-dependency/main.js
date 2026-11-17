@@ -24,7 +24,7 @@ const {
 const { updatePackageJson, sleep } = require('./util')(repositoryRootPath);
 const fetchOutdatedDependencies = require('./fetch-outdated-dependencies');
 
-module.exports = async function() {
+module.exports = async function () {
   try {
     // ensure we are on master
     await switchToCleanBranch();

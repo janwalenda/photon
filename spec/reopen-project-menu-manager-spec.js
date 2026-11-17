@@ -7,7 +7,7 @@ const ReopenProjectMenuManager = require('../src/reopen-project-menu-manager');
 function numberRange(low, high) {
   const size = high - low;
   const result = new Array(size);
-  for (var i = 0; i < size; i++) result[i] = low + i;
+  for (let i = 0; i < size; i++) result[i] = low + i;
   return result;
 }
 

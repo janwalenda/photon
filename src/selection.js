@@ -827,7 +827,10 @@ module.exports = class Selection {
     for (let row = start; row <= end; row++) {
       const match = buffer.lineForRow(row).match(leadingTabRegex);
       if (match && match[0].length > 0) {
-        buffer.delete([[row, 0], [row, match[0].length]]);
+        buffer.delete([
+          [row, 0],
+          [row, match[0].length]
+        ]);
       }
     }
   }
@@ -852,7 +855,7 @@ module.exports = class Selection {
   //   * `bypassReadOnly` (optional) {Boolean} Must be `true` to modify text within a read-only editor. (default: false)
   toggleLineComments(options = {}) {
     if (!this.ensureWritable('toggleLineComments', options)) return;
-    let bufferRowRange = this.getBufferRowRange() || [null, null];
+    const bufferRowRange = this.getBufferRowRange() || [null, null];
     this.editor.toggleLineCommentsForBufferRows(...bufferRowRange, {
       correctSelection: true,
       selection: this
@@ -909,10 +912,8 @@ module.exports = class Selection {
     const startLevel = this.editor.indentLevelForLine(precedingText);
 
     if (maintainClipboard) {
-      let {
-        text: clipboardText,
-        metadata
-      } = this.editor.constructor.clipboard.readWithMetadata();
+      let { text: clipboardText, metadata } =
+        this.editor.constructor.clipboard.readWithMetadata();
       if (!metadata) metadata = {};
       if (!metadata.selections) {
         metadata.selections = [
@@ -1044,9 +1045,10 @@ module.exports = class Selection {
         if (clippedRange.isEmpty()) continue;
       }
 
-      const containingSelections = this.editor.selectionsMarkerLayer.findMarkers(
-        { containsScreenRange: clippedRange }
-      );
+      const containingSelections =
+        this.editor.selectionsMarkerLayer.findMarkers({
+          containsScreenRange: clippedRange
+        });
       if (containingSelections.length === 0) {
         const selection = this.editor.addSelectionForScreenRange(clippedRange);
         selection.setGoalScreenRange(range);
@@ -1074,9 +1076,10 @@ module.exports = class Selection {
         if (clippedRange.isEmpty()) continue;
       }
 
-      const containingSelections = this.editor.selectionsMarkerLayer.findMarkers(
-        { containsScreenRange: clippedRange }
-      );
+      const containingSelections =
+        this.editor.selectionsMarkerLayer.findMarkers({
+          containsScreenRange: clippedRange
+        });
       if (containingSelections.length === 0) {
         const selection = this.editor.addSelectionForScreenRange(clippedRange);
         selection.setGoalScreenRange(range);

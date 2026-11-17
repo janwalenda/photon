@@ -72,9 +72,7 @@ describe('GrammarRegistry', () => {
   describe('.assignGrammar(buffer, grammar)', () => {
     it('allows a TextMate grammar to be assigned directly, even when Tree-sitter is permitted', () => {
       grammarRegistry.loadGrammarSync(
-        require.resolve(
-          'language-javascript/grammars/tree-sitter-javascript.cson'
-        )
+        require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
       );
       const tmGrammar = grammarRegistry.loadGrammarSync(
         require.resolve('language-javascript/grammars/javascript.cson')
@@ -96,9 +94,7 @@ describe('GrammarRegistry', () => {
         require.resolve('language-javascript/grammars/javascript.cson')
       );
       grammarRegistry.loadGrammarSync(
-        require.resolve(
-          'language-javascript/grammars/tree-sitter-javascript.cson'
-        )
+        require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
       );
 
       const grammar = grammarRegistry.grammarForId('source.js');
@@ -116,9 +112,7 @@ describe('GrammarRegistry', () => {
         require.resolve('language-javascript/grammars/javascript.cson')
       );
       grammarRegistry.loadGrammarSync(
-        require.resolve(
-          'language-javascript/grammars/tree-sitter-javascript.cson'
-        )
+        require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
       );
 
       const grammar = grammarRegistry.grammarForId('source.js');
@@ -187,9 +181,7 @@ describe('GrammarRegistry', () => {
       expect(buffer.getLanguageMode().grammar).toBe(textMateGrammar);
 
       grammarRegistry.loadGrammarSync(
-        require.resolve(
-          'language-javascript/grammars/tree-sitter-javascript.cson'
-        )
+        require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
       );
       expect(buffer.getLanguageMode().grammar).toBe(textMateGrammar);
     });
@@ -204,9 +196,7 @@ describe('GrammarRegistry', () => {
       grammarRegistry.maintainLanguageMode(buffer);
 
       const treeSitterGrammar = grammarRegistry.loadGrammarSync(
-        require.resolve(
-          'language-javascript/grammars/tree-sitter-javascript.cson'
-        )
+        require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
       );
       expect(buffer.getLanguageMode().grammar).toBe(treeSitterGrammar);
 
@@ -553,9 +543,7 @@ describe('GrammarRegistry', () => {
           require.resolve('language-javascript/grammars/javascript.cson')
         );
         grammarRegistry.loadGrammarSync(
-          require.resolve(
-            'language-javascript/grammars/tree-sitter-javascript.cson'
-          )
+          require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
         );
 
         const grammar = grammarRegistry.selectGrammar('test.js');
@@ -570,9 +558,7 @@ describe('GrammarRegistry', () => {
           require.resolve('language-javascript/grammars/javascript.cson')
         );
         grammarRegistry.loadGrammarSync(
-          require.resolve(
-            'language-javascript/grammars/tree-sitter-javascript.cson'
-          )
+          require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
         );
 
         const grammar = grammarRegistry.selectGrammar('test.js');
@@ -582,9 +568,7 @@ describe('GrammarRegistry', () => {
       it('only favors a tree-sitter grammar if it actually matches in some way (regression)', () => {
         atom.config.set('core.useTreeSitterParsers', true);
         grammarRegistry.loadGrammarSync(
-          require.resolve(
-            'language-javascript/grammars/tree-sitter-javascript.cson'
-          )
+          require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
         );
 
         const grammar = grammarRegistry.selectGrammar('test', '');
@@ -654,7 +638,7 @@ describe('GrammarRegistry', () => {
           require.resolve('language-c/grammars/tree-sitter-cpp.cson')
         );
 
-        let grammar = grammarRegistry.selectGrammar(
+        const grammar = grammarRegistry.selectGrammar(
           'test.cc',
           dedent`
           int a();
@@ -669,7 +653,7 @@ describe('GrammarRegistry', () => {
           require.resolve('language-c/grammars/tree-sitter-cpp.cson')
         );
 
-        let grammar = grammarRegistry.selectGrammar(
+        const grammar = grammarRegistry.selectGrammar(
           '',
           dedent`
           class Foo
@@ -728,9 +712,7 @@ describe('GrammarRegistry', () => {
       it('recognizes JavaScript files that use Flow', () => {
         atom.config.set('core.useTreeSitterParsers', true);
         grammarRegistry.loadGrammarSync(
-          require.resolve(
-            'language-javascript/grammars/tree-sitter-javascript.cson'
-          )
+          require.resolve('language-javascript/grammars/tree-sitter-javascript.cson')
         );
         grammarRegistry.loadGrammarSync(
           require.resolve('language-typescript/grammars/tree-sitter-flow.cson')

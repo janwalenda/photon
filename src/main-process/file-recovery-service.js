@@ -91,7 +91,7 @@ module.exports = class FileRecoveryService {
             });
           })
           .then(() => {
-            for (let window of this.windowsByRecoveryFile.get(recoveryFile)) {
+            for (const window of this.windowsByRecoveryFile.get(recoveryFile)) {
               this.recoveryFilesByWindow.get(window).delete(recoveryFile);
             }
             this.windowsByRecoveryFile.delete(recoveryFile);
@@ -106,7 +106,7 @@ module.exports = class FileRecoveryService {
   didCloseWindow(window) {
     if (!this.recoveryFilesByWindow.has(window)) return;
 
-    for (let recoveryFile of this.recoveryFilesByWindow.get(window)) {
+    for (const recoveryFile of this.recoveryFilesByWindow.get(window)) {
       this.windowsByRecoveryFile.get(recoveryFile).delete(window);
     }
     this.recoveryFilesByWindow.delete(window);

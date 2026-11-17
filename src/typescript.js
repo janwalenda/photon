@@ -13,11 +13,11 @@ const defaultOptions = {
 let TypeScriptSimple = null;
 let typescriptVersionDir = null;
 
-exports.shouldCompile = function() {
+exports.shouldCompile = function () {
   return true;
 };
 
-exports.getCachePath = function(sourceCode) {
+exports.getCachePath = function (sourceCode) {
   if (typescriptVersionDir == null) {
     const version = require('typescript-simple/package.json').version;
     typescriptVersionDir = path.join(
@@ -28,14 +28,11 @@ exports.getCachePath = function(sourceCode) {
 
   return path.join(
     typescriptVersionDir,
-    crypto
-      .createHash('sha1')
-      .update(sourceCode, 'utf8')
-      .digest('hex') + '.js'
+    crypto.createHash('sha1').update(sourceCode, 'utf8').digest('hex') + '.js'
   );
 };
 
-exports.compile = function(sourceCode, filePath) {
+exports.compile = function (sourceCode, filePath) {
   if (!TypeScriptSimple) {
     TypeScriptSimple = require('typescript-simple').TypeScriptSimple;
   }

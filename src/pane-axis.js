@@ -23,7 +23,7 @@ class PaneAxis extends Model {
     this.flexScale = flexScale != null ? flexScale : 1;
     this.children = [];
     if (children) {
-      for (let child of children) {
+      for (const child of children) {
         this.addChild(child);
       }
     }

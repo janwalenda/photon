@@ -7,7 +7,7 @@ const legalEagle = require('legal-eagle');
 const licenseOverrides = require('../license-overrides');
 const CONFIG = require('../config');
 
-module.exports = function() {
+module.exports = function () {
   return new Promise((resolve, reject) => {
     legalEagle(
       { path: CONFIG.repositoryRootPath, overrides: licenseOverrides },
@@ -24,7 +24,7 @@ module.exports = function() {
             '\n\n' +
             'This application bundles the following third-party packages in accordance\n' +
             'with the following licenses:\n\n';
-          for (let packageName of Object.keys(packagesLicenses).sort()) {
+          for (const packageName of Object.keys(packagesLicenses).sort()) {
             const packageLicense = packagesLicenses[packageName];
             text +=
               '-------------------------------------------------------------------------\n\n';

@@ -9,10 +9,10 @@ import {
 import mockSpawn from 'mock-spawn';
 const temp = require('temp').track();
 
-describe('updateProcessEnv(launchEnv)', function() {
+describe('updateProcessEnv(launchEnv)', function () {
   let originalProcessEnv, originalProcessPlatform, originalSpawn, spawn;
 
-  beforeEach(function() {
+  beforeEach(function () {
     originalSpawn = childProcess.spawn;
     spawn = mockSpawn();
     childProcess.spawn = spawn;
@@ -21,7 +21,7 @@ describe('updateProcessEnv(launchEnv)', function() {
     process.env = {};
   });
 
-  afterEach(function() {
+  afterEach(function () {
     if (originalSpawn) {
       childProcess.spawn = originalSpawn;
     }
@@ -34,8 +34,8 @@ describe('updateProcessEnv(launchEnv)', function() {
     }
   });
 
-  describe('when the launch environment appears to come from a shell', function() {
-    it('updates process.env to match the launch environment because PWD is set', async function() {
+  describe('when the launch environment appears to come from a shell', function () {
+    it('updates process.env to match the launch environment because PWD is set', async function () {
       process.env = {
         WILL_BE_DELETED: 'hi',
         NODE_ENV: 'the-node-env',
@@ -69,7 +69,7 @@ describe('updateProcessEnv(launchEnv)', function() {
       expect(process.env).toBe(initialProcessEnv);
     });
 
-    it('updates process.env to match the launch environment because PROMPT is set', async function() {
+    it('updates process.env to match the launch environment because PROMPT is set', async function () {
       process.env = {
         WILL_BE_DELETED: 'hi',
         NODE_ENV: 'the-node-env',
@@ -101,7 +101,7 @@ describe('updateProcessEnv(launchEnv)', function() {
       expect(process.env).toBe(initialProcessEnv);
     });
 
-    it('updates process.env to match the launch environment because PSModulePath is set', async function() {
+    it('updates process.env to match the launch environment because PSModulePath is set', async function () {
       process.env = {
         WILL_BE_DELETED: 'hi',
         NODE_ENV: 'the-node-env',
@@ -135,8 +135,8 @@ describe('updateProcessEnv(launchEnv)', function() {
       expect(process.env).toBe(initialProcessEnv);
     });
 
-    it('allows ATOM_HOME to be overwritten only if the new value is a valid path', async function() {
-      let newAtomHomePath = temp.mkdirSync('atom-home');
+    it('allows ATOM_HOME to be overwritten only if the new value is a valid path', async function () {
+      const newAtomHomePath = temp.mkdirSync('atom-home');
 
       process.env = {
         WILL_BE_DELETED: 'hi',
@@ -184,7 +184,7 @@ describe('updateProcessEnv(launchEnv)', function() {
       });
     });
 
-    it('allows ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT to be preserved if set', async function() {
+    it('allows ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT to be preserved if set', async function () {
       process.env = {
         WILL_BE_DELETED: 'hi',
         NODE_ENV: 'the-node-env',
@@ -222,7 +222,7 @@ describe('updateProcessEnv(launchEnv)', function() {
       });
     });
 
-    it('allows an existing env variable to be updated', async function() {
+    it('allows an existing env variable to be updated', async function () {
       process.env = {
         WILL_BE_UPDATED: 'old-value',
         NODE_ENV: 'the-node-env',
@@ -233,7 +233,7 @@ describe('updateProcessEnv(launchEnv)', function() {
       await updateProcessEnv(process.env);
       expect(process.env).toEqual(process.env);
 
-      let updatedEnv = {
+      const updatedEnv = {
         ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT: 'true',
         WILL_BE_UPDATED: 'new-value',
         NODE_ENV: 'the-node-env',
@@ -247,9 +247,9 @@ describe('updateProcessEnv(launchEnv)', function() {
     });
   });
 
-  describe('when the launch environment does not come from a shell', function() {
-    describe('on macOS', function() {
-      it("updates process.env to match the environment in the user's login shell", async function() {
+  describe('when the launch environment does not come from a shell', function () {
+    describe('on macOS', function () {
+      it("updates process.env to match the environment in the user's login shell", async function () {
         if (process.platform === 'win32') return; // TestsThatFailOnWin32
 
         process.platform = 'darwin';
@@ -279,8 +279,8 @@ describe('updateProcessEnv(launchEnv)', function() {
       });
     });
 
-    describe('on linux', function() {
-      it("updates process.env to match the environment in the user's login shell", async function() {
+    describe('on linux', function () {
+      it("updates process.env to match the environment in the user's login shell", async function () {
         if (process.platform === 'win32') return; // TestsThatFailOnWin32
 
         process.platform = 'linux';
@@ -310,8 +310,8 @@ describe('updateProcessEnv(launchEnv)', function() {
       });
     });
 
-    describe('on windows', function() {
-      it('does not update process.env', async function() {
+    describe('on windows', function () {
+      it('does not update process.env', async function () {
         process.platform = 'win32';
         spyOn(childProcess, 'spawn');
         process.env = { FOO: 'bar' };
@@ -322,8 +322,8 @@ describe('updateProcessEnv(launchEnv)', function() {
       });
     });
 
-    describe('shouldGetEnvFromShell()', function() {
-      it('indicates when the environment should be fetched from the shell', function() {
+    describe('shouldGetEnvFromShell()', function () {
+      it('indicates when the environment should be fetched from the shell', function () {
         if (process.platform === 'win32') return; // TestsThatFailOnWin32
 
         process.platform = 'darwin';
@@ -362,7 +362,7 @@ describe('updateProcessEnv(launchEnv)', function() {
         );
       });
 
-      it('returns false when the environment indicates that Atom was launched from a shell', function() {
+      it('returns false when the environment indicates that Atom was launched from a shell', function () {
         process.platform = 'darwin';
         expect(
           shouldGetEnvFromShell({
@@ -379,7 +379,7 @@ describe('updateProcessEnv(launchEnv)', function() {
         ).toBe(false);
       });
 
-      it('returns false when the shell is undefined or empty', function() {
+      it('returns false when the shell is undefined or empty', function () {
         process.platform = 'darwin';
         expect(shouldGetEnvFromShell(undefined)).toBe(false);
         expect(shouldGetEnvFromShell({})).toBe(false);

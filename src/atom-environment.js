@@ -832,10 +832,8 @@ class AtomEnvironment {
     if (dimensions && this.isValidDimensions(dimensions)) {
       return dimensions;
     } else {
-      const {
-        width,
-        height
-      } = this.applicationDelegate.getPrimaryDisplayWorkAreaSize();
+      const { width, height } =
+        this.applicationDelegate.getPrimaryDisplayWorkAreaSize();
       return { x: 0, y: 0, width: Math.min(1024, width), height };
     }
   }
@@ -994,7 +992,7 @@ class AtomEnvironment {
       let previousProjectPaths = this.project.getPaths();
       this.disposables.add(
         this.project.onDidChangePaths(newPaths => {
-          for (let path of previousProjectPaths) {
+          for (const path of previousProjectPaths) {
             if (
               this.pathsWithWaitSessions.has(path) &&
               !newPaths.includes(path)
@@ -1343,8 +1341,8 @@ class AtomEnvironment {
   ) {
     const center = this.workspace.getCenter();
     const windowIsUnused = () => {
-      for (let container of this.workspace.getPaneContainers()) {
-        for (let item of container.getPaneItems()) {
+      for (const container of this.workspace.getPaneContainers()) {
+        for (const item of container.getPaneItems()) {
           if (item instanceof TextEditor) {
             if (item.getPath() || item.isModified()) return false;
           } else {
@@ -1386,7 +1384,7 @@ class AtomEnvironment {
             });
             resolveDiscardStatePromise(Promise.resolve(null));
           } else if (response === 1) {
-            for (let selectedPath of projectPaths) {
+            for (const selectedPath of projectPaths) {
               this.project.addPath(selectedPath);
             }
             resolveDiscardStatePromise(
@@ -1402,7 +1400,7 @@ class AtomEnvironment {
 
   restoreStateIntoThisEnvironment(state) {
     state.fullScreen = this.isFullScreen();
-    for (let pane of this.workspace.getPanes()) {
+    for (const pane of this.workspace.getPanes()) {
       pane.destroy();
     }
     return this.deserialize(state);
@@ -1509,12 +1507,7 @@ or use Pane::saveItemAs for programmatic saving.`);
     if (paths && paths.length > 0) {
       const sha1 = crypto
         .createHash('sha1')
-        .update(
-          paths
-            .slice()
-            .sort()
-            .join('\n')
-        )
+        .update(paths.slice().sort().join('\n'))
         .digest('hex');
       return `editor-${sha1}`;
     } else {
@@ -1596,7 +1589,7 @@ or use Pane::saveItemAs for programmatic saving.`);
     if (this.packages.hasLoadedInitialPackages()) {
       this.uriHandlerRegistry.handleURI(uri);
     } else {
-      let subscription = this.packages.onDidLoadInitialPackages(() => {
+      const subscription = this.packages.onDidLoadInitialPackages(() => {
         subscription.dispose();
         this.uriHandlerRegistry.handleURI(uri);
       });
@@ -1647,9 +1640,8 @@ or use Pane::saveItemAs for programmatic saving.`);
       } else {
         // Path does not exist
         // Attempt to interpret as a URI from a non-default directory provider
-        const directory = this.project.getProvidedDirectoryForProjectPath(
-          pathToOpen
-        );
+        const directory =
+          this.project.getProvidedDirectoryForProjectPath(pathToOpen);
         if (directory) {
           // Found: add as a project folder
           foldersToAddToProject.add(directory.getPath());
@@ -1686,7 +1678,7 @@ or use Pane::saveItemAs for programmatic saving.`);
         );
         restoredState = true;
       } else {
-        for (let folder of foldersToAddToProject) {
+        for (const folder of foldersToAddToProject) {
           this.project.addPath(folder);
         }
       }

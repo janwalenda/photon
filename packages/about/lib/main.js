@@ -15,7 +15,9 @@ module.exports = {
 
     this.createModel();
 
-    let availableVersion = window.localStorage.getItem(AvailableUpdateVersion);
+    const availableVersion = window.localStorage.getItem(
+      AvailableUpdateVersion
+    );
     if (
       atom.getReleaseChannel() === 'dev' ||
       (availableVersion && semver.lte(availableVersion, atom.getVersion()))
@@ -81,18 +83,20 @@ module.exports = {
       currentElectronVersion: process.versions.electron,
       currentChromeVersion: process.versions.chrome,
       currentNodeVersion: process.version,
-      updateManager: updateManager
+      updateManager
     });
   },
 
   isUpdateAvailable() {
-    let availableVersion = window.localStorage.getItem(AvailableUpdateVersion);
+    const availableVersion = window.localStorage.getItem(
+      AvailableUpdateVersion
+    );
     return availableVersion && semver.gt(availableVersion, atom.getVersion());
   },
 
   showStatusBarIfNeeded() {
     if (this.isUpdateAvailable() && this.statusBar) {
-      let statusBarView = new StatusBarView();
+      const statusBarView = new StatusBarView();
 
       if (this.statusBarTile) {
         this.statusBarTile.destroy();

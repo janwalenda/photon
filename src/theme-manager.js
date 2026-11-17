@@ -119,7 +119,7 @@ module.exports = class ThemeManager {
     if (!Array.isArray(themeNames)) {
       themeNames = [themeNames];
     }
-    for (let themeName of themeNames) {
+    for (const themeName of themeNames) {
       if (
         !themeName ||
         typeof themeName !== 'string' ||
@@ -192,7 +192,7 @@ module.exports = class ThemeManager {
     priority,
     skipDeprecatedSelectorsTransformation
   ) {
-    let fullPath = this.resolveStylesheet(stylesheetPath);
+    const fullPath = this.resolveStylesheet(stylesheetPath);
     if (fullPath) {
       const content = this.loadStylesheet(fullPath);
       return this.applyStylesheet(
@@ -298,8 +298,8 @@ On linux there are currently problems with watch sizes. See
       this.lessCache = new LessCompileCache({
         resourcePath: this.resourcePath,
         lessSourcesByRelativeFilePath: this.lessSourcesByRelativeFilePath,
-        importedFilePathsByRelativeImportPath: this
-          .importedFilePathsByRelativeImportPath,
+        importedFilePathsByRelativeImportPath:
+          this.importedFilePathsByRelativeImportPath,
         importPaths: this.getImportPaths()
       });
     }
@@ -358,13 +358,12 @@ On linux there are currently problems with watch sizes. See
   }
 
   applyStylesheet(path, text, priority, skipDeprecatedSelectorsTransformation) {
-    this.styleSheetDisposablesBySourcePath[
-      path
-    ] = this.styleManager.addStyleSheet(text, {
-      priority,
-      skipDeprecatedSelectorsTransformation,
-      sourcePath: path
-    });
+    this.styleSheetDisposablesBySourcePath[path] =
+      this.styleManager.addStyleSheet(text, {
+        priority,
+        skipDeprecatedSelectorsTransformation,
+        sourcePath: path
+      });
 
     return this.styleSheetDisposablesBySourcePath[path];
   }

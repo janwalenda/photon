@@ -102,7 +102,7 @@ module.exports = class URIHandlerRegistry {
     }
 
     const registration = this.registrations.get(host);
-    const historyEntry = { id: ++this._id, uri: uri, handled: false, host };
+    const historyEntry = { id: ++this._id, uri, handled: false, host };
     try {
       if (registration) {
         historyEntry.handled = true;

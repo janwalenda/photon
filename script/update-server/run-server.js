@@ -68,7 +68,7 @@ function getMacUpdates(req, res) {
 }
 
 function getReleasesFile(fileName) {
-  return function(req, res) {
+  return function (req, res) {
     console.log(
       `Received request for ${fileName}, version: ${req.query.version}`
     );
@@ -93,7 +93,7 @@ function getReleasesFile(fileName) {
 }
 
 function getNupkgFile(is64bit) {
-  return function(req, res) {
+  return function (req, res) {
     let nupkgFile = req.params.nupkg;
     if (is64bit) {
       const nupkgMatch = nupkgFile.match(/atom-(.+)-(delta|full)\.nupkg/);

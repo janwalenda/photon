@@ -5,7 +5,7 @@ const path = require('path');
 
 const CONFIG = require('../config');
 
-module.exports = function() {
+module.exports = function () {
   return stylelint
     .lint({
       files: path.join(CONFIG.repositoryRootPath, 'static/**/*.less'),

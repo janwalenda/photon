@@ -5,12 +5,12 @@ let BrowserWindow = null;
 
 let nextResponseChannelId = 0;
 
-exports.on = function(emitter, eventName, callback) {
+exports.on = function (emitter, eventName, callback) {
   emitter.on(eventName, callback);
   return new Disposable(() => emitter.removeListener(eventName, callback));
 };
 
-exports.call = function(channel, ...args) {
+exports.call = function (channel, ...args) {
   if (!ipcRenderer) {
     ipcRenderer = require('electron').ipcRenderer;
     ipcRenderer.setMaxListeners(20);
@@ -28,7 +28,7 @@ exports.call = function(channel, ...args) {
   });
 };
 
-exports.respondTo = function(channel, callback) {
+exports.respondTo = function (channel, callback) {
   if (!ipcMain) {
     const electron = require('electron');
     ipcMain = electron.ipcMain;

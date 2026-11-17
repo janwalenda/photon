@@ -4,9 +4,8 @@ const TreeSitterGrammar = require('../src/tree-sitter-grammar');
 const TreeSitterLanguageMode = require('../src/tree-sitter-language-mode');
 const TreeIndenter = require('../src/tree-indenter');
 
-const jsGrammarPath = require.resolve(
-  'language-javascript/grammars/tree-sitter-javascript.cson'
-);
+const jsGrammarPath =
+  require.resolve('language-javascript/grammars/tree-sitter-javascript.cson');
 
 const TAB_LENGTH = 2;
 
@@ -85,8 +84,9 @@ describe('TreeIndenter', () => {
       // verify
       if (indent !== currentIndentation) {
         throw Error(
-          `failure in file row ${row +
-            1}: suggested ${indent} but ${currentIndentation} is correct (${line})`
+          `failure in file row ${
+            row + 1
+          }: suggested ${indent} but ${currentIndentation} is correct (${line})`
         );
       } else {
         expect(indent).toEqual(currentIndentation);

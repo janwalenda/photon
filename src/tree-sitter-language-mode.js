@@ -254,8 +254,8 @@ class TreeSitterLanguageMode {
    * folds are only generated for the root language layer).
    */
   getFoldableRangesAtIndentLevel(goalLevel) {
-    let result = [];
-    let stack = [{ node: this.tree.rootNode, level: 0 }];
+    const result = [];
+    const stack = [{ node: this.tree.rootNode, level: 0 }];
     while (stack.length > 0) {
       const { node, level } = stack.pop();
 
@@ -291,7 +291,7 @@ class TreeSitterLanguageMode {
             childStart.row === parentStartRow &&
             childEnd.row === parentEndRow
           ) {
-            stack.push({ node: child, level: level });
+            stack.push({ node: child, level });
           } else {
             const childLevel =
               range &&
@@ -355,7 +355,7 @@ class TreeSitterLanguageMode {
     const { children } = node;
     const childCount = children.length;
 
-    for (var i = 0, { length } = grammar.folds; i < length; i++) {
+    for (let i = 0, { length } = grammar.folds; i < length; i++) {
       const foldSpec = grammar.folds[i];
 
       if (foldSpec.matchers && !hasMatchingFoldSpec(foldSpec.matchers, node))
@@ -859,9 +859,8 @@ class LanguageLayer {
         const languageName = injectionPoint.language(node);
         if (!languageName) continue;
 
-        const grammar = this.languageMode.grammarForLanguageString(
-          languageName
-        );
+        const grammar =
+          this.languageMode.grammarForLanguageString(languageName);
         if (!grammar) continue;
 
         const contentNodes = injectionPoint.content(node);
@@ -895,9 +894,8 @@ class LanguageLayer {
         }
 
         if (!marker) {
-          marker = this.languageMode.injectionsMarkerLayer.markRange(
-            injectionRange
-          );
+          marker =
+            this.languageMode.injectionsMarkerLayer.markRange(injectionRange);
           marker.languageLayer = new LanguageLayer(
             marker,
             this.languageMode,
@@ -936,9 +934,8 @@ class LanguageLayer {
   }
 
   _treeEditForBufferChange(start, oldEnd, newEnd, oldText, newText) {
-    const startIndex = this.languageMode.buffer.characterIndexForPosition(
-      start
-    );
+    const startIndex =
+      this.languageMode.buffer.characterIndexForPosition(start);
     return {
       startIndex,
       oldEndIndex: startIndex + oldText.length,
@@ -957,20 +954,19 @@ class HighlightIterator {
   }
 
   seek(targetPosition, endRow) {
-    const injectionMarkers = this.languageMode.injectionsMarkerLayer.findMarkers(
-      {
+    const injectionMarkers =
+      this.languageMode.injectionsMarkerLayer.findMarkers({
         intersectsRange: new Range(targetPosition, new Point(endRow + 1, 0))
-      }
-    );
+      });
 
     const containingTags = [];
     const containingTagStartIndices = [];
-    const targetIndex = this.languageMode.buffer.characterIndexForPosition(
-      targetPosition
-    );
+    const targetIndex =
+      this.languageMode.buffer.characterIndexForPosition(targetPosition);
 
     this.iterators = [];
-    const iterator = this.languageMode.rootLanguageLayer.buildHighlightIterator();
+    const iterator =
+      this.languageMode.rootLanguageLayer.buildHighlightIterator();
     if (iterator.seek(targetIndex, containingTags, containingTagStartIndices)) {
       this.iterators.push(iterator);
     }
@@ -996,7 +992,7 @@ class HighlightIterator {
 
   moveToSuccessor() {
     // Advance the earliest layer iterator to its next scope boundary.
-    let leader = last(this.iterators);
+    const leader = last(this.iterators);
 
     // Maintain the sorting of the iterators by their position in the document.
     if (leader.moveToSuccessor()) {
@@ -1119,7 +1115,9 @@ class LayerHighlightIterator {
   }
 
   seek(targetIndex, containingTags, containingTagStartIndices) {
-    while (this.treeCursor.gotoParent()) {}
+    while (this.treeCursor.gotoParent()) {
+      // walk up to the root
+    }
 
     this.atEnd = true;
     this.closeTags.length = 0;

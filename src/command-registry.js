@@ -173,9 +173,8 @@ module.exports = class CommandRegistry {
     if (this.selectorBasedListenersByCommandName[commandName] == null) {
       this.selectorBasedListenersByCommandName[commandName] = [];
     }
-    const listenersForCommand = this.selectorBasedListenersByCommandName[
-      commandName
-    ];
+    const listenersForCommand =
+      this.selectorBasedListenersByCommandName[commandName];
     const selectorListener = new SelectorBasedListener(
       selector,
       commandName,
@@ -328,7 +327,7 @@ module.exports = class CommandRegistry {
   handleCommandEvent(event) {
     let propagationStopped = false;
     let immediatePropagationStopped = false;
-    let matched = [];
+    const matched = [];
     let currentTarget = event.target;
 
     const dispatchedEvent = new CustomEvent(event.type, {

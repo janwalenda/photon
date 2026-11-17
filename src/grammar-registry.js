@@ -319,7 +319,7 @@ module.exports = class GrammarRegistry {
     if (contents && grammar.firstLineRegex) {
       let escaped = false;
       let numberOfNewlinesInRegex = 0;
-      for (let character of grammar.firstLineRegex.source) {
+      for (const character of grammar.firstLineRegex.source) {
         switch (character) {
           case '\\':
             escaped = !escaped;
@@ -623,7 +623,7 @@ module.exports = class GrammarRegistry {
   //
   // Returns a non-empty {Array} of {Grammar} instances.
   getGrammars(params) {
-    let tmGrammars = this.textmateRegistry.getGrammars();
+    const tmGrammars = this.textmateRegistry.getGrammars();
     if (!(params && params.includeTreeSitter)) return tmGrammars;
 
     const tsGrammars = Object.values(this.treeSitterGrammarsById).filter(

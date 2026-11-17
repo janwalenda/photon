@@ -284,7 +284,7 @@ class RegistryWatcherNode {
     if (pathSegments.length !== 0) {
       return this;
     } else if (this.childPaths.size > 0) {
-      let newSubTree = new RegistryTree(
+      const newSubTree = new RegistryTree(
         this.absolutePathSegments,
         createSplitNative
       );

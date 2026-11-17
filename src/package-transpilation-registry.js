@@ -92,7 +92,7 @@ class PackageTranspilationRegistry {
     // only iterates four times, even if there are hundreds of configs registered.
     while (thisPath !== lastPath) {
       // until we reach the root
-      let config = this.configByPackagePath[thisPath];
+      const config = this.configByPackagePath[thisPath];
       if (config) {
         const relativePath = path.relative(thisPath, filePath);
         if (
@@ -126,7 +126,7 @@ class PackageTranspilationRegistry {
     spec._transpilerSource = transpilerSource;
     const transpiler = this.getTranspiler(spec);
 
-    let hash = crypto
+    const hash = crypto
       .createHash('sha1')
       .update(JSON.stringify(spec.options || {}))
       .update(transpilerSource, 'utf8')

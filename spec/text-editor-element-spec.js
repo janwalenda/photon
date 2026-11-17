@@ -70,7 +70,7 @@ describe('TextEditorElement', () => {
     expect(element.getModel().isLineNumberGutterVisible()).toBe(false);
   });
 
-  it("honors the 'readonly' attribute", async function() {
+  it("honors the 'readonly' attribute", async function () {
     jasmineContent.innerHTML = '<atom-text-editor readonly>';
     const element = jasmineContent.firstChild;
 
@@ -146,7 +146,10 @@ describe('TextEditorElement', () => {
       const editor = new TextEditor();
       editor.setText('1\n2\n3');
       editor.addGutter({ name: 'test-gutter' });
-      const marker = editor.markBufferRange([[0, 0], [2, 0]]);
+      const marker = editor.markBufferRange([
+        [0, 0],
+        [2, 0]
+      ]);
       editor.decorateMarker(marker, {
         type: 'gutter',
         gutterName: 'test-gutter'
@@ -154,8 +157,8 @@ describe('TextEditorElement', () => {
       const element = editor.getElement();
 
       jasmine.attachToDOM(element);
-      const initialDecorationCount = element.querySelectorAll('.decoration')
-        .length;
+      const initialDecorationCount =
+        element.querySelectorAll('.decoration').length;
 
       element.remove();
       jasmine.attachToDOM(element);
@@ -348,7 +351,8 @@ describe('TextEditorElement', () => {
       element.style.width = '200px';
       jasmine.attachToDOM(element);
 
-      const horizontalScrollbarHeight = element.component.getHorizontalScrollbarHeight();
+      const horizontalScrollbarHeight =
+        element.component.getHorizontalScrollbarHeight();
 
       expect(element.getMaxScrollTop()).toBe(0);
       await editor.update({ autoHeight: false });
@@ -402,7 +406,8 @@ describe('TextEditorElement', () => {
     it('returns true if the given row range intersects the visible row range', async () => {
       const element = buildTextEditorElement();
       const editor = element.getModel();
-      const horizontalScrollbarHeight = element.component.getHorizontalScrollbarHeight();
+      const horizontalScrollbarHeight =
+        element.component.getHorizontalScrollbarHeight();
 
       editor.update({ autoHeight: false });
       element.getModel().setText('x\n'.repeat(20));
@@ -425,7 +430,8 @@ describe('TextEditorElement', () => {
     it('returns a {top/left/width/height} object describing the rectangle between two screen positions, even if they are not on screen', async () => {
       const element = buildTextEditorElement();
       const editor = element.getModel();
-      const horizontalScrollbarHeight = element.component.getHorizontalScrollbarHeight();
+      const horizontalScrollbarHeight =
+        element.component.getHorizontalScrollbarHeight();
 
       editor.update({ autoHeight: false });
       element.getModel().setText('xxxxxxxxxxxxxxxxxxxxxx\n'.repeat(20));
@@ -440,7 +446,10 @@ describe('TextEditorElement', () => {
       const left = Math.round(3 * editor.getDefaultCharWidth());
       const right = Math.round(11 * editor.getDefaultCharWidth());
 
-      const pixelRect = element.pixelRectForScreenRange([[2, 3], [13, 11]]);
+      const pixelRect = element.pixelRectForScreenRange([
+        [2, 3],
+        [13, 11]
+      ]);
 
       expect(pixelRect.top).toEqual(top);
       expect(pixelRect.left).toEqual(left);

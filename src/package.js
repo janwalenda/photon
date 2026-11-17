@@ -105,7 +105,7 @@ module.exports = class Package {
     this.activationDisposables = new CompositeDisposable();
     this.activateKeymaps();
     this.activateMenus();
-    for (let settings of this.settings) {
+    for (const settings of this.settings) {
       settings.activate(this.config);
     }
     this.settingsActivated = true;
@@ -135,7 +135,8 @@ module.exports = class Package {
         this.activateCoreStartupServices();
         this.registerURIHandler();
         this.registerTranspilerConfig();
-        this.configSchemaRegisteredOnLoad = this.registerConfigSchemaFromMetadata();
+        this.configSchemaRegisteredOnLoad =
+          this.registerConfigSchemaFromMetadata();
         this.settingsPromise = this.loadSettings();
         if (this.shouldRequireMainModuleOnLoad() && this.mainModule == null) {
           this.requireMainModule();
@@ -230,7 +231,8 @@ module.exports = class Package {
   activateNow() {
     try {
       if (!this.mainModule) this.requireMainModule();
-      this.configSchemaRegisteredOnActivate = this.registerConfigSchemaFromMainModule();
+      this.configSchemaRegisteredOnActivate =
+        this.registerConfigSchemaFromMainModule();
       this.registerViewProviders();
       this.activateStylesheets();
       if (this.mainModule && !this.mainActivated) {
@@ -299,7 +301,7 @@ module.exports = class Package {
     this.stylesheetDisposables = new CompositeDisposable();
 
     const priority = this.getStyleSheetPriority();
-    for (let [sourcePath, source] of this.stylesheets) {
+    for (const [sourcePath, source] of this.stylesheets) {
       const match = path.basename(sourcePath).match(/[^.]*\.([^.]*)\./);
 
       let context;
@@ -343,14 +345,14 @@ module.exports = class Package {
     }
 
     if (!this.grammarsActivated) {
-      for (let grammar of this.grammars) {
+      for (const grammar of this.grammars) {
         grammar.activate();
       }
       this.grammarsActivated = true;
     }
 
     if (!this.settingsActivated) {
-      for (let settings of this.settings) {
+      for (const settings of this.settings) {
         settings.activate(this.config);
       }
       this.settingsActivated = true;
@@ -363,7 +365,7 @@ module.exports = class Package {
     this.keymapDisposables = new CompositeDisposable();
 
     const validateSelectors = !this.preloadedPackage;
-    for (let [keymapPath, map] of this.keymaps) {
+    for (const [keymapPath, map] of this.keymaps) {
       this.keymapDisposables.add(
         this.keymapManager.add(keymapPath, map, 0, validateSelectors)
       );
@@ -383,7 +385,7 @@ module.exports = class Package {
   }
 
   hasKeymaps() {
-    for (let [, map] of this.keymaps) {
+    for (const [, map] of this.keymaps) {
       if (map.length > 0) return true;
     }
     return false;
@@ -453,10 +455,10 @@ module.exports = class Package {
     const handlerConfig = this.getURIHandler();
     const methodName = handlerConfig && handlerConfig.method;
     if (methodName) {
-      this.uriHandlerSubscription = this.packageManager.registerURIHandlerForPackage(
-        this.name,
-        (...args) => this.handleURI(methodName, args)
-      );
+      this.uriHandlerSubscription =
+        this.packageManager.registerURIHandlerForPackage(this.name, (...args) =>
+          this.handleURI(methodName, args)
+        );
     }
   }
 
@@ -494,8 +496,8 @@ module.exports = class Package {
       this.keymaps = [];
       for (const keymapPath in this.packageManager.packagesCache[this.name]
         .keymaps) {
-        const keymapObject = this.packageManager.packagesCache[this.name]
-          .keymaps[keymapPath];
+        const keymapObject =
+          this.packageManager.packagesCache[this.name].keymaps[keymapPath];
         this.keymaps.push([`core:${keymapPath}`, keymapObject]);
       }
     } else {
@@ -511,9 +513,8 @@ module.exports = class Package {
       this.menus = [];
       for (const menuPath in this.packageManager.packagesCache[this.name]
         .menus) {
-        const menuObject = this.packageManager.packagesCache[this.name].menus[
-          menuPath
-        ];
+        const menuObject =
+          this.packageManager.packagesCache[this.name].menus[menuPath];
         this.menus.push([`core:${menuPath}`, menuObject]);
       }
     } else {
@@ -590,7 +591,7 @@ module.exports = class Package {
     if (directoryProviderService) {
       this.requireMainModule();
       const servicesByVersion = {};
-      for (let version in directoryProviderService.versions) {
+      for (const version in directoryProviderService.versions) {
         const methodName = directoryProviderService.versions[version];
         if (typeof this.mainModule[methodName] === 'function') {
           servicesByVersion[version] = this.mainModule[methodName]();
@@ -761,10 +762,10 @@ module.exports = class Package {
     };
 
     if (this.preloadedPackage && this.packageManager.packagesCache[this.name]) {
-      for (let settingsPath in this.packageManager.packagesCache[this.name]
+      for (const settingsPath in this.packageManager.packagesCache[this.name]
         .settings) {
-        const properties = this.packageManager.packagesCache[this.name]
-          .settings[settingsPath];
+        const properties =
+          this.packageManager.packagesCache[this.name].settings[settingsPath];
         const settingsFile = new SettingsFile(
           `core:${settingsPath}`,
           properties || {}
@@ -846,10 +847,10 @@ module.exports = class Package {
   }
 
   deactivateResources() {
-    for (let grammar of this.grammars) {
+    for (const grammar of this.grammars) {
       grammar.deactivate();
     }
-    for (let settings of this.settings) {
+    for (const settings of this.settings) {
       settings.deactivate(this.config);
     }
 
@@ -904,8 +905,10 @@ module.exports = class Package {
       if (fs.isFileSync(mainModulePath)) {
         this.mainModuleRequired = true;
 
-        const previousViewProviderCount = this.viewRegistry.getViewProviderCount();
-        const previousDeserializerCount = this.deserializerManager.getDeserializerCount();
+        const previousViewProviderCount =
+          this.viewRegistry.getViewProviderCount();
+        const previousDeserializerCount =
+          this.deserializerManager.getDeserializerCount();
         this.mainModule = requireModule(mainModulePath);
         if (
           this.viewRegistry.getViewProviderCount() ===
@@ -975,7 +978,7 @@ module.exports = class Package {
 
   hasActivationCommands() {
     const object = this.getActivationCommands();
-    for (let selector in object) {
+    for (const selector in object) {
       const commands = object[selector];
       if (commands.length > 0) return true;
     }
@@ -996,15 +999,15 @@ module.exports = class Package {
   subscribeToActivationCommands() {
     this.activationCommandSubscriptions = new CompositeDisposable();
     const object = this.getActivationCommands();
-    for (let selector in object) {
+    for (const selector in object) {
       const commands = object[selector];
-      for (let command of commands) {
+      for (const command of commands) {
         ((selector, command) => {
           // Add dummy command so it appears in menu.
           // The real command will be registered on package activation
           try {
             this.activationCommandSubscriptions.add(
-              this.commandRegistry.add(selector, command, function() {})
+              this.commandRegistry.add(selector, command, function () {})
             );
           } catch (error) {
             if (error.code === 'EBADSELECTOR') {
@@ -1040,7 +1043,7 @@ module.exports = class Package {
     this.activationCommands = {};
 
     if (this.metadata.activationCommands) {
-      for (let selector in this.metadata.activationCommands) {
+      for (const selector in this.metadata.activationCommands) {
         const commands = this.metadata.activationCommands[selector];
         if (!this.activationCommands[selector])
           this.activationCommands[selector] = [];
@@ -1057,7 +1060,7 @@ module.exports = class Package {
 
   subscribeToActivationHooks() {
     this.activationHookSubscriptions = new CompositeDisposable();
-    for (let hook of this.getActivationHooks()) {
+    for (const hook of this.getActivationHooks()) {
       if (typeof hook === 'string' && hook.trim().length > 0) {
         this.activationHookSubscriptions.add(
           this.packageManager.onDidTriggerActivationHook(hook, () =>
@@ -1090,7 +1093,7 @@ module.exports = class Package {
 
   subscribeToWorkspaceOpeners() {
     this.workspaceOpenerSubscriptions = new CompositeDisposable();
-    for (let opener of this.getWorkspaceOpeners()) {
+    for (const opener of this.getWorkspaceOpeners()) {
       this.workspaceOpenerSubscriptions.add(
         atom.workspace.addOpener(filePath => {
           if (filePath === opener) {
@@ -1163,7 +1166,7 @@ module.exports = class Package {
         (this.metadata._atomModuleCache.extensions &&
           this.metadata._atomModuleCache.extensions['.node']) ||
         [];
-      for (let relativeNativeModuleBindingPath of relativeNativeModuleBindingPaths) {
+      for (const relativeNativeModuleBindingPath of relativeNativeModuleBindingPaths) {
         const nodeFilePath = path.join(
           this.path,
           relativeNativeModuleBindingPath,
@@ -1179,7 +1182,7 @@ module.exports = class Package {
 
     const traversePath = nodeModulesPath => {
       try {
-        for (let modulePath of fs.listSync(nodeModulesPath)) {
+        for (const modulePath of fs.listSync(nodeModulesPath)) {
           const modulePathNodeFiles = this.getModulePathNodeFiles(modulePath);
           if (modulePathNodeFiles) {
             nativeModulePaths.set(modulePath, modulePathNodeFiles);
@@ -1350,8 +1353,9 @@ module.exports = class Package {
 
     let detail, location, stack;
     if (error.filename && error.location && error instanceof SyntaxError) {
-      location = `${error.filename}:${error.location.first_line + 1}:${error
-        .location.first_column + 1}`;
+      location = `${error.filename}:${error.location.first_line + 1}:${
+        error.location.first_column + 1
+      }`;
       detail = `${error.message} in ${location}`;
       stack = 'SyntaxError: ' + error.message + '\n' + 'at ' + location;
     } else if (
@@ -1394,7 +1398,7 @@ class SettingsFile {
   }
 
   activate(config) {
-    for (let selector in this.properties) {
+    for (const selector in this.properties) {
       config.set(null, this.properties[selector], {
         scopeSelector: selector,
         source: this.path
@@ -1403,7 +1407,7 @@ class SettingsFile {
   }
 
   deactivate(config) {
-    for (let selector in this.properties) {
+    for (const selector in this.properties) {
       config.unset(null, { scopeSelector: selector, source: this.path });
     }
   }

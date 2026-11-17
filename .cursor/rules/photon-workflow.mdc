@@ -86,7 +86,8 @@ Never commit directly to `main` or `develop`. Changes land through pull requests
   - `node script/lint --fix` fixes what it can automatically.
 - The pre-commit hook in `.githooks/pre-commit` enforces this. Enable it once per clone:
   `git config core.hooksPath .githooks`
-- Prettier configuration: `.prettierrc`. ESLint configuration: `.eslintrc.json`.
+- Prettier configuration: `.prettierrc`. ESLint configuration: `eslint.config.js` (flat config,
+  ignores listed there).
 - Do not bypass the hook with `--no-verify`.
 
 ## Building and running
@@ -96,8 +97,8 @@ Never commit directly to `main` or `develop`. Changes land through pull requests
   `script/test --core-main --core-renderer` runs the core specs.
 - Terminals inside VS Code and Cursor set `ELECTRON_RUN_AS_NODE=1`, which makes the app start
   as plain Node. Run the app and specs with `env -u ELECTRON_RUN_AS_NODE ...`.
-- Vendored third-party packages in `packages/` are listed in `.eslintignore` and
-  `.prettierignore`; keep their upstream style.
+- Vendored third-party packages in `packages/` are listed in the `ignores` of `eslint.config.js`
+  and in `.prettierignore`; keep their upstream style.
 
 ## CHANGELOG
 
