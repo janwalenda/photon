@@ -65,3 +65,8 @@ packages/spell-check/
 packages/status-bar/
 packages/styleguide/
 packages/symbols-view/
+packages/tabs/
+packages/timecop/
+packages/tree-view/
+packages/whitespace/
+packages/wrap-guide/
