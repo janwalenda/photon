@@ -3,3 +3,15 @@ packages/github/
 packages/git-utils/
 packages/superstring/
 packages/tree-sitter/
+
+# Imported Atom packages, upstream formatting until the Prettier 3 switch (#8)
+packages/archive-view/
+packages/autocomplete-atom-api/
+packages/autocomplete-css/
+packages/autocomplete-html/
+packages/autocomplete-plus/
+packages/autocomplete-snippets/
+packages/autosave/
+packages/background-tips/
+packages/bookmarks/
+packages/bracket-matcher/
