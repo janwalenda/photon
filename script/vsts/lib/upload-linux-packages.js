@@ -2,9 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const request = require('request-promise-native');
 
-module.exports = async function(packageRepoName, apiToken, version, artifacts) {
-  for (let artifact of artifacts) {
-    let fileExt = path.extname(artifact);
+module.exports = async function (
+  packageRepoName,
+  apiToken,
+  version,
+  artifacts
+) {
+  for (const artifact of artifacts) {
+    const fileExt = path.extname(artifact);
     switch (fileExt) {
       case '.deb':
         await uploadDebPackage(version, artifact);
@@ -66,7 +71,7 @@ module.exports = async function(packageRepoName, apiToken, version, artifacts) {
           packageDetails.fileName
         } to https://packagecloud.io/AtomEditor/${packageRepoName}`
       );
-      var uploadOptions = {
+      const uploadOptions = {
         url: `https://${apiToken}:@packagecloud.io/api/v1/repos/AtomEditor/${packageRepoName}/packages.json`,
         formData: {
           'package[distro_version_id]': packageDetails.distroId,
@@ -100,13 +105,14 @@ module.exports = async function(packageRepoName, apiToken, version, artifacts) {
     releaseSuffix
   }) {
     // RPM URI paths have an extra '/0.1' thrown in
-    let versionJsonPath =
+    const versionJsonPath =
       type === 'rpm' ? `${version.replace('-', '.')}/0.1` : version;
 
     try {
       const existingPackageDetails = await request({
-        uri: `https://${apiToken}:@packagecloud.io/api/v1/repos/AtomEditor/${packageRepoName}/package/${type}/${distroName}/${distroVersion}/atom${releaseSuffix ||
-          ''}/${arch}/${versionJsonPath}.json`,
+        uri: `https://${apiToken}:@packagecloud.io/api/v1/repos/AtomEditor/${packageRepoName}/package/${type}/${distroName}/${distroVersion}/atom${
+          releaseSuffix || ''
+        }/${arch}/${versionJsonPath}.json`,
         method: 'get',
         json: true
       });

@@ -51,7 +51,7 @@ module.exports = class StyleManager {
   // Returns a {Disposable} on which `.dispose()` can be called to cancel the
   // subscription.
   observeStyleElements(callback) {
-    for (let styleElement of this.getStyleElements()) {
+    for (const styleElement of this.getStyleElements()) {
       callback(styleElement);
     }
 
@@ -239,14 +239,14 @@ module.exports = class StyleManager {
   }
 
   restoreSnapshot(styleElementsToRestore) {
-    for (let styleElement of this.getStyleElements()) {
+    for (const styleElement of this.getStyleElements()) {
       if (!styleElementsToRestore.includes(styleElement)) {
         this.removeStyleElement(styleElement);
       }
     }
 
     const existingStyleElements = this.getStyleElements();
-    for (let styleElement of styleElementsToRestore) {
+    for (const styleElement of styleElementsToRestore) {
       if (!existingStyleElements.includes(styleElement)) {
         this.addStyleElement(styleElement);
       }

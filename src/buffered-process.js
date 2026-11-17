@@ -152,12 +152,12 @@ module.exports = class BufferedProcess {
     stream.on('data', data => {
       if (this.killed) return;
 
-      let bufferedLength = buffered.length;
+      const bufferedLength = buffered.length;
       buffered += data;
-      let lastNewlineIndex = data.lastIndexOf('\n');
+      const lastNewlineIndex = data.lastIndexOf('\n');
 
       if (lastNewlineIndex !== -1) {
-        let lineLength = lastNewlineIndex + bufferedLength + 1;
+        const lineLength = lastNewlineIndex + bufferedLength + 1;
         onLines(buffered.substring(0, lineLength));
         buffered = buffered.substring(lineLength);
       }

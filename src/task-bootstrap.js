@@ -5,8 +5,8 @@ const CompileCache = require('./compile-cache');
 CompileCache.setCacheDirectory(compileCachePath);
 CompileCache.install(`${process.resourcesPath}`, require);
 
-const setupGlobals = function() {
-  global.attachEvent = function() {};
+const setupGlobals = function () {
+  global.attachEvent = function () {};
   const console = {
     warn() {
       return global.emit('task:warn', ...arguments);
@@ -51,18 +51,18 @@ const setupGlobals = function() {
   return (global.window = global);
 };
 
-const handleEvents = function() {
+const handleEvents = function () {
   process.on('uncaughtException', error =>
     console.error(error.message, error.stack)
   );
 
-  return process.on('message', function({ event, args } = {}) {
+  return process.on('message', function ({ event, args } = {}) {
     if (event !== 'start') {
       return;
     }
 
     let isAsync = false;
-    const async = function() {
+    const async = function () {
       isAsync = true;
       return result => global.emit('task:completed', result);
     };
@@ -73,9 +73,9 @@ const handleEvents = function() {
   });
 };
 
-const setupDeprecations = function() {
+const setupDeprecations = function () {
   const Grim = require('grim');
-  return Grim.on('updated', function() {
+  return Grim.on('updated', function () {
     const deprecations = Grim.getDeprecations().map(deprecation =>
       deprecation.serialize()
     );

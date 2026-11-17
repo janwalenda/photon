@@ -20,17 +20,15 @@ const CURSOR_OVERLAY_VISIBLE_CLASS = 'atom-dock-cursor-overlay-visible';
 // or add an item to a dock via {Workspace::open}.
 module.exports = class Dock {
   constructor(params) {
-    this.handleResizeHandleDragStart = this.handleResizeHandleDragStart.bind(
-      this
-    );
+    this.handleResizeHandleDragStart =
+      this.handleResizeHandleDragStart.bind(this);
     this.handleResizeToFit = this.handleResizeToFit.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleDrag = _.throttle(this.handleDrag.bind(this), 30);
     this.handleDragEnd = this.handleDragEnd.bind(this);
-    this.handleToggleButtonDragEnter = this.handleToggleButtonDragEnter.bind(
-      this
-    );
+    this.handleToggleButtonDragEnter =
+      this.handleToggleButtonDragEnter.bind(this);
     this.toggle = this.toggle.bind(this);
 
     this.location = params.location;
@@ -777,9 +775,10 @@ class DockResizeHandle {
 
   getSize() {
     if (!this.size) {
-      this.size = this.element.getBoundingClientRect()[
-        getWidthOrHeight(this.props.location)
-      ];
+      this.size =
+        this.element.getBoundingClientRect()[
+          getWidthOrHeight(this.props.location)
+        ];
     }
     return this.size;
   }

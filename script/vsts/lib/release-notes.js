@@ -3,7 +3,7 @@ const octokit = require('@octokit/rest')();
 const changelog = require('pr-changelog');
 const childProcess = require('child_process');
 
-module.exports.getRelease = async function(releaseVersion, githubToken) {
+module.exports.getRelease = async function (releaseVersion, githubToken) {
   if (githubToken) {
     octokit.authenticate({
       type: 'token',
@@ -24,7 +24,7 @@ module.exports.getRelease = async function(releaseVersion, githubToken) {
   };
 };
 
-module.exports.generateForVersion = async function(
+module.exports.generateForVersion = async function (
   releaseVersion,
   githubToken,
   oldReleaseNotes
@@ -48,7 +48,7 @@ module.exports.generateForVersion = async function(
     oldVersion = `${parsedVersion.major}.${parsedVersion.minor - 1}-releases`;
     oldVersionName = `v${parsedVersion.major}.${parsedVersion.minor - 1}.0`;
   } else {
-    let releases = await octokit.repos.getReleases({
+    const releases = await octokit.repos.getReleases({
       owner: 'atom',
       repo: 'atom'
     });
@@ -62,14 +62,14 @@ module.exports.generateForVersion = async function(
     fromTag: oldVersion,
     toTag: newVersionBranch,
     dependencyKey: 'packageDependencies',
-    changelogFormatter: function({
+    changelogFormatter: function ({
       pullRequests,
       owner,
       repo,
       fromTag,
       toTag
     }) {
-      let prString = changelog.pullRequestsToString(pullRequests);
+      const prString = changelog.pullRequestsToString(pullRequests);
       let title = repo;
       if (repo === 'atom') {
         title = 'Atom Core';
@@ -93,7 +93,7 @@ ${allChangesText}
 `;
 };
 
-module.exports.generateForNightly = async function(
+module.exports.generateForNightly = async function (
   releaseVersion,
   githubToken
 ) {
@@ -172,7 +172,7 @@ function getPreviousRelease(version, allReleases) {
   // Make sure versions are sorted before using them
   allReleases.sort((v1, v2) => semver.rcompare(v1.name, v2.name));
 
-  for (let release of allReleases) {
+  for (const release of allReleases) {
     if (versionIsStable && semver.prerelease(release.name)) {
       continue;
     }

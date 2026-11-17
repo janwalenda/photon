@@ -326,12 +326,9 @@ describe('AtomEnvironment', () => {
       await atom2.deserialize(atom.serialize());
       await atom2.packages.activatePackage('language-text');
       const editor2 = atom2.workspace.getActiveTextEditor();
-      expect(
-        editor2
-          .getBuffer()
-          .getLanguageMode()
-          .getLanguageId()
-      ).toBe('text.plain');
+      expect(editor2.getBuffer().getLanguageMode().getLanguageId()).toBe(
+        'text.plain'
+      );
       atom2.destroy();
     });
 
@@ -803,7 +800,7 @@ describe('AtomEnvironment', () => {
 
       beforeEach(() => {
         spyOn(atom, 'getStateKey').andCallFake(dirs => dirs.join(':'));
-        spyOn(atom, 'loadState').andCallFake(function(key) {
+        spyOn(atom, 'loadState').andCallFake(function (key) {
           if (key === __dirname) {
             return Promise.resolve(state);
           } else {
@@ -829,7 +826,7 @@ describe('AtomEnvironment', () => {
           const existingDir = path.join(__dirname, 'fixtures');
           const missingDir = path.join(__dirname, 'no');
 
-          atom.loadState.andCallFake(function(key) {
+          atom.loadState.andCallFake(function (key) {
             if (key === `${existingDir}:${missingDir}`) {
               return Promise.resolve(state);
             } else {

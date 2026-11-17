@@ -3,7 +3,7 @@
 const path = require('path');
 const CONFIG = require('../config');
 
-module.exports = function(filePath) {
+module.exports = function (filePath) {
   return (
     !EXCLUDED_PATHS_REGEXP.test(filePath) ||
     INCLUDED_PATHS_REGEXP.test(filePath)
@@ -123,7 +123,7 @@ const EXCLUDE_REGEXPS_SOURCES = [
 ];
 
 // Ignore spec directories in all bundled packages
-for (let packageName in CONFIG.appMetadata.packageDependencies) {
+for (const packageName in CONFIG.appMetadata.packageDependencies) {
   EXCLUDE_REGEXPS_SOURCES.push(
     '^' +
       escapeRegExp(

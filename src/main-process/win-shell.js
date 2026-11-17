@@ -35,7 +35,7 @@ class ShellOption {
   register(callback) {
     let doneCount = this.parts.length;
     this.parts.forEach(part => {
-      let reg = new Registry({
+      const reg = new Registry({
         hive: 'HKCU',
         key: part.key != null ? `${this.key}\\${part.key}` : this.key
       });
@@ -84,7 +84,7 @@ exports.fileHandler = new ShellOption(
   ]
 );
 
-let contextParts = [
+const contextParts = [
   { key: 'command', name: '', value: `${appPath} "%1"` },
   { name: '', value: `Open with ${appName}` },
   { name: 'Icon', value: `${appPath}` }

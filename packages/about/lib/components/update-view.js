@@ -21,7 +21,7 @@ module.exports = class UpdateView extends EtchComponent {
   }
 
   shouldUpdateActionButtonBeDisabled() {
-    let { state } = this.props.updateManager;
+    const { state } = this.props.updateManager;
     return (
       state === UpdateManager.State.CheckingForUpdate ||
       state === UpdateManager.State.DownloadingUpdate

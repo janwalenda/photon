@@ -45,8 +45,8 @@ module.exports = class CommandInstaller {
   }
 
   getCommandNameForChannel(commandName) {
-    let channelMatch = this.appVersion.match(/beta|nightly/);
-    let channel = channelMatch ? channelMatch[0] : '';
+    const channelMatch = this.appVersion.match(/beta|nightly/);
+    const channel = channelMatch ? channelMatch[0] : '';
 
     switch (channel) {
       case 'beta':

@@ -206,7 +206,7 @@ describe('PanelContainerElement', () => {
         const panel = new Panel(
           {
             item: new TestPanelContainerItem(),
-            autoFocus: autoFocus,
+            autoFocus,
             visible: false
           },
           atom.views

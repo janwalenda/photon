@@ -107,8 +107,8 @@ export default class Reporter {
     return version.indexOf('beta') > -1
       ? 'beta'
       : version.indexOf('dev') > -1
-      ? 'dev'
-      : 'stable';
+        ? 'dev'
+        : 'stable';
   }
 
   performRequest(json) {
@@ -162,8 +162,8 @@ export default class Reporter {
       if (error.metadata == null) {
         error.metadata = {};
       }
-      for (let key in error.privateMetadata) {
-        let value = error.privateMetadata[key];
+      for (const key in error.privateMetadata) {
+        const value = error.privateMetadata[key];
         error.metadata[key] = value;
       }
       reportWithoutPrivateMetadata();
@@ -201,12 +201,12 @@ export default class Reporter {
   }
 
   addPackageMetadata(error) {
-    let activePackages = atom.packages.getActivePackages();
+    const activePackages = atom.packages.getActivePackages();
     const availablePackagePaths = atom.packages.getPackageDirPaths();
     if (activePackages.length > 0) {
-      let userPackages = {};
-      let bundledPackages = {};
-      for (let pack of atom.packages.getActivePackages()) {
+      const userPackages = {};
+      const bundledPackages = {};
+      for (const pack of atom.packages.getActivePackages()) {
         if (availablePackagePaths.includes(path.dirname(pack.path))) {
           userPackages[pack.name] = pack.metadata.version;
         } else {
@@ -228,9 +228,8 @@ export default class Reporter {
     error.metadata.previousErrors = this.reportedErrors.map(
       error => error.message
     );
-    error.metadata.previousAssertionFailures = this.reportedAssertionFailures.map(
-      error => error.message
-    );
+    error.metadata.previousAssertionFailures =
+      this.reportedAssertionFailures.map(error => error.message);
   }
 
   reportUncaughtException(error) {
@@ -251,7 +250,7 @@ export default class Reporter {
       return;
     }
 
-    let params = this.getDefaultNotificationParams();
+    const params = this.getDefaultNotificationParams();
     params.severity = 'error';
     this.performRequest(this.buildNotificationJSON(error, params));
     this.reportedErrors.push(error);
@@ -275,7 +274,7 @@ export default class Reporter {
       return;
     }
 
-    let params = this.getDefaultNotificationParams();
+    const params = this.getDefaultNotificationParams();
     params.severity = 'warning';
     this.performRequest(this.buildNotificationJSON(error, params));
     this.reportedAssertionFailures.push(error);

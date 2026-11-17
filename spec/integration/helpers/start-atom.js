@@ -75,14 +75,14 @@ const buildAtomClient = async (args, env) => {
     }
   });
 
-  client.addCommand('waitForPaneItemCount', async function(count, timeout) {
+  client.addCommand('waitForPaneItemCount', async function (count, timeout) {
     await this.waitUntil(
       () =>
         this.execute(() => atom.workspace.getActivePane().getItems().length),
       timeout
     );
   });
-  client.addCommand('treeViewRootDirectories', async function() {
+  client.addCommand('treeViewRootDirectories', async function () {
     const treeViewElement = await this.$('.tree-view');
     await treeViewElement.waitForExist(10000);
     return this.execute(() =>
@@ -91,7 +91,7 @@ const buildAtomClient = async (args, env) => {
       ).map(element => element.dataset.path)
     );
   });
-  client.addCommand('dispatchCommand', async function(command) {
+  client.addCommand('dispatchCommand', async function (command) {
     return this.execute(
       command => atom.commands.dispatch(document.activeElement, command),
       command
@@ -101,7 +101,7 @@ const buildAtomClient = async (args, env) => {
   return client;
 };
 
-module.exports = function(args, env, fn) {
+module.exports = function (args, env, fn) {
   let chromedriver, chromedriverLogs, chromedriverExit;
 
   runs(() => {
@@ -156,7 +156,7 @@ Logs:\n${chromedriverLogs.join('\n')}`);
       }
 
       try {
-        await client.waitUntil(async function() {
+        await client.waitUntil(async function () {
           const handles = await this.getWindowHandles();
           return handles.length > 0;
         }, 10000);

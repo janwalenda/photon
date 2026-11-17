@@ -58,7 +58,7 @@ module.exports = class WorkspaceCenter {
   //
   // Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
   observeTextEditors(callback) {
-    for (let textEditor of this.getTextEditors()) {
+    for (const textEditor of this.getTextEditors()) {
       callback(textEditor);
     }
     return this.onDidAddTextEditor(({ textEditor }) => callback(textEditor));

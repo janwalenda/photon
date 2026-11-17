@@ -44,7 +44,7 @@ module.exports = class About {
 
   setState(newState) {
     if (newState && typeof newState === 'object') {
-      let { state } = this;
+      const { state } = this;
       this.state = Object.assign({}, state, newState);
 
       this.didChange();

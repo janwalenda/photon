@@ -67,7 +67,7 @@ module.exports = class ProtocolHandlerInstaller {
     let notification;
 
     const withSetting = (value, fn) => {
-      return function() {
+      return function () {
         config.set(SETTING, value);
         fn();
       };

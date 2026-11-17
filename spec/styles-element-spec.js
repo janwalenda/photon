@@ -1,6 +1,6 @@
 const { createStylesElement } = require('../src/styles-element');
 
-describe('StylesElement', function() {
+describe('StylesElement', function () {
   let [
     element,
     addedStyleElements,
@@ -8,7 +8,7 @@ describe('StylesElement', function() {
     updatedStyleElements
   ] = [];
 
-  beforeEach(function() {
+  beforeEach(function () {
     element = createStylesElement();
     element.initialize(atom.styles);
     document.querySelector('#jasmine-content').appendChild(element);
@@ -24,7 +24,7 @@ describe('StylesElement', function() {
     );
   });
 
-  it('renders a style tag for all currently active stylesheets in the style manager', function() {
+  it('renders a style tag for all currently active stylesheets in the style manager', function () {
     const initialChildCount = element.children.length;
 
     const disposable1 = atom.styles.addStyleSheet('a {color: red;}');
@@ -52,7 +52,7 @@ describe('StylesElement', function() {
     expect(removedStyleElements).toEqual([addedStyleElements[0]]);
   });
 
-  it('orders style elements by priority', function() {
+  it('orders style elements by priority', function () {
     const initialChildCount = element.children.length;
 
     atom.styles.addStyleSheet('a {color: red}', { priority: 1 });
@@ -74,7 +74,7 @@ describe('StylesElement', function() {
     );
   });
 
-  it('updates existing style nodes when style elements are updated', function() {
+  it('updates existing style nodes when style elements are updated', function () {
     const initialChildCount = element.children.length;
 
     atom.styles.addStyleSheet('a {color: red;}', { sourcePath: '/foo/bar' });
@@ -87,7 +87,7 @@ describe('StylesElement', function() {
     expect(updatedStyleElements).toEqual([element.children[initialChildCount]]);
   });
 
-  it("only includes style elements matching the 'context' attribute", function() {
+  it("only includes style elements matching the 'context' attribute", function () {
     const initialChildCount = element.children.length;
 
     atom.styles.addStyleSheet('a {color: red;}', { context: 'test-context' });

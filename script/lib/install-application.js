@@ -45,7 +45,7 @@ function findBaseIconThemeDirPath() {
   }
 }
 
-module.exports = function(packagedAppPath, installDir) {
+module.exports = function (packagedAppPath, installDir) {
   const packagedAppFileName = path.basename(packagedAppPath);
   if (process.platform === 'darwin') {
     const installPrefix =

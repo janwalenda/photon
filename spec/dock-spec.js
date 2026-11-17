@@ -16,10 +16,7 @@ describe('Dock', () => {
 
       expect(dock.isVisible()).toBe(false);
       expect(document.activeElement).toBe(
-        atom.workspace
-          .getCenter()
-          .getActivePane()
-          .getElement()
+        atom.workspace.getCenter().getActivePane().getElement()
       );
       dock.activate();
       expect(dock.isVisible()).toBe(true);
@@ -41,10 +38,7 @@ describe('Dock', () => {
 
       dock.hide();
       expect(document.activeElement).toBe(
-        atom.workspace
-          .getCenter()
-          .getActivePane()
-          .getElement()
+        atom.workspace.getCenter().getActivePane().getElement()
       );
       expect(didChangeVisibleSpy.mostRecentCall.args[0]).toBe(false);
 
@@ -54,10 +48,7 @@ describe('Dock', () => {
 
       dock.toggle();
       expect(document.activeElement).toBe(
-        atom.workspace
-          .getCenter()
-          .getActivePane()
-          .getElement()
+        atom.workspace.getCenter().getActivePane().getElement()
       );
       expect(didChangeVisibleSpy.mostRecentCall.args[0]).toBe(false);
 
@@ -90,10 +81,7 @@ describe('Dock', () => {
       await atom.workspace.open(item, { activatePane: false });
       expect(atom.workspace.getLeftDock().isVisible()).toBe(false);
 
-      atom.workspace
-        .getLeftDock()
-        .getPanes()[0]
-        .activate();
+      atom.workspace.getLeftDock().getPanes()[0].activate();
       expect(atom.workspace.getLeftDock().isVisible()).toBe(true);
     });
   });

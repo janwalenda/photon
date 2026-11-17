@@ -8,7 +8,7 @@ const template = require('lodash.template');
 
 const CONFIG = require('../config');
 
-module.exports = function(packagedAppPath) {
+module.exports = function (packagedAppPath) {
   console.log(`Creating Debian package for "${packagedAppPath}"`);
   const atomExecutableName =
     CONFIG.channel === 'stable' ? 'atom' : `atom-${CONFIG.channel}`;
@@ -133,7 +133,7 @@ module.exports = function(packagedAppPath) {
   const controlFileContents = template(controlFileTemplate)({
     appFileName: atomExecutableName,
     version: appVersion,
-    arch: arch,
+    arch,
     installedSize: packageSizeInKilobytes,
     description: appDescription
   });

@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-module.exports = function(filesToSign) {
+module.exports = function (filesToSign) {
   if (
     !process.env.ATOM_WIN_CODE_SIGNING_CERT_DOWNLOAD_URL &&
     !process.env.ATOM_WIN_CODE_SIGNING_CERT_PATH

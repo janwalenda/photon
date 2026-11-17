@@ -62,9 +62,8 @@ module.exports = class Pane {
     this.setPendingItem = this.setPendingItem.bind(this);
     this.getPendingItem = this.getPendingItem.bind(this);
     this.clearPendingItem = this.clearPendingItem.bind(this);
-    this.onItemDidTerminatePendingState = this.onItemDidTerminatePendingState.bind(
-      this
-    );
+    this.onItemDidTerminatePendingState =
+      this.onItemDidTerminatePendingState.bind(this);
     this.saveItem = this.saveItem.bind(this);
     this.saveItemAs = this.saveItemAs.bind(this);
 
@@ -332,7 +331,7 @@ module.exports = class Pane {
   //
   // Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
   observeItems(callback) {
-    for (let item of this.getItems()) {
+    for (const item of this.getItems()) {
       callback(item);
     }
     return this.onDidAddItem(({ item }) => callback(item));
@@ -478,7 +477,7 @@ module.exports = class Pane {
         itemStackIndices = this.items.map((item, i) => i);
       }
 
-      for (let itemIndex of itemStackIndices) {
+      for (const itemIndex of itemStackIndices) {
         this.addItemToStack(this.items[itemIndex]);
       }
     }
@@ -654,8 +653,9 @@ module.exports = class Pane {
 
     if (typeof item.isDestroyed === 'function' && item.isDestroyed()) {
       throw new Error(
-        `Adding a pane item with URI '${typeof item.getURI === 'function' &&
-          item.getURI()}' that has already been destroyed`
+        `Adding a pane item with URI '${
+          typeof item.getURI === 'function' && item.getURI()
+        }' that has already been destroyed`
       );
     }
 
@@ -1063,7 +1063,7 @@ module.exports = class Pane {
 
   // Public: Save all items.
   saveItems() {
-    for (let item of this.getItems()) {
+    for (const item of this.getItems()) {
       if (typeof item.isModified === 'function' && item.isModified()) {
         this.saveItem(item);
       }
@@ -1146,7 +1146,7 @@ module.exports = class Pane {
     }
     this.emitter.emit('did-destroy');
     this.emitter.dispose();
-    for (let item of this.items.slice()) {
+    for (const item of this.items.slice()) {
       if (typeof item.destroy === 'function') item.destroy();
     }
     if (this.container) this.container.didDestroyPane({ pane: this });
@@ -1279,9 +1279,8 @@ module.exports = class Pane {
 
   findRightmostSibling() {
     if (this.parent.orientation === 'horizontal') {
-      const rightmostSibling = this.parent.children[
-        this.parent.children.length - 1
-      ];
+      const rightmostSibling =
+        this.parent.children[this.parent.children.length - 1];
       if (rightmostSibling instanceof PaneAxis) {
         return this;
       } else {
@@ -1320,9 +1319,8 @@ module.exports = class Pane {
 
   findBottommostSibling() {
     if (this.parent.orientation === 'vertical') {
-      const bottommostSibling = this.parent.children[
-        this.parent.children.length - 1
-      ];
+      const bottommostSibling =
+        this.parent.children[this.parent.children.length - 1];
       if (bottommostSibling instanceof PaneAxis) {
         return this;
       } else {

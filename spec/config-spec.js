@@ -6,7 +6,7 @@ describe('Config', () => {
     atom.config.settingsLoaded = true;
 
     savedSettings = [];
-    atom.config.saveCallback = function(settings) {
+    atom.config.saveCallback = function (settings) {
       savedSettings.push(settings);
     };
   });
@@ -575,9 +575,8 @@ describe('Config', () => {
 
         expect(savedSettings.length).toBe(0);
 
-        const scopedProperties = atom.config.scopedSettingsStore.propertiesForSource(
-          'user-config'
-        );
+        const scopedProperties =
+          atom.config.scopedSettingsStore.propertiesForSource('user-config');
         expect(scopedProperties['.coffee.source']).toBeUndefined();
       });
 

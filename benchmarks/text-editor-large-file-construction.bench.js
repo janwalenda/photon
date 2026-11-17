@@ -16,7 +16,7 @@ module.exports = async ({ test }) => {
   atom.packages.loadPackages();
   await atom.packages.activate();
 
-  for (let pane of atom.workspace.getPanes()) {
+  for (const pane of atom.workspace.getPanes()) {
     pane.destroy();
   }
 

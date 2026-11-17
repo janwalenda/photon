@@ -7,7 +7,7 @@ const { path7za } = require('7zip-bin');
 
 const CONFIG = require('../config');
 
-module.exports = function(packagedAppPath) {
+module.exports = function (packagedAppPath) {
   const appArchivePath = path.join(CONFIG.buildOutputPath, getArchiveName());
   compress(packagedAppPath, appArchivePath);
 

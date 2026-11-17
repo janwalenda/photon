@@ -58,7 +58,7 @@ export default class IncompatiblePackagesComponent {
   renderHeading() {
     if (this.incompatiblePackages.length > 0) {
       if (this.rebuiltPackageCount > 0) {
-        let alertClass =
+        const alertClass =
           this.rebuiltPackageCount === this.incompatiblePackages.length
             ? 'alert-success icon-check'
             : 'alert-warning icon-bug';
@@ -107,7 +107,7 @@ export default class IncompatiblePackagesComponent {
   }
 
   renderIncompatiblePackage(pack) {
-    let rebuildStatus = this.rebuildStatuses.get(pack);
+    const rebuildStatus = this.rebuildStatuses.get(pack);
 
     return (
       <div className={'incompatible-package'}>
@@ -180,8 +180,8 @@ export default class IncompatiblePackagesComponent {
       .getLoadedPackages()
       .filter(pack => !pack.isCompatible());
 
-    for (let pack of this.incompatiblePackages) {
-      let buildFailureOutput = pack.getBuildFailureOutput();
+    for (const pack of this.incompatiblePackages) {
+      const buildFailureOutput = pack.getBuildFailureOutput();
       if (buildFailureOutput) {
         this.setPackageStatus(pack, REBUILD_FAILED);
         this.setRebuildFailureOutput(pack, buildFailureOutput);
@@ -195,9 +195,9 @@ export default class IncompatiblePackagesComponent {
   async rebuildIncompatiblePackages() {
     this.rebuildInProgress = true;
     let rebuiltPackageCount = 0;
-    for (let pack of this.incompatiblePackages) {
+    for (const pack of this.incompatiblePackages) {
       this.setPackageStatus(pack, REBUILDING);
-      let { code, stderr } = await pack.rebuild();
+      const { code, stderr } = await pack.rebuild();
       if (code === 0) {
         this.setPackageStatus(pack, REBUILD_SUCCEEDED);
         rebuiltPackageCount++;

@@ -136,7 +136,10 @@ describe('TextMateLanguageMode', () => {
           describe('when lines are removed', () => {
             it('pulls the invalid rows up', () => {
               expect(languageMode.firstInvalidRow()).toBe(5);
-              buffer.delete([[1, 0], [3, 0]]);
+              buffer.delete([
+                [1, 0],
+                [3, 0]
+              ]);
               expect(languageMode.firstInvalidRow()).toBe(2);
             });
           });
@@ -154,7 +157,13 @@ describe('TextMateLanguageMode', () => {
 
         describe('when there is a buffer change surrounding an invalid row', () => {
           it('pushes the invalid row to the end of the change', () => {
-            buffer.setTextInRange([[4, 0], [6, 0]], '\n\n\n');
+            buffer.setTextInRange(
+              [
+                [4, 0],
+                [6, 0]
+              ],
+              '\n\n\n'
+            );
             expect(languageMode.firstInvalidRow()).toBe(8);
           });
         });
@@ -162,7 +171,13 @@ describe('TextMateLanguageMode', () => {
         describe('when there is a buffer change inside an invalid region', () => {
           it('does not attempt to tokenize the lines in the change, and preserves the existing invalid row', () => {
             expect(languageMode.firstInvalidRow()).toBe(5);
-            buffer.setTextInRange([[6, 0], [7, 0]], '\n\n\n');
+            buffer.setTextInRange(
+              [
+                [6, 0],
+                [7, 0]
+              ],
+              '\n\n\n'
+            );
             expect(languageMode.tokenizedLines[6]).toBeUndefined();
             expect(languageMode.tokenizedLines[7]).toBeUndefined();
             expect(languageMode.firstInvalidRow()).toBe(5);
@@ -176,7 +191,13 @@ describe('TextMateLanguageMode', () => {
         describe('when there is a buffer change that is smaller than the chunk size', () => {
           describe('when lines are updated, but none are added or removed', () => {
             it('updates tokens to reflect the change', () => {
-              buffer.setTextInRange([[0, 0], [2, 0]], 'foo()\n7\n');
+              buffer.setTextInRange(
+                [
+                  [0, 0],
+                  [2, 0]
+                ],
+                'foo()\n7\n'
+              );
 
               expect(languageMode.tokenizedLines[0].tokens[1]).toEqual({
                 value: '(',
@@ -233,7 +254,13 @@ describe('TextMateLanguageMode', () => {
 
           describe('when lines are both updated and removed', () => {
             it('updates tokens to reflect the change', () => {
-              buffer.setTextInRange([[1, 0], [3, 0]], 'foo()');
+              buffer.setTextInRange(
+                [
+                  [1, 0],
+                  [3, 0]
+                ],
+                'foo()'
+              );
 
               // previous line 0 remains
               expect(languageMode.tokenizedLines[0].tokens[0]).toEqual({
@@ -274,7 +301,13 @@ describe('TextMateLanguageMode', () => {
           describe('when the change invalidates the tokenization of subsequent lines', () => {
             it('schedules the invalidated lines to be tokenized in the background', () => {
               buffer.insert([5, 30], '/* */');
-              buffer.setTextInRange([[2, 0], [3, 0]], '/*');
+              buffer.setTextInRange(
+                [
+                  [2, 0],
+                  [3, 0]
+                ],
+                '/*'
+              );
               expect(languageMode.tokenizedLines[2].tokens[0].scopes).toEqual([
                 'source.js',
                 'comment.block.js',
@@ -299,7 +332,10 @@ describe('TextMateLanguageMode', () => {
           describe('when lines are both updated and inserted', () => {
             it('updates tokens to reflect the change', () => {
               buffer.setTextInRange(
-                [[1, 0], [2, 0]],
+                [
+                  [1, 0],
+                  [2, 0]
+                ],
                 'foo()\nbar()\nbaz()\nquux()'
               );
 
@@ -592,17 +628,23 @@ describe('TextMateLanguageMode', () => {
     describe('when the selector matches a single token at the position', () => {
       it('returns the range covered by the token', () => {
         expect(
-          languageMode.bufferRangeForScopeAtPosition('.storage.type.var.js', [
-            0,
-            1
-          ])
-        ).toEqual([[0, 0], [0, 3]]);
+          languageMode.bufferRangeForScopeAtPosition(
+            '.storage.type.var.js',
+            [0, 1]
+          )
+        ).toEqual([
+          [0, 0],
+          [0, 3]
+        ]);
         expect(
-          languageMode.bufferRangeForScopeAtPosition('.storage.type.var.js', [
-            0,
-            3
-          ])
-        ).toEqual([[0, 0], [0, 3]]);
+          languageMode.bufferRangeForScopeAtPosition(
+            '.storage.type.var.js',
+            [0, 3]
+          )
+        ).toEqual([
+          [0, 0],
+          [0, 3]
+        ]);
       });
     });
 
@@ -610,7 +652,10 @@ describe('TextMateLanguageMode', () => {
       it('returns the range covered by all contiguous tokens (within a single line)', () => {
         expect(
           languageMode.bufferRangeForScopeAtPosition('.function', [1, 18])
-        ).toEqual([[1, 6], [1, 28]]);
+        ).toEqual([
+          [1, 6],
+          [1, 28]
+        ]);
       });
     });
   });
@@ -889,8 +934,8 @@ describe('TextMateLanguageMode', () => {
       ).toEqual(['syntax--yellow syntax--broken']);
     });
 
-    describe('TextMateHighlightIterator.seek(position)', function() {
-      it('seeks to the leftmost tag boundary greater than or equal to the given position and returns the containing tags', function() {
+    describe('TextMateHighlightIterator.seek(position)', function () {
+      it('seeks to the leftmost tag boundary greater than or equal to the given position and returns the containing tags', function () {
         const languageMode = {
           tokenizedLineForRow(row) {
             if (row === 0) {
@@ -963,7 +1008,7 @@ describe('TextMateLanguageMode', () => {
       });
     });
 
-    describe('TextMateHighlightIterator.moveToSuccessor()', function() {
+    describe('TextMateHighlightIterator.moveToSuccessor()', function () {
       it('reports two boundaries at the same position when tags close, open, then close again without a non-negative integer separating them (regression)', () => {
         const languageMode = {
           tokenizedLineForRow() {
@@ -1369,16 +1414,28 @@ describe('TextMateLanguageMode', () => {
 
       expect(
         languageMode.getFoldableRangeContainingPoint(Point(0, Infinity), 2)
-      ).toEqual([[0, Infinity], [20, Infinity]]);
+      ).toEqual([
+        [0, Infinity],
+        [20, Infinity]
+      ]);
       expect(
         languageMode.getFoldableRangeContainingPoint(Point(1, Infinity), 2)
-      ).toEqual([[1, Infinity], [17, Infinity]]);
+      ).toEqual([
+        [1, Infinity],
+        [17, Infinity]
+      ]);
       expect(
         languageMode.getFoldableRangeContainingPoint(Point(2, Infinity), 2)
-      ).toEqual([[1, Infinity], [17, Infinity]]);
+      ).toEqual([
+        [1, Infinity],
+        [17, Infinity]
+      ]);
       expect(
         languageMode.getFoldableRangeContainingPoint(Point(19, Infinity), 2)
-      ).toEqual([[19, Infinity], [20, Infinity]]);
+      ).toEqual([
+        [19, Infinity],
+        [20, Infinity]
+      ]);
     });
 
     it('works for javascript', async () => {
@@ -1392,25 +1449,37 @@ describe('TextMateLanguageMode', () => {
           Point(0, Infinity),
           2
         )
-      ).toEqual([[0, Infinity], [12, Infinity]]);
+      ).toEqual([
+        [0, Infinity],
+        [12, Infinity]
+      ]);
       expect(
         editor.languageMode.getFoldableRangeContainingPoint(
           Point(1, Infinity),
           2
         )
-      ).toEqual([[1, Infinity], [9, Infinity]]);
+      ).toEqual([
+        [1, Infinity],
+        [9, Infinity]
+      ]);
       expect(
         editor.languageMode.getFoldableRangeContainingPoint(
           Point(2, Infinity),
           2
         )
-      ).toEqual([[1, Infinity], [9, Infinity]]);
+      ).toEqual([
+        [1, Infinity],
+        [9, Infinity]
+      ]);
       expect(
         editor.languageMode.getFoldableRangeContainingPoint(
           Point(4, Infinity),
           2
         )
-      ).toEqual([[4, Infinity], [7, Infinity]]);
+      ).toEqual([
+        [4, Infinity],
+        [7, Infinity]
+      ]);
     });
 
     it('searches upward and downward for surrounding comment lines and folds them as a single fold', async () => {
@@ -1483,7 +1552,7 @@ describe('TextMateLanguageMode', () => {
         buffer.setTextInRange(range, '⋯');
       }
     });
-    let text = buffer.getText();
+    const text = buffer.getText();
     buffer.undo();
     return text;
   }

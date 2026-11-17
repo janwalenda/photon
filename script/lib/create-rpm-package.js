@@ -8,7 +8,7 @@ const template = require('lodash.template');
 
 const CONFIG = require('../config');
 
-module.exports = function(packagedAppPath) {
+module.exports = function (packagedAppPath) {
   console.log(`Creating rpm package for "${packagedAppPath}"`);
   const atomExecutableName =
     CONFIG.channel === 'stable' ? 'atom' : `atom-${CONFIG.channel}`;
@@ -76,7 +76,7 @@ module.exports = function(packagedAppPath) {
     )
   );
   const rpmPackageSpecsContents = template(rpmPackageSpecsTemplate)({
-    appName: appName,
+    appName,
     appFileName: atomExecutableName,
     apmFileName: apmExecutableName,
     description: appDescription,
@@ -96,7 +96,7 @@ module.exports = function(packagedAppPath) {
     )
   );
   const desktopEntryContents = template(desktopEntryTemplate)({
-    appName: appName,
+    appName,
     appFileName: atomExecutableName,
     description: appDescription,
     installDir: '/usr',
@@ -121,7 +121,7 @@ module.exports = function(packagedAppPath) {
 
   console.log(`Generating .rpm package from "${rpmPackageDirPath}"`);
   spawnSync('rpmbuild', ['-ba', '--clean', rpmPackageSpecFilePath]);
-  for (let generatedArch of fs.readdirSync(rpmPackageRpmsDirPath)) {
+  for (const generatedArch of fs.readdirSync(rpmPackageRpmsDirPath)) {
     const generatedArchDirPath = path.join(
       rpmPackageRpmsDirPath,
       generatedArch

@@ -237,9 +237,8 @@ class TextEditorElement extends HTMLElement {
   // Returns an {Object} with two values: `top` and `left`, representing the
   // pixel position.
   pixelPositionForBufferPosition(bufferPosition) {
-    const screenPosition = this.getModel().screenPositionForBufferPosition(
-      bufferPosition
-    );
+    const screenPosition =
+      this.getModel().screenPositionForBufferPosition(bufferPosition);
     return this.getComponent().pixelPositionForScreenPosition(screenPosition);
   }
 

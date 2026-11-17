@@ -3,14 +3,14 @@ const semver = require('semver');
 const os = require('os');
 const path = require('path');
 const fs = require('fs-plus');
-let osVersion = `${os.platform()}-${os.arch()}-${os.release()}`;
+const osVersion = `${os.platform()}-${os.arch()}-${os.release()}`;
 
-let getReleaseChannel = version => {
+const getReleaseChannel = version => {
   return version.indexOf('beta') > -1
     ? 'beta'
     : version.indexOf('dev') > -1
-    ? 'dev'
-    : 'stable';
+      ? 'dev'
+      : 'stable';
 };
 
 describe('Reporter', () => {
@@ -54,20 +54,20 @@ describe('Reporter', () => {
         resourcePath: repositoryRootPath
       });
 
-      let error = new Error();
+      const error = new Error();
       Error.captureStackTrace(error);
       reporter.reportUncaughtException(error);
-      let [lineNumber, columnNumber] = error.stack
+      const [lineNumber, columnNumber] = error.stack
         .match(/.js:(\d+):(\d+)/)
         .slice(1)
         .map(s => parseInt(s));
 
       expect(requests.length).toBe(1);
-      let [request] = requests;
+      const [request] = requests;
       expect(request.method).toBe('POST');
       expect(request.url).toBe('https://notify.bugsnag.com');
       expect(request.headers.get('Content-Type')).toBe('application/json');
-      let body = JSON.parse(request.body);
+      const body = JSON.parse(request.body);
       // Delete `inProject` field because tests may fail when run as part of Atom core
       // (i.e. when this test file will be located under `node_modules/exception-reporting/spec`)
       delete body.events[0].exceptions[0].stacktrace[0].inProject;
@@ -92,8 +92,8 @@ describe('Reporter', () => {
                       ? 'Spec.<anonymous>'
                       : '<anonymous>',
                     file: 'spec/reporter-spec.js',
-                    lineNumber: lineNumber,
-                    columnNumber: columnNumber
+                    lineNumber,
+                    columnNumber
                   }
                 ]
               }
@@ -105,7 +105,7 @@ describe('Reporter', () => {
               releaseStage: getReleaseChannel(atom.getVersion())
             },
             device: {
-              osVersion: osVersion
+              osVersion
             }
           }
         ]
@@ -115,20 +115,20 @@ describe('Reporter', () => {
     it('posts errors originated outside Atom Core to BugSnag', () => {
       fs.getHomeDirectory = () => path.join(__dirname, '..', '..');
 
-      let error = new Error();
+      const error = new Error();
       Error.captureStackTrace(error);
       reporter.reportUncaughtException(error);
-      let [lineNumber, columnNumber] = error.stack
+      const [lineNumber, columnNumber] = error.stack
         .match(/.js:(\d+):(\d+)/)
         .slice(1)
         .map(s => parseInt(s));
 
       expect(requests.length).toBe(1);
-      let [request] = requests;
+      const [request] = requests;
       expect(request.method).toBe('POST');
       expect(request.url).toBe('https://notify.bugsnag.com');
       expect(request.headers.get('Content-Type')).toBe('application/json');
-      let body = JSON.parse(request.body);
+      const body = JSON.parse(request.body);
       // Delete `inProject` field because tests may fail when run as part of Atom core
       // (i.e. when this test file will be located under `node_modules/exception-reporting/spec`)
       delete body.events[0].exceptions[0].stacktrace[0].inProject;
@@ -153,8 +153,8 @@ describe('Reporter', () => {
                       ? 'Spec.<anonymous>'
                       : '<anonymous>',
                     file: '~/exception-reporting/spec/reporter-spec.js',
-                    lineNumber: lineNumber,
-                    columnNumber: columnNumber
+                    lineNumber,
+                    columnNumber
                   }
                 ]
               }
@@ -166,7 +166,7 @@ describe('Reporter', () => {
               releaseStage: getReleaseChannel(atom.getVersion())
             },
             device: {
-              osVersion: osVersion
+              osVersion
             }
           }
         ]
@@ -200,7 +200,8 @@ describe('Reporter', () => {
 
         notification = atom.notifications.getNotifications()[0];
 
-        let notificationOptions = atom.notifications.addInfo.argsForCall[0][1];
+        const notificationOptions =
+          atom.notifications.addInfo.argsForCall[0][1];
         expect(notificationOptions.buttons[1].text).toMatch(/Yes/);
 
         notificationOptions.buttons[1].onDidClick();
@@ -220,7 +221,8 @@ describe('Reporter', () => {
 
         notification = atom.notifications.getNotifications()[0];
 
-        let notificationOptions = atom.notifications.addInfo.argsForCall[0][1];
+        const notificationOptions =
+          atom.notifications.addInfo.argsForCall[0][1];
         expect(notificationOptions.buttons[0].text).toMatch(/No/);
 
         notificationOptions.buttons[0].onDidClick();
@@ -263,14 +265,12 @@ describe('Reporter', () => {
         },
         {
           name: 'bundled-1',
-          path:
-            '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-1',
+          path: '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-1',
           metadata: { version: '1.0.0' }
         },
         {
           name: 'bundled-2',
-          path:
-            '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-2',
+          path: '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-2',
           metadata: { version: '1.2.0' }
         }
       ];
@@ -279,7 +279,7 @@ describe('Reporter', () => {
 
       spyOn(atom.packages, 'getPackageDirPaths').andReturn(packageDirPaths);
 
-      let error = new Error();
+      const error = new Error();
       Error.captureStackTrace(error);
       reporter.reportUncaughtException(error);
 
@@ -321,20 +321,20 @@ describe('Reporter', () => {
     it('posts warnings to bugsnag', () => {
       fs.getHomeDirectory = () => path.join(__dirname, '..', '..');
 
-      let error = new Error();
+      const error = new Error();
       Error.captureStackTrace(error);
       reporter.reportFailedAssertion(error);
-      let [lineNumber, columnNumber] = error.stack
+      const [lineNumber, columnNumber] = error.stack
         .match(/.js:(\d+):(\d+)/)
         .slice(1)
         .map(s => parseInt(s));
 
       expect(requests.length).toBe(1);
-      let [request] = requests;
+      const [request] = requests;
       expect(request.method).toBe('POST');
       expect(request.url).toBe('https://notify.bugsnag.com');
       expect(request.headers.get('Content-Type')).toBe('application/json');
-      let body = JSON.parse(request.body);
+      const body = JSON.parse(request.body);
       // Delete `inProject` field because tests may fail when run as part of Atom core
       // (i.e. when this test file will be located under `node_modules/exception-reporting/spec`)
       delete body.events[0].exceptions[0].stacktrace[0].inProject;
@@ -359,8 +359,8 @@ describe('Reporter', () => {
                       ? 'Spec.<anonymous>'
                       : '<anonymous>',
                     file: '~/exception-reporting/spec/reporter-spec.js',
-                    lineNumber: lineNumber,
-                    columnNumber: columnNumber
+                    lineNumber,
+                    columnNumber
                   }
                 ]
               }
@@ -372,7 +372,7 @@ describe('Reporter', () => {
               releaseStage: getReleaseChannel(atom.getVersion())
             },
             device: {
-              osVersion: osVersion
+              osVersion
             }
           }
         ]
@@ -406,7 +406,8 @@ describe('Reporter', () => {
 
         notification = atom.notifications.getNotifications()[0];
 
-        let notificationOptions = atom.notifications.addInfo.argsForCall[0][1];
+        const notificationOptions =
+          atom.notifications.addInfo.argsForCall[0][1];
         expect(notificationOptions.buttons[1].text).toMatch(/Yes/);
 
         notificationOptions.buttons[1].onDidClick();
@@ -426,7 +427,8 @@ describe('Reporter', () => {
 
         notification = atom.notifications.getNotifications()[0];
 
-        let notificationOptions = atom.notifications.addInfo.argsForCall[0][1];
+        const notificationOptions =
+          atom.notifications.addInfo.argsForCall[0][1];
         expect(notificationOptions.buttons[0].text).toMatch(/No/);
 
         notificationOptions.buttons[0].onDidClick();
@@ -455,7 +457,7 @@ describe('Reporter', () => {
       });
 
       it("only notifies the user once for a given 'privateMetadataRequestName'", () => {
-        let fakeStorage = {};
+        const fakeStorage = {};
         spyOn(global.localStorage, 'setItem').andCallFake(
           (key, value) => (fakeStorage[key] = value)
         );
@@ -472,7 +474,7 @@ describe('Reporter', () => {
         reporter.reportFailedAssertion(error);
         expect(atom.notifications.addInfo).not.toHaveBeenCalled();
 
-        let error2 = new Error();
+        const error2 = new Error();
         Error.captureStackTrace(error2);
         error2.privateMetadataDescription = 'Something about you';
         error2.privateMetadata = { baz: 'quux' };
@@ -497,14 +499,12 @@ describe('Reporter', () => {
         },
         {
           name: 'bundled-1',
-          path:
-            '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-1',
+          path: '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-1',
           metadata: { version: '1.0.0' }
         },
         {
           name: 'bundled-2',
-          path:
-            '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-2',
+          path: '/Applications/Atom.app/Contents/Resources/app.asar/node_modules/bundled-2',
           metadata: { version: '1.2.0' }
         }
       ];
@@ -513,7 +513,7 @@ describe('Reporter', () => {
 
       spyOn(atom.packages, 'getPackageDirPaths').andReturn(packageDirPaths);
 
-      let error = new Error();
+      const error = new Error();
       Error.captureStackTrace(error);
       reporter.reportFailedAssertion(error);
 

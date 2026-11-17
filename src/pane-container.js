@@ -51,7 +51,7 @@ module.exports = class PaneContainer {
 
   destroy() {
     this.alive = false;
-    for (let pane of this.getRoot().getPanes()) {
+    for (const pane of this.getRoot().getPanes()) {
       pane.destroy();
     }
     this.cancelStoppedChangingActivePaneItemTimeout();
@@ -100,7 +100,7 @@ module.exports = class PaneContainer {
   }
 
   observePanes(fn) {
-    for (let pane of this.getPanes()) {
+    for (const pane of this.getPanes()) {
       fn(pane);
     }
     return this.onDidAddPane(({ pane }) => fn(pane));
@@ -132,7 +132,7 @@ module.exports = class PaneContainer {
   }
 
   observePaneItems(fn) {
-    for (let item of this.getPaneItems()) {
+    for (const item of this.getPaneItems()) {
       fn(item);
     }
     return this.onDidAddPaneItem(({ item }) => fn(item));
@@ -209,7 +209,7 @@ module.exports = class PaneContainer {
   }
 
   saveAll() {
-    for (let pane of this.getPanes()) {
+    for (const pane of this.getPanes()) {
       pane.saveItems();
     }
   }
@@ -271,7 +271,7 @@ module.exports = class PaneContainer {
   }
 
   destroyEmptyPanes() {
-    for (let pane of this.getPanes()) {
+    for (const pane of this.getPanes()) {
       if (pane.items.length === 0) {
         pane.destroy();
       }

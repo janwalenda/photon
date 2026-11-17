@@ -1,9 +1,9 @@
 const ContextMenuManager = require('../src/context-menu-manager');
 
-describe('ContextMenuManager', function() {
+describe('ContextMenuManager', function () {
   let [contextMenu, parent, child, grandchild] = [];
 
-  beforeEach(function() {
+  beforeEach(function () {
     const { resourcePath } = atom.getLoadSettings();
     contextMenu = new ContextMenuManager({ keymapManager: atom.keymaps });
     contextMenu.initialize({ resourcePath });
@@ -23,13 +23,13 @@ describe('ContextMenuManager', function() {
     document.body.appendChild(parent);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     document.body.blur();
     document.body.removeChild(parent);
   });
 
-  describe('::add(itemsBySelector)', function() {
-    it('can add top-level menu items that can be removed with the returned disposable', function() {
+  describe('::add(itemsBySelector)', function () {
+    it('can add top-level menu items that can be removed with the returned disposable', function () {
       const disposable = contextMenu.add({
         '.parent': [{ label: 'A', command: 'a' }],
         '.child': [{ label: 'B', command: 'b' }],
@@ -46,7 +46,7 @@ describe('ContextMenuManager', function() {
       expect(contextMenu.templateForElement(grandchild)).toEqual([]);
     });
 
-    it('can add submenu items to existing menus that can be removed with the returned disposable', function() {
+    it('can add submenu items to existing menus that can be removed with the returned disposable', function () {
       const disposable1 = contextMenu.add({
         '.grandchild': [{ label: 'A', submenu: [{ label: 'B', command: 'b' }] }]
       });
@@ -78,7 +78,7 @@ describe('ContextMenuManager', function() {
       expect(contextMenu.templateForElement(grandchild)).toEqual([]);
     });
 
-    it('favors the most specific / recently added item in the case of a duplicate label', function() {
+    it('favors the most specific / recently added item in the case of a duplicate label', function () {
       grandchild.classList.add('foo');
 
       const disposable1 = contextMenu.add({
@@ -115,7 +115,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('allows multiple separators, but not adjacent to each other', function() {
+    it('allows multiple separators, but not adjacent to each other', function () {
       contextMenu.add({
         '.grandchild': [
           { label: 'A', command: 'a' },
@@ -137,7 +137,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('excludes items marked for display in devMode unless in dev mode', function() {
+    it('excludes items marked for display in devMode unless in dev mode', function () {
       contextMenu.add({
         '.grandchild': [
           { label: 'A', command: 'a', devMode: true },
@@ -156,7 +156,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('allows items to be associated with `created` hooks which are invoked on template construction with the item and event', function() {
+    it('allows items to be associated with `created` hooks which are invoked on template construction with the item and event', function () {
       let createdEvent = null;
 
       const item = {
@@ -178,7 +178,7 @@ describe('ContextMenuManager', function() {
       expect(createdEvent).toBe(dispatchedEvent);
     });
 
-    it('allows items to be associated with `shouldDisplay` hooks which are invoked on construction to determine whether the item should be included', function() {
+    it('allows items to be associated with `shouldDisplay` hooks which are invoked on construction to determine whether the item should be included', function () {
       let shouldDisplayEvent = null;
       let shouldDisplay = true;
 
@@ -204,7 +204,7 @@ describe('ContextMenuManager', function() {
       expect(contextMenu.templateForEvent(dispatchedEvent)).toEqual([]);
     });
 
-    it('prunes a trailing separator', function() {
+    it('prunes a trailing separator', function () {
       contextMenu.add({
         '.grandchild': [
           { label: 'A', command: 'a' },
@@ -219,7 +219,7 @@ describe('ContextMenuManager', function() {
       );
     });
 
-    it('prunes a leading separator', function() {
+    it('prunes a leading separator', function () {
       contextMenu.add({
         '.grandchild': [
           { type: 'separator' },
@@ -234,7 +234,7 @@ describe('ContextMenuManager', function() {
       );
     });
 
-    it('prunes duplicate separators', function() {
+    it('prunes duplicate separators', function () {
       contextMenu.add({
         '.grandchild': [
           { label: 'A', command: 'a' },
@@ -249,7 +249,7 @@ describe('ContextMenuManager', function() {
       );
     });
 
-    it('prunes all redundant separators', function() {
+    it('prunes all redundant separators', function () {
       contextMenu.add({
         '.grandchild': [
           { type: 'separator' },
@@ -269,7 +269,7 @@ describe('ContextMenuManager', function() {
       );
     });
 
-    it('throws an error when the selector is invalid', function() {
+    it('throws an error when the selector is invalid', function () {
       let addError = null;
       try {
         contextMenu.add({ '<>': [{ label: 'A', command: 'a' }] });
@@ -279,7 +279,7 @@ describe('ContextMenuManager', function() {
       expect(addError.message).toContain('<>');
     });
 
-    it('calls `created` hooks for submenu items', function() {
+    it('calls `created` hooks for submenu items', function () {
       const item = {
         label: 'A',
         command: 'B',
@@ -311,10 +311,10 @@ describe('ContextMenuManager', function() {
     });
   });
 
-  describe('::templateForEvent(target)', function() {
+  describe('::templateForEvent(target)', function () {
     let [keymaps, item] = [];
 
-    beforeEach(function() {
+    beforeEach(function () {
       keymaps = atom.keymaps.add('source', {
         '.child': {
           'ctrl-a': 'test:my-command',
@@ -336,7 +336,7 @@ describe('ContextMenuManager', function() {
 
     afterEach(() => keymaps.dispose());
 
-    it('adds Electron-style accelerators to items that have keybindings', function() {
+    it('adds Electron-style accelerators to items that have keybindings', function () {
       child.focus();
       const dispatchedEvent = { target: child };
       expect(contextMenu.templateForEvent(dispatchedEvent)).toEqual([
@@ -357,7 +357,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('adds accelerators when a parent node has key bindings for a given command', function() {
+    it('adds accelerators when a parent node has key bindings for a given command', function () {
       grandchild.focus();
       const dispatchedEvent = { target: grandchild };
       expect(contextMenu.templateForEvent(dispatchedEvent)).toEqual([
@@ -378,7 +378,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('does not add accelerators when a child node has key bindings for a given command', function() {
+    it('does not add accelerators when a child node has key bindings for a given command', function () {
       parent.focus();
       const dispatchedEvent = { target: parent };
       expect(contextMenu.templateForEvent(dispatchedEvent)).toEqual([
@@ -397,7 +397,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('adds accelerators based on focus, not context menu target', function() {
+    it('adds accelerators based on focus, not context menu target', function () {
       grandchild.focus();
       const dispatchedEvent = { target: parent };
       expect(contextMenu.templateForEvent(dispatchedEvent)).toEqual([
@@ -418,7 +418,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('does not add accelerators for multi-keystroke key bindings', function() {
+    it('does not add accelerators for multi-keystroke key bindings', function () {
       atom.keymaps.add('source', {
         '.child': {
           'ctrl-a ctrl-b': 'test:multi-keystroke-command'
@@ -447,8 +447,8 @@ describe('ContextMenuManager', function() {
     });
   });
 
-  describe('::templateForEvent(target) (sorting)', function() {
-    it('applies simple sorting rules', function() {
+  describe('::templateForEvent(target) (sorting)', function () {
+    it('applies simple sorting rules', function () {
       contextMenu.add({
         '.parent': [
           {
@@ -478,7 +478,7 @@ describe('ContextMenuManager', function() {
       ]);
     });
 
-    it('applies sorting rules recursively to submenus', function() {
+    it('applies sorting rules recursively to submenus', function () {
       contextMenu.add({
         '.parent': [
           {

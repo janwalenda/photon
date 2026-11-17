@@ -172,7 +172,8 @@ export default class DeprecationCopView {
   }
 
   renderDeprecatedSelectors() {
-    const deprecationsByPackageName = this.getDeprecatedSelectorsByPackageName();
+    const deprecationsByPackageName =
+      this.getDeprecatedSelectorsByPackageName();
     const packageNames = Object.keys(deprecationsByPackageName);
     if (packageNames.length === 0) {
       return <li className="list-item">No deprecated selectors</li>;
@@ -387,7 +388,7 @@ export default class DeprecationCopView {
 
   async shortenURL(url) {
     let encodedUrl = encodeURIComponent(url).substr(0, 5000); // is.gd has 5000 char limit
-    let incompletePercentEncoding = encodedUrl.indexOf(
+    const incompletePercentEncoding = encodedUrl.indexOf(
       '%',
       encodedUrl.length - 2
     );
@@ -396,7 +397,7 @@ export default class DeprecationCopView {
       encodedUrl = encodedUrl.substr(0, incompletePercentEncoding);
     }
 
-    let result = await fetch('https://is.gd/create.php?format=simple', {
+    const result = await fetch('https://is.gd/create.php?format=simple', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `url=${encodedUrl}`

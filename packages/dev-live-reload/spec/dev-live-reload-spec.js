@@ -83,9 +83,8 @@ describe('Dev Live Reload', () => {
 
     it('stops watching all files', async () => {
       spyOn(atom.packages, 'hasActivatedInitialPackages').andReturn(true);
-      const { mainModule } = await atom.packages.activatePackage(
-        'dev-live-reload'
-      );
+      const { mainModule } =
+        await atom.packages.activatePackage('dev-live-reload');
       expect(mainModule.uiWatcher).not.toBeNull();
 
       spyOn(mainModule.uiWatcher, 'destroy');
@@ -95,9 +94,8 @@ describe('Dev Live Reload', () => {
     });
 
     it('unsubscribes from the onDidActivateInitialPackages subscription if it is disabled before all initial packages are activated', async () => {
-      const { mainModule } = await atom.packages.activatePackage(
-        'dev-live-reload'
-      );
+      const { mainModule } =
+        await atom.packages.activatePackage('dev-live-reload');
       expect(mainModule.activatedDisposable.disposed).toBe(false);
 
       await atom.packages.deactivatePackage('dev-live-reload');

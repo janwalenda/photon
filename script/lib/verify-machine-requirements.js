@@ -2,7 +2,7 @@
 
 const childProcess = require('child_process');
 
-module.exports = function(ci) {
+module.exports = function (ci) {
   verifyNode();
   verifyPython();
 };

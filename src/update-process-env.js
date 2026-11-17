@@ -27,13 +27,13 @@ async function updateProcessEnv(launchEnv) {
   }
 
   if (envToAssign) {
-    for (let key in process.env) {
+    for (const key in process.env) {
       if (!ENVIRONMENT_VARIABLES_TO_PRESERVE.has(key)) {
         delete process.env[key];
       }
     }
 
-    for (let key in envToAssign) {
+    for (const key in envToAssign) {
       if (
         !ENVIRONMENT_VARIABLES_TO_PRESERVE.has(key) ||
         (!process.env[key] && envToAssign[key])
@@ -69,7 +69,7 @@ function shouldGetEnvFromShell(env) {
 }
 
 async function getEnvFromShell(env) {
-  let { stdout, error } = await new Promise(resolve => {
+  const { stdout, error } = await new Promise(resolve => {
     let child;
     let error;
     let stdout = '';
@@ -128,12 +128,12 @@ async function getEnvFromShell(env) {
     return null;
   }
 
-  let result = {};
-  for (let line of stdout.split('\0')) {
+  const result = {};
+  for (const line of stdout.split('\0')) {
     if (line.includes('=')) {
-      let components = line.split('=');
-      let key = components.shift();
-      let value = components.join('=');
+      const components = line.split('=');
+      const key = components.shift();
+      const value = components.join('=');
       result[key] = value;
     }
   }

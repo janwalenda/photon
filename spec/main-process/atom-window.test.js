@@ -11,26 +11,26 @@ const dedent = require('dedent');
 const AtomWindow = require('../../src/main-process/atom-window');
 const { emitterEventPromise } = require('../async-spec-helpers');
 
-describe('AtomWindow', function() {
+describe('AtomWindow', function () {
   let sinon, app, service;
 
-  beforeEach(function() {
+  beforeEach(function () {
     sinon = sandbox;
     app = new StubApplication(sinon);
     service = new StubRecoveryService(sinon);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     sinon.restore();
   });
 
-  describe('creating a real window', function() {
+  describe('creating a real window', function () {
     let resourcePath, windowInitializationScript, atomHome;
     let original;
 
     this.timeout(10 * 1000);
 
-    beforeEach(async function() {
+    beforeEach(async function () {
       original = {
         ATOM_HOME: process.env.ATOM_HOME,
         ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT:
@@ -81,13 +81,13 @@ describe('AtomWindow', function() {
       process.env.ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT = 'true';
     });
 
-    afterEach(async function() {
+    afterEach(async function () {
       process.env.ATOM_HOME = original.ATOM_HOME;
       process.env.ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT =
         original.ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT;
     });
 
-    it('creates a real, properly configured BrowserWindow', async function() {
+    it('creates a real, properly configured BrowserWindow', async function () {
       const w = new AtomWindow(app, service, {
         resourcePath,
         windowInitializationScript,
@@ -121,9 +121,9 @@ describe('AtomWindow', function() {
     });
   });
 
-  describe('launch behavior', function() {
+  describe('launch behavior', function () {
     if (process.platform === 'darwin') {
-      it('sets titleBarStyle to "hidden" for a custom title bar on non-spec windows', function() {
+      it('sets titleBarStyle to "hidden" for a custom title bar on non-spec windows', function () {
         app.config['core.titleBar'] = 'custom';
 
         const { browserWindow: w0 } = new AtomWindow(app, service, {
@@ -138,7 +138,7 @@ describe('AtomWindow', function() {
         assert.isUndefined(w1.options.titleBarStyle);
       });
 
-      it('sets titleBarStyle to "hiddenInset" for a custom inset title bar on non-spec windows', function() {
+      it('sets titleBarStyle to "hiddenInset" for a custom inset title bar on non-spec windows', function () {
         app.config['core.titleBar'] = 'custom-inset';
 
         const { browserWindow: w0 } = new AtomWindow(app, service, {
@@ -152,7 +152,7 @@ describe('AtomWindow', function() {
         });
         assert.isUndefined(w1.options.titleBarStyle);
       });
-      it('sets frame to "false" for a hidden title bar on non-spec windows', function() {
+      it('sets frame to "false" for a hidden title bar on non-spec windows', function () {
         app.config['core.titleBar'] = 'hidden';
 
         const { browserWindow: w0 } = new AtomWindow(app, service, {
@@ -167,7 +167,7 @@ describe('AtomWindow', function() {
         assert.isUndefined(w1.options.frame);
       });
     } else {
-      it('sets frame to "false" for a hidden title bar on non-spec windows', function() {
+      it('sets frame to "false" for a hidden title bar on non-spec windows', function () {
         app.config['core.titleBar'] = 'hidden';
 
         const { browserWindow: w0 } = new AtomWindow(app, service, {
@@ -183,7 +183,7 @@ describe('AtomWindow', function() {
       });
     }
 
-    it('opens initial locations', async function() {
+    it('opens initial locations', async function () {
       const locationsToOpen = [
         {
           pathToOpen: 'file.txt',
@@ -216,7 +216,7 @@ describe('AtomWindow', function() {
       ]);
     });
 
-    it('does not open an initial null location', async function() {
+    it('does not open an initial null location', async function () {
       const w = new AtomWindow(app, service, {
         browserWindowConstructor: StubBrowserWindow,
         locationsToOpen: [{ pathToOpen: null }]
@@ -229,7 +229,7 @@ describe('AtomWindow', function() {
       assert.lengthOf(w.browserWindow.sent, 0);
     });
 
-    it('does not open initial locations in spec mode', async function() {
+    it('does not open initial locations in spec mode', async function () {
       const w = new AtomWindow(app, service, {
         browserWindowConstructor: StubBrowserWindow,
         locationsToOpen: [{ pathToOpen: 'file.txt' }],
@@ -243,7 +243,7 @@ describe('AtomWindow', function() {
       assert.lengthOf(w.browserWindow.sent, 0);
     });
 
-    it('focuses the webView for specs', function() {
+    it('focuses the webView for specs', function () {
       const w = new AtomWindow(app, service, {
         browserWindowConstructor: StubBrowserWindow,
         isSpec: true
@@ -253,15 +253,15 @@ describe('AtomWindow', function() {
     });
   });
 
-  describe('project root tracking', function() {
-    it('knows when it has no roots', function() {
+  describe('project root tracking', function () {
+    it('knows when it has no roots', function () {
       const w = new AtomWindow(app, service, {
         browserWindowConstructor: StubBrowserWindow
       });
       assert.isFalse(w.hasProjectPaths());
     });
 
-    it('is initialized from directories in the initial locationsToOpen', function() {
+    it('is initialized from directories in the initial locationsToOpen', function () {
       const locationsToOpen = [
         { pathToOpen: 'file.txt', exists: true, isFile: true },
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
@@ -284,7 +284,7 @@ describe('AtomWindow', function() {
       assert.isTrue(w.hasProjectPaths());
     });
 
-    it('is updated synchronously by openLocations', async function() {
+    it('is updated synchronously by openLocations', async function () {
       const locationsToOpen = [
         { pathToOpen: 'file.txt', isFile: true },
         { pathToOpen: 'directory1', isDirectory: true },
@@ -304,7 +304,7 @@ describe('AtomWindow', function() {
       await promise;
     });
 
-    it('is updated by setProjectRoots', function() {
+    it('is updated by setProjectRoots', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true }
       ];
@@ -329,7 +329,7 @@ describe('AtomWindow', function() {
       ]);
     });
 
-    it('never reports that it owns the empty path', function() {
+    it('never reports that it owns the empty path', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true },
@@ -343,7 +343,7 @@ describe('AtomWindow', function() {
       assert.isFalse(w.containsLocation({ pathToOpen: null }));
     });
 
-    it('discovers an exact path match', function() {
+    it('discovers an exact path match', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true }
@@ -357,7 +357,7 @@ describe('AtomWindow', function() {
       assert.isFalse(w.containsLocation({ pathToOpen: 'directory2' }));
     });
 
-    it('discovers the path of a file within any project root', function() {
+    it('discovers the path of a file within any project root', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true }
@@ -397,7 +397,7 @@ describe('AtomWindow', function() {
       );
     });
 
-    it('reports that it owns nonexistent paths within a project root', function() {
+    it('reports that it owns nonexistent paths within a project root', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true }
@@ -421,7 +421,7 @@ describe('AtomWindow', function() {
       );
     });
 
-    it('never reports that it owns directories within a project root', function() {
+    it('never reports that it owns directories within a project root', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true }
@@ -440,7 +440,7 @@ describe('AtomWindow', function() {
       );
     });
 
-    it('checks a full list of paths and reports if it owns all of them', function() {
+    it('checks a full list of paths and reports if it owns all of them', function () {
       const locationsToOpen = [
         { pathToOpen: 'directory0', exists: true, isDirectory: true },
         { pathToOpen: 'directory1', exists: true, isDirectory: true }

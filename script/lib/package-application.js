@@ -14,7 +14,7 @@ const template = require('lodash.template');
 const CONFIG = require('../config');
 const HOST_ARCH = hostArch();
 
-module.exports = function() {
+module.exports = function () {
   const appName = getAppName();
   console.log(
     `Running electron-packager on ${

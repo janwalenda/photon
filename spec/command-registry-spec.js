@@ -24,7 +24,7 @@ describe('CommandRegistry', () => {
   describe('when a command event is dispatched on an element', () => {
     it('invokes callbacks with selectors matching the target', () => {
       let called = false;
-      registry.add('.grandchild', 'command', function(event) {
+      registry.add('.grandchild', 'command', function (event) {
         expect(this).toBe(grandchild);
         expect(event.type).toBe('command');
         expect(event.eventPhase).toBe(Event.BUBBLING_PHASE);
@@ -40,14 +40,14 @@ describe('CommandRegistry', () => {
     it('invokes callbacks with selectors matching ancestors of the target', () => {
       const calls = [];
 
-      registry.add('.child', 'command', function(event) {
+      registry.add('.child', 'command', function (event) {
         expect(this).toBe(child);
         expect(event.target).toBe(grandchild);
         expect(event.currentTarget).toBe(child);
         calls.push('child');
       });
 
-      registry.add('.parent', 'command', function(event) {
+      registry.add('.parent', 'command', function (event) {
         expect(this).toBe(parent);
         expect(event.target).toBe(grandchild);
         expect(event.currentTarget).toBe(parent);
@@ -364,7 +364,7 @@ describe('CommandRegistry', () => {
   describe('::dispatch(target, commandName)', () => {
     it('simulates invocation of the given command ', () => {
       let called = false;
-      registry.add('.grandchild', 'command', function(event) {
+      registry.add('.grandchild', 'command', function (event) {
         expect(this).toBe(grandchild);
         expect(event.type).toBe('command');
         expect(event.eventPhase).toBe(Event.BUBBLING_PHASE);

@@ -9,7 +9,7 @@ module.exports = class ReopenProjectListView {
       items: [],
       filterKeyForItem: project => project.name,
       elementForItem: project => {
-        let element = document.createElement('li');
+        const element = document.createElement('li');
         if (project.name === this.currentProjectName) {
           element.classList.add('active');
         }

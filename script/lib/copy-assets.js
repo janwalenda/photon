@@ -9,7 +9,7 @@ const CONFIG = require('../config');
 const glob = require('glob');
 const includePathInPackagedApp = require('./include-path-in-packaged-app');
 
-module.exports = function() {
+module.exports = function () {
   console.log(`Copying assets to ${CONFIG.intermediateAppPath}`);
   let srcPaths = [
     path.join(CONFIG.repositoryRootPath, 'benchmarks', 'benchmark-runner.js'),
@@ -25,7 +25,7 @@ module.exports = function() {
       ignore: path.join('**', '*-spec.*')
     })
   );
-  for (let srcPath of srcPaths) {
+  for (const srcPath of srcPaths) {
     fs.copySync(srcPath, computeDestinationPath(srcPath), {
       filter: includePathInPackagedApp
     });
@@ -77,10 +77,9 @@ module.exports = function() {
 // development (devDependencies of the root or of a workspace, and their deps).
 // They are not copied into the packaged app.
 function getDevOnlyPaths() {
-  const lock = require(path.join(
-    CONFIG.repositoryRootPath,
-    'package-lock.json'
-  ));
+  const lock = require(
+    path.join(CONFIG.repositoryRootPath, 'package-lock.json')
+  );
   const devOnlyPaths = new Set();
   for (const [lockPath, entry] of Object.entries(lock.packages || {})) {
     if (lockPath && entry.dev) {

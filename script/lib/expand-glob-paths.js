@@ -2,7 +2,7 @@
 
 const glob = require('glob');
 
-module.exports = function(globPaths) {
+module.exports = function (globPaths) {
   return Promise.all(globPaths.map(g => expandGlobPath(g))).then(paths =>
     paths.reduce((a, b) => a.concat(b), [])
   );

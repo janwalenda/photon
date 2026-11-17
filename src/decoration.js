@@ -3,7 +3,7 @@ const { Emitter } = require('event-kit');
 let idCounter = 0;
 const nextId = () => idCounter++;
 
-const normalizeDecorationProperties = function(decoration, decorationParams) {
+const normalizeDecorationProperties = function (decoration, decorationParams) {
   decorationParams.id = decoration.id;
 
   if (
@@ -213,7 +213,7 @@ module.exports = class Decoration {
     if (decorationPattern == null) {
       return false;
     }
-    for (let key in decorationPattern) {
+    for (const key in decorationPattern) {
       const value = decorationPattern[key];
       if (this.properties[key] !== value) {
         return false;

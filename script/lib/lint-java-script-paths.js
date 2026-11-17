@@ -6,7 +6,7 @@ const process = require('process');
 
 const CONFIG = require('../config');
 
-module.exports = async function() {
+module.exports = async function () {
   return new Promise((resolve, reject) => {
     const eslintArgs = ['--cache', '--format', 'json'];
 

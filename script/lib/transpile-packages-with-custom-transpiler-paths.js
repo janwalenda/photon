@@ -9,13 +9,15 @@ const CONFIG = require('../config');
 
 require('colors');
 
-module.exports = function() {
+module.exports = function () {
   console.log(
     `Transpiling packages with custom transpiler configurations in ${
       CONFIG.intermediateAppPath
     }`
   );
-  for (let packageName of Object.keys(CONFIG.appMetadata.packageDependencies)) {
+  for (const packageName of Object.keys(
+    CONFIG.appMetadata.packageDependencies
+  )) {
     const intermediatePackagePath = path.join(
       CONFIG.intermediateAppPath,
       'node_modules',
@@ -36,7 +38,7 @@ module.exports = function() {
         metadata,
         metadata.atomTranspilers
       );
-      for (let config of metadata.atomTranspilers) {
+      for (const config of metadata.atomTranspilers) {
         const pathsToCompile = glob.sync(
           path.join(intermediatePackagePath, config.glob),
           { nodir: true }

@@ -69,7 +69,7 @@ module.exports = class ApplicationMenu {
   flattenMenuItems(menu) {
     const object = menu.items || {};
     let items = [];
-    for (let index in object) {
+    for (const index in object) {
       const item = object[index];
       items.push(item);
       if (item.submenu)
@@ -85,7 +85,7 @@ module.exports = class ApplicationMenu {
   // Returns an Array of native menu items.
   flattenMenuTemplate(template) {
     let items = [];
-    for (let item of template) {
+    for (const item of template) {
       items.push(item);
       if (item.submenu)
         items = items.concat(this.flattenMenuTemplate(item.submenu));
@@ -98,14 +98,14 @@ module.exports = class ApplicationMenu {
   // enable - If true enables all window specific items, if false disables all
   //          window specific items.
   enableWindowSpecificItems(enable) {
-    for (let item of this.flattenMenuItems(this.menu)) {
+    for (const item of this.flattenMenuItems(this.menu)) {
       if (item.metadata && item.metadata.windowSpecific) item.enabled = enable;
     }
   }
 
   // Replaces VERSION with the current version.
   substituteVersion(template) {
-    let item = this.flattenMenuTemplate(template).find(
+    const item = this.flattenMenuTemplate(template).find(
       ({ label }) => label === 'VERSION'
     );
     if (item) item.label = `Version ${this.version}`;

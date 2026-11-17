@@ -1,4 +1,4 @@
-module.exports = function(params) {
+module.exports = function (params) {
   const { crashReporter } = require('electron');
   const os = require('os');
   const platformRelease = os.release();

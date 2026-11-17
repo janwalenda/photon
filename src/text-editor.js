@@ -103,7 +103,7 @@ module.exports = class TextEditor {
   static deserialize(state, atomEnvironment) {
     if (state.version !== SERIALIZATION_VERSION) return null;
 
-    let bufferId = state.tokenizedBuffer
+    const bufferId = state.tokenizedBuffer
       ? state.tokenizedBuffer.bufferId
       : state.bufferId;
 
@@ -294,7 +294,7 @@ module.exports = class TextEditor {
       class: 'folded'
     });
 
-    for (let marker of this.selectionsMarkerLayer.getMarkers()) {
+    for (const marker of this.selectionsMarkerLayer.getMarkers()) {
       this.addSelection(marker);
     }
 
@@ -392,7 +392,7 @@ module.exports = class TextEditor {
   update(params) {
     const displayLayerParams = {};
 
-    for (let param of Object.keys(params)) {
+    for (const param of Object.keys(params)) {
       const value = params[param];
 
       switch (param) {
@@ -630,7 +630,7 @@ module.exports = class TextEditor {
       displayLayerParams.softWrapColumn = this.getSoftWrapColumn();
       displayLayerParams.showIndentGuides = this.doesShowIndentGuide();
       if (this.mini) {
-        for (let decoration of this.cursorLineDecorations) {
+        for (const decoration of this.cursorLineDecorations) {
           decoration.destroy();
         }
         this.cursorLineDecorations = null;
@@ -879,7 +879,7 @@ module.exports = class TextEditor {
     this.alive = false;
     this.disposables.dispose();
     this.displayLayer.destroy();
-    for (let selection of this.selections.slice()) {
+    for (const selection of this.selections.slice()) {
       selection.destroy();
     }
     this.buffer.release();
@@ -1866,7 +1866,7 @@ module.exports = class TextEditor {
         this.buffer.insert([precedingRow, 0], lines);
 
         // Restore folds that existed before the lines were moved
-        for (let rangeToRefold of rangesToRefold) {
+        for (const rangeToRefold of rangesToRefold) {
           this.displayLayer.foldBufferRange(rangeToRefold);
         }
 
@@ -1956,7 +1956,7 @@ module.exports = class TextEditor {
         this.buffer.delete(linesRange);
 
         // Restore folds that existed before the lines were moved
-        for (let rangeToRefold of rangesToRefold) {
+        for (const rangeToRefold of rangesToRefold) {
           this.displayLayer.foldBufferRange(rangeToRefold);
         }
 
@@ -1990,7 +1990,7 @@ module.exports = class TextEditor {
 
     if (noSelectionAtStartOfLine) {
       this.transact(() => {
-        for (let selection of selections) {
+        for (const selection of selections) {
           const charToLeftOfSelection = new Range(
             selection.start.translate(translationDelta),
             selection.start
@@ -2027,7 +2027,7 @@ module.exports = class TextEditor {
 
     if (noSelectionAtEndOfLine) {
       this.transact(() => {
-        for (let selection of selections) {
+        for (const selection of selections) {
           const charToRightOfSelection = new Range(
             selection.end,
             selection.end.translate(translationDelta)
@@ -2062,17 +2062,21 @@ module.exports = class TextEditor {
         previousSelectionRanges[i] = selections[i].getBufferRange();
         if (selections[i].isEmpty()) {
           const { start } = selections[i].getScreenRange();
-          selections[i].setScreenRange([[start.row, 0], [start.row + 1, 0]], {
-            preserveFolds: true
-          });
+          selections[i].setScreenRange(
+            [
+              [start.row, 0],
+              [start.row + 1, 0]
+            ],
+            {
+              preserveFolds: true
+            }
+          );
         }
         let [startRow, endRow] = selections[i].getBufferRowRange();
         endRow++;
         while (i > 0) {
-          const [
-            previousSelectionStartRow,
-            previousSelectionEndRow
-          ] = selections[i - 1].getBufferRowRange();
+          const [previousSelectionStartRow, previousSelectionEndRow] =
+            selections[i - 1].getBufferRowRange();
           if (previousSelectionEndRow === startRow) {
             startRow = previousSelectionStartRow;
             previousSelectionRanges[i - 1] = selections[i - 1].getBufferRange();
@@ -2082,9 +2086,11 @@ module.exports = class TextEditor {
           }
         }
 
-        const intersectingFolds = this.displayLayer.foldsIntersectingBufferRange(
-          [[startRow, 0], [endRow, 0]]
-        );
+        const intersectingFolds =
+          this.displayLayer.foldsIntersectingBufferRange([
+            [startRow, 0],
+            [endRow, 0]
+          ]);
         let textToDuplicate = this.getTextInBufferRange([
           [startRow, 0],
           [endRow, 0]
@@ -2141,7 +2147,10 @@ module.exports = class TextEditor {
         this.addSelectionForBufferRange([start, [start.row, Infinity]]);
         let { row } = start;
         while (++row < end.row) {
-          this.addSelectionForBufferRange([[row, 0], [row, Infinity]]);
+          this.addSelectionForBufferRange([
+            [row, 0],
+            [row, Infinity]
+          ]);
         }
         if (end.column !== 0)
           this.addSelectionForBufferRange([
@@ -2170,13 +2179,7 @@ module.exports = class TextEditor {
         selection.cursor.moveLeft();
         selection.insertText(text);
       } else {
-        selection.insertText(
-          selection
-            .getText()
-            .split('')
-            .reverse()
-            .join('')
-        );
+        selection.insertText(selection.getText().split('').reverse().join(''));
       }
     });
   }
@@ -3392,7 +3395,7 @@ module.exports = class TextEditor {
 
   cursorsForScreenRowRange(startScreenRow, endScreenRow) {
     const cursors = [];
-    for (let marker of this.selectionsMarkerLayer.findMarkers({
+    for (const marker of this.selectionsMarkerLayer.findMarkers({
       intersectsScreenRowRange: [startScreenRow, endScreenRow]
     })) {
       const cursor = this.cursorsByMarkerId.get(marker.id);
@@ -3427,7 +3430,7 @@ module.exports = class TextEditor {
   // Merge cursors that have the same screen position
   mergeCursors() {
     const positions = {};
-    for (let cursor of this.getCursors()) {
+    for (const cursor of this.getCursors()) {
       const position = cursor.getBufferPosition().toString();
       if (positions.hasOwnProperty(position)) {
         cursor.destroy();
@@ -3492,7 +3495,7 @@ module.exports = class TextEditor {
       throw new Error('Passed an empty array to setSelectedBufferRanges');
 
     const selections = this.getSelections();
-    for (let selection of selections.slice(bufferRanges.length)) {
+    for (const selection of selections.slice(bufferRanges.length)) {
       selection.destroy();
     }
 
@@ -3552,7 +3555,7 @@ module.exports = class TextEditor {
       throw new Error('Passed an empty array to setSelectedScreenRanges');
 
     const selections = this.getSelections();
-    for (let selection of selections.slice(screenRanges.length)) {
+    for (const selection of selections.slice(screenRanges.length)) {
       selection.destroy();
     }
 
@@ -3858,9 +3861,8 @@ module.exports = class TextEditor {
 
     this.expandSelectionsForward(selection => {
       const currentRange = selection.getBufferRange();
-      const newRange = languageMode.getRangeForSyntaxNodeContainingRange(
-        currentRange
-      );
+      const newRange =
+        languageMode.getRangeForSyntaxNodeContainingRange(currentRange);
       if (newRange) {
         if (!selection._rangeStack) selection._rangeStack = [];
         selection._rangeStack.push(currentRange);
@@ -3984,7 +3986,7 @@ module.exports = class TextEditor {
   }
 
   finalizeSelections() {
-    for (let selection of this.getSelections()) {
+    for (const selection of this.getSelections()) {
       selection.finalize();
     }
   }
@@ -4101,7 +4103,7 @@ module.exports = class TextEditor {
   consolidateSelections() {
     const selections = this.getSelections();
     if (selections.length > 1) {
-      for (let selection of selections.slice(1, selections.length)) {
+      for (const selection of selections.slice(1, selections.length)) {
         selection.destroy();
       }
       selections[0].autoscroll({ center: true });
@@ -4119,10 +4121,16 @@ module.exports = class TextEditor {
 
   createLastSelectionIfNeeded() {
     if (this.selections.length === 0) {
-      this.addSelectionForBufferRange([[0, 0], [0, 0]], {
-        autoscroll: false,
-        preserveFolds: true
-      });
+      this.addSelectionForBufferRange(
+        [
+          [0, 0],
+          [0, 0]
+        ],
+        {
+          autoscroll: false,
+          preserveFolds: true
+        }
+      );
     }
   }
 
@@ -4387,7 +4395,10 @@ module.exports = class TextEditor {
     }
     const newIndentString = this.buildIndentString(newLevel);
     return this.buffer.setTextInRange(
-      [[bufferRow, 0], [bufferRow, endColumn]],
+      [
+        [bufferRow, 0],
+        [bufferRow, endColumn]
+      ],
       newIndentString
     );
   }
@@ -4627,7 +4638,7 @@ module.exports = class TextEditor {
   // Essential: For each selection, copy the selected text.
   copySelectedText() {
     let maintainClipboard = false;
-    for (let selection of this.getSelectionsOrderedByBufferPosition()) {
+    for (const selection of this.getSelectionsOrderedByBufferPosition()) {
       if (selection.isEmpty()) {
         const previousRange = selection.getBufferRange();
         selection.selectLine();
@@ -4643,7 +4654,7 @@ module.exports = class TextEditor {
   // Private: For each selection, only copy highlighted text.
   copyOnlySelectedText() {
     let maintainClipboard = false;
-    for (let selection of this.getSelectionsOrderedByBufferPosition()) {
+    for (const selection of this.getSelectionsOrderedByBufferPosition()) {
       if (!selection.isEmpty()) {
         selection.copy(maintainClipboard, false);
         maintainClipboard = true;
@@ -4680,10 +4691,8 @@ module.exports = class TextEditor {
   pasteText(options = {}) {
     if (!this.ensureWritable('parseText', options)) return;
     options = Object.assign({}, options);
-    let {
-      text: clipboardText,
-      metadata
-    } = this.constructor.clipboard.readWithMetadata();
+    let { text: clipboardText, metadata } =
+      this.constructor.clipboard.readWithMetadata();
     if (!this.emitWillInsertTextEvent(clipboardText)) return false;
 
     if (!metadata) metadata = {};
@@ -4715,7 +4724,10 @@ module.exports = class TextEditor {
       let range;
       if (fullLine && selection.isEmpty()) {
         const oldPosition = selection.getBufferRange().start;
-        selection.setBufferRange([[oldPosition.row, 0], [oldPosition.row, 0]]);
+        selection.setBufferRange([
+          [oldPosition.row, 0],
+          [oldPosition.row, 0]
+        ]);
         range = selection.insertText(text, options);
         const newPosition = oldPosition.translate([1, 0]);
         selection.setBufferRange([newPosition, newPosition]);
@@ -4834,7 +4846,7 @@ module.exports = class TextEditor {
 
   // Extended: For each selection, fold the rows it intersects.
   foldSelectedLines() {
-    for (let selection of this.selections) {
+    for (const selection of this.selections) {
       selection.fold();
     }
   }
@@ -4846,7 +4858,7 @@ module.exports = class TextEditor {
       languageMode.getFoldableRanges &&
       languageMode.getFoldableRanges(this.getTabLength());
     this.displayLayer.destroyAllFolds();
-    for (let range of foldableRanges || []) {
+    for (const range of foldableRanges || []) {
       this.displayLayer.foldBufferRange(range);
     }
   }
@@ -4867,7 +4879,7 @@ module.exports = class TextEditor {
       languageMode.getFoldableRangesAtIndentLevel &&
       languageMode.getFoldableRangesAtIndentLevel(level, this.getTabLength());
     this.displayLayer.destroyAllFolds();
-    for (let range of foldableRanges || []) {
+    for (const range of foldableRanges || []) {
       this.displayLayer.foldBufferRange(range);
     }
   }
@@ -5660,8 +5672,9 @@ module.exports = class TextEditor {
         }
       } else {
         this.buffer.transact(() => {
-          const indentLength = this.buffer.lineForRow(start).match(/^\s*/)[0]
-            .length;
+          const indentLength = this.buffer
+            .lineForRow(start)
+            .match(/^\s*/)[0].length;
           this.buffer.insert([start, indentLength], commentStartString + ' ');
           this.buffer.insert(
             [end, this.buffer.lineLengthForRow(end)],
@@ -5677,7 +5690,10 @@ module.exports = class TextEditor {
               if (oldRange.start.column === endLineLength) {
                 const endCol = endLineLength - commentEndString.length - 1;
                 options.selection.setBufferRange(
-                  [[end, endCol], [end, endCol]],
+                  [
+                    [end, endCol],
+                    [end, endCol]
+                  ],
                   { autoscroll: false }
                 );
               }
@@ -5721,7 +5737,10 @@ module.exports = class TextEditor {
             commentStartString
           );
           if (columnRange)
-            this.buffer.delete([[row, columnRange[0]], [row, columnRange[1]]]);
+            this.buffer.delete([
+              [row, columnRange[0]],
+              [row, columnRange[1]]
+            ]);
         }
       } else {
         let minIndentLevel = Infinity;
@@ -5739,8 +5758,8 @@ module.exports = class TextEditor {
         minIndentLevel = Number.isFinite(minIndentLevel)
           ? minIndentLevel
           : Number.isFinite(minBlankIndentLevel)
-          ? minBlankIndentLevel
-          : 0;
+            ? minBlankIndentLevel
+            : 0;
 
         const indentString = this.buildIndentString(minIndentLevel);
         for (let row = start; row <= end; row++) {

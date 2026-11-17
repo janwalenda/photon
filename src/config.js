@@ -389,9 +389,9 @@ class Config {
   }
 
   static addSchemaEnforcers(filters) {
-    for (let typeName in filters) {
+    for (const typeName in filters) {
       const functions = filters[typeName];
-      for (let name in functions) {
+      for (const name in functions) {
         const enforcerFunction = functions[name];
         this.addSchemaEnforcer(typeName, enforcerFunction);
       }
@@ -404,12 +404,12 @@ class Config {
     if (!Array.isArray(types)) {
       types = [types];
     }
-    for (let type of types) {
+    for (const type of types) {
       try {
         const enforcerFunctions = schemaEnforcers[type].concat(
           schemaEnforcers['*']
         );
-        for (let enforcer of enforcerFunctions) {
+        for (const enforcer of enforcerFunctions) {
           // At some point in one's life, one must call upon an enforcer.
           value = enforcer.call(this, keyPath, value, schema);
         }
@@ -500,7 +500,8 @@ class Config {
       [keyPath, callback] = args;
     } else if (
       args.length === 3 &&
-      (_.isString(args[0]) && _.isObject(args[1]))
+      _.isString(args[0]) &&
+      _.isObject(args[1])
     ) {
       [keyPath, options, callback] = args;
       scopeDescriptor = options.scope;
@@ -660,9 +661,8 @@ class Config {
         keyPath,
         options
       );
-      legacyScopeDescriptor = this.getLegacyScopeDescriptorForNewScopeDescriptor(
-        scopeDescriptor
-      );
+      legacyScopeDescriptor =
+        this.getLegacyScopeDescriptorForNewScopeDescriptor(scopeDescriptor);
       if (legacyScopeDescriptor) {
         result.push(
           ...Array.from(
@@ -855,7 +855,7 @@ class Config {
   getSchema(keyPath) {
     const keys = splitKeyPath(keyPath);
     let { schema } = this;
-    for (let key of keys) {
+    for (const key of keys) {
       let childSchema;
       if (schema.type === 'object') {
         childSchema =
@@ -918,10 +918,12 @@ class Config {
     let endTransaction;
     this.beginTransaction();
     try {
-      endTransaction = fn => (...args) => {
-        this.endTransaction();
-        return fn(...args);
-      };
+      endTransaction =
+        fn =>
+        (...args) => {
+          this.endTransaction();
+          return fn(...args);
+        };
       const result = callback();
       return new Promise((resolve, reject) => {
         return result
@@ -982,7 +984,7 @@ class Config {
 
     let rootSchema = this.schema;
     if (keyPath) {
-      for (let key of splitKeyPath(keyPath)) {
+      for (const key of splitKeyPath(keyPath)) {
         rootSchema.type = 'object';
         if (rootSchema.properties == null) {
           rootSchema.properties = {};
@@ -1041,12 +1043,12 @@ class Config {
     return this.transact(() => {
       this._clearUnscopedSettingsForSource(source);
       this.settingsLoaded = true;
-      for (let key in newSettings) {
+      for (const key in newSettings) {
         const value = newSettings[key];
         this.set(key, value, { save: false, source });
       }
       if (this.pendingOperations.length) {
-        for (let op of this.pendingOperations) {
+        for (const op of this.pendingOperations) {
           op();
         }
         this.pendingOperations = [];
@@ -1166,7 +1168,7 @@ class Config {
       const keys = splitKeyPath(keyPath);
       this.transact(() => {
         const result = [];
-        for (let key in defaults) {
+        for (const key in defaults) {
           const childValue = defaults[key];
           if (!defaults.hasOwnProperty(key)) {
             continue;
@@ -1209,7 +1211,7 @@ class Config {
     while (++i < arguments.length) {
       const object = arguments[i];
       if (isPlainObject(result) && isPlainObject(object)) {
-        for (let key of Object.keys(object)) {
+        for (const key of Object.keys(object)) {
           result[key] = this.deepDefaults(result[key], object[key]);
         }
       } else {
@@ -1233,7 +1235,7 @@ class Config {
   setScopedDefaultsFromSchema(keyPath, schema) {
     if (schema.scopes != null && isPlainObject(schema.scopes)) {
       const scopedDefaults = {};
-      for (let scope in schema.scopes) {
+      for (const scope in schema.scopes) {
         const scopeSchema = schema.scopes[scope];
         if (!scopeSchema.hasOwnProperty('default')) {
           continue;
@@ -1250,7 +1252,7 @@ class Config {
       isPlainObject(schema.properties)
     ) {
       const keys = splitKeyPath(keyPath);
-      for (let key in schema.properties) {
+      for (const key in schema.properties) {
         const childValue = schema.properties[key];
         if (!schema.properties.hasOwnProperty(key)) {
           continue;
@@ -1273,7 +1275,7 @@ class Config {
     ) {
       const defaults = {};
       const properties = schema.properties || {};
-      for (let key in properties) {
+      for (const key in properties) {
         const value = properties[key];
         defaults[key] = this.extractDefaultsFromSchema(value);
       }
@@ -1309,11 +1311,10 @@ class Config {
       this.settings = this.makeValueConformToSchema(null, this.settings, {
         suppressException: true
       });
-      const selectorsAndSettings = this.scopedSettingsStore.propertiesForSource(
-        source
-      );
+      const selectorsAndSettings =
+        this.scopedSettingsStore.propertiesForSource(source);
       this.scopedSettingsStore.removePropertiesForSource(source);
-      for (let scopeSelector in selectorsAndSettings) {
+      for (const scopeSelector in selectorsAndSettings) {
         let settings = selectorsAndSettings[scopeSelector];
         settings = this.makeValueConformToSchema(null, settings, {
           suppressException: true
@@ -1349,7 +1350,7 @@ class Config {
     const priority = this.priorityForSource(source);
     this.scopedSettingsStore.removePropertiesForSource(source);
 
-    for (let scopeSelector in newScopedSettings) {
+    for (const scopeSelector in newScopedSettings) {
       let settings = newScopedSettings[scopeSelector];
       settings = this.makeValueConformToSchema(null, settings, {
         suppressException: true
@@ -1389,9 +1390,8 @@ class Config {
       options
     );
 
-    const legacyScopeDescriptor = this.getLegacyScopeDescriptorForNewScopeDescriptor(
-      scopeDescriptor
-    );
+    const legacyScopeDescriptor =
+      this.getLegacyScopeDescriptorForNewScopeDescriptor(scopeDescriptor);
     if (result != null) {
       return result;
     } else if (legacyScopeDescriptor) {
@@ -1554,7 +1554,7 @@ Config.addSchemaEnforcers({
       }
 
       const newValue = {};
-      for (let prop in value) {
+      for (const prop in value) {
         const propValue = value[prop];
         const childSchema =
           schema.properties[prop] != null
@@ -1594,7 +1594,7 @@ Config.addSchemaEnforcers({
       const itemSchema = schema.items;
       if (itemSchema != null) {
         const newValue = [];
-        for (let item of value) {
+        for (const item of value) {
           try {
             newValue.push(
               this.executeSchemaEnforcers(keyPath, item, itemSchema)
@@ -1659,7 +1659,7 @@ Config.addSchemaEnforcers({
         return value;
       }
 
-      for (let possibleValue of possibleValues) {
+      for (const possibleValue of possibleValues) {
         // Using `isEqual` for possibility of placing enums on array and object schemas
         if (_.isEqual(possibleValue, value)) {
           return value;
@@ -1675,19 +1675,19 @@ Config.addSchemaEnforcers({
   }
 });
 
-let isPlainObject = value =>
+const isPlainObject = value =>
   _.isObject(value) &&
   !Array.isArray(value) &&
   !_.isFunction(value) &&
   !_.isString(value) &&
   !(value instanceof Color);
 
-let sortObject = value => {
+const sortObject = value => {
   if (!isPlainObject(value)) {
     return value;
   }
   const result = {};
-  for (let key of Object.keys(value).sort()) {
+  for (const key of Object.keys(value).sort()) {
     result[key] = sortObject(value[key]);
   }
   return result;
@@ -1696,7 +1696,7 @@ let sortObject = value => {
 const withoutEmptyObjects = object => {
   let resultObject;
   if (isPlainObject(object)) {
-    for (let key in object) {
+    for (const key in object) {
       const value = object[key];
       const newValue = withoutEmptyObjects(value);
       if (newValue != null) {

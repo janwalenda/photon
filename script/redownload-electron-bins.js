@@ -12,15 +12,13 @@ if (process.env.ELECTRON_CUSTOM_VERSION !== electronVersion) {
   );
 
   process.env.ELECTRON_CUSTOM_VERSION = electronVersion;
-  const downloadChromedriverPath = require.resolve(
-    'electron-chromedriver/download-chromedriver.js'
-  );
-  const downloadMksnapshotPath = require.resolve(
-    'electron-mksnapshot/download-mksnapshot.js'
-  );
+  const downloadChromedriverPath =
+    require.resolve('electron-chromedriver/download-chromedriver.js');
+  const downloadMksnapshotPath =
+    require.resolve('electron-mksnapshot/download-mksnapshot.js');
   const downloadChromedriver = spawn('node', [downloadChromedriverPath]);
   const downloadMksnapshot = spawn('node', [downloadMksnapshotPath]);
-  var exitStatus;
+  let exitStatus;
 
   downloadChromedriver.on('close', code => {
     if (code === 0) {

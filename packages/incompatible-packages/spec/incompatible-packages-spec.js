@@ -31,7 +31,7 @@ describe('Incompatible packages', () => {
 
   describe('when there are packages with incompatible native modules', () => {
     beforeEach(() => {
-      let incompatiblePackage = atom.packages.loadPackage(
+      const incompatiblePackage = atom.packages.loadPackage(
         path.join(__dirname, 'fixtures', 'incompatible-package')
       );
       spyOn(incompatiblePackage, 'isCompatible').andReturn(false);
@@ -44,13 +44,13 @@ describe('Incompatible packages', () => {
     });
 
     it('adds an icon to the status bar', () => {
-      let statusBarIcon = statusBar.getRightTiles()[0].getItem();
+      const statusBarIcon = statusBar.getRightTiles()[0].getItem();
       expect(statusBarIcon.constructor).toBe(StatusIconComponent);
     });
 
     describe('clicking the icon', () => {
       it('displays the incompatible packages view in a pane', () => {
-        let statusBarIcon = statusBar.getRightTiles()[0].getItem();
+        const statusBarIcon = statusBar.getRightTiles()[0].getItem();
         statusBarIcon.element.dispatchEvent(new MouseEvent('click'));
 
         let activePaneItem;
@@ -73,7 +73,7 @@ describe('Incompatible packages', () => {
     });
 
     it('does not add an icon to the status bar', () => {
-      let statusBarItemClasses = statusBar
+      const statusBarItemClasses = statusBar
         .getRightTiles()
         .map(tile => tile.getItem().className);
 

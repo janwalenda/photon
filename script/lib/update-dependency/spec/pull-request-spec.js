@@ -31,8 +31,7 @@ describe('Pull Request', () => {
     const scope = nock('https://api.github.com')
       .get('/search/issues')
       .query({
-        q:
-          'octocat type:pr octocat@2.0.0 in:title repo:atom/atom head:octocat-2.0.0 state:open',
+        q: 'octocat type:pr octocat@2.0.0 in:title repo:atom/atom head:octocat-2.0.0 state:open',
         owner: 'atom',
         repo: 'atom'
       })

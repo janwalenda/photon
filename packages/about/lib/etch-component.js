@@ -38,7 +38,7 @@ module.exports = class EtchComponent {
     * `props` an {Object} representing the properties you want to update
   */
   update(props) {
-    let oldProps = this.props;
+    const oldProps = this.props;
     this.props = Object.assign({}, oldProps, props);
     return etch.update(this);
   }

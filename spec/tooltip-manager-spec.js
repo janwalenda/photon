@@ -9,7 +9,7 @@ describe('TooltipManager', () => {
   const ctrlX = _.humanizeKeystroke('ctrl-x');
   const ctrlY = _.humanizeKeystroke('ctrl-y');
 
-  const hover = function(element, fn) {
+  const hover = function (element, fn) {
     mouseEnter(element);
     advanceClock(manager.hoverDefaults.delay.show);
     fn();
@@ -17,7 +17,7 @@ describe('TooltipManager', () => {
     advanceClock(manager.hoverDefaults.delay.hide);
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     manager = new TooltipManager({
       keymapManager: atom.keymaps,
       viewRegistry: atom.views
@@ -66,7 +66,7 @@ describe('TooltipManager', () => {
           title: 'Title',
           trigger: 'hover'
         });
-        hover(element, function() {
+        hover(element, function () {
           expect(document.body.querySelector('.tooltip')).not.toBeNull();
           window.dispatchEvent(
             new CustomEvent('keydown', {
@@ -194,7 +194,7 @@ describe('TooltipManager', () => {
             keyBindingCommand: 'test-command'
           });
 
-          hover(element, function() {
+          hover(element, function () {
             const tooltipElement = document.body.querySelector('.tooltip');
             expect(tooltipElement).toHaveText(`Title ${ctrlX} ${ctrlY}`);
           });
@@ -208,7 +208,7 @@ describe('TooltipManager', () => {
 
           manager.add(element, { keyBindingCommand: 'test-command' });
 
-          hover(element, function() {
+          hover(element, function () {
             const tooltipElement = document.body.querySelector('.tooltip');
             expect(tooltipElement).toHaveText(`${ctrlX} ${ctrlY}`);
           });
@@ -226,7 +226,7 @@ describe('TooltipManager', () => {
             keyBindingTarget: element
           });
 
-          hover(element, function() {
+          hover(element, function () {
             const tooltipElement = document.body.querySelector('.tooltip');
             expect(tooltipElement).toHaveText(`${ctrlX} ${ctrlY}`);
           });
@@ -239,7 +239,7 @@ describe('TooltipManager', () => {
             keyBindingTarget: element
           });
 
-          hover(element, function() {
+          hover(element, function () {
             const tooltipElement = document.body.querySelector('.tooltip');
             expect(tooltipElement.textContent).toBe('A Title');
           });
@@ -265,7 +265,7 @@ describe('TooltipManager', () => {
     describe('when the window is resized', () =>
       it('hides the tooltips', () => {
         const disposable = manager.add(element, { title: 'Title' });
-        hover(element, function() {
+        hover(element, function () {
           expect(document.body.querySelector('.tooltip')).not.toBeNull();
           window.dispatchEvent(new CustomEvent('resize'));
           expect(document.body.querySelector('.tooltip')).toBeNull();
@@ -288,7 +288,7 @@ describe('TooltipManager', () => {
 
       it('lets us hide tooltips programmatically', () => {
         const disposable = manager.add(element, { title: 'Title' });
-        hover(element, function() {
+        hover(element, function () {
           expect(document.body.querySelector('.tooltip')).not.toBeNull();
           manager.findTooltips(element)[0].hide();
           expect(document.body.querySelector('.tooltip')).toBeNull();

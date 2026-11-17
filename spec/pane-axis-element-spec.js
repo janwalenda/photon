@@ -12,7 +12,7 @@ const buildPane = () =>
   });
 
 describe('PaneAxisElement', () =>
-  it('correctly subscribes and unsubscribes to the underlying model events on attach/detach', function() {
+  it('correctly subscribes and unsubscribes to the underlying model events on attach/detach', function () {
     const container = new PaneContainer({
       config: atom.config,
       applicationDelegate: atom.applicationDelegate,

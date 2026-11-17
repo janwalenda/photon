@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `script/bootstrap` installs dependencies with the system npm instead of the bundled apm, which cannot run on Apple Silicon. It requires Python 3.10 or newer.
 - `packages/*` are npm workspaces; the `overrides` for the patched `superstring` and `git-utils` are no longer needed.
 - The packaged app no longer contains packages that `package-lock.json` marks as development-only (about 210 MB smaller).
+- Linting uses ESLint 10 with a flat config (`eslint.config.js`, `neostandard` without style rules) and Prettier 3; the existing formatting is kept (`trailingComma: none`, `arrowParens: avoid`).
 
 ### Removed
 

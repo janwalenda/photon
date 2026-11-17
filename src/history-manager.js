@@ -78,10 +78,10 @@ class HistoryManager {
   async removeProject(paths) {
     if (paths.length === 0) return;
 
-    let project = this.getProject(paths);
+    const project = this.getProject(paths);
     if (!project) return;
 
-    let index = this.projects.indexOf(project);
+    const index = this.projects.indexOf(project);
     this.projects.splice(index, 1);
 
     await this.saveState();

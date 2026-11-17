@@ -4,10 +4,7 @@ const crypto = require('crypto');
 const vm = require('vm');
 
 function computeHash(contents) {
-  return crypto
-    .createHash('sha1')
-    .update(contents, 'utf8')
-    .digest('hex');
+  return crypto.createHash('sha1').update(contents, 'utf8').digest('hex');
 }
 
 class NativeCompileCache {
@@ -55,18 +52,18 @@ class NativeCompileCache {
   }
 
   overrideModuleCompile() {
-    let self = this;
+    const self = this;
     // Here we override Node's module.js
     // (https://github.com/atom/node/blob/atom/lib/module.js#L378), changing
     // only the bits that affect compilation in order to use the cached one.
-    Module.prototype._compile = function(content, filename) {
-      let moduleSelf = this;
+    Module.prototype._compile = function (content, filename) {
+      const moduleSelf = this;
       // remove shebang
       content = content.replace(/^#!.*/, '');
       function require(path) {
         return moduleSelf.require(path);
       }
-      require.resolve = function(request) {
+      require.resolve = function (request) {
         return Module._resolveFilename(request, moduleSelf);
       };
       require.main = process.mainModule;
@@ -75,16 +72,16 @@ class NativeCompileCache {
       require.extensions = Module._extensions;
       require.cache = Module._cache;
 
-      let dirname = path.dirname(filename);
+      const dirname = path.dirname(filename);
 
       // create wrapper function
-      let wrapper = Module.wrap(content);
+      const wrapper = Module.wrap(content);
 
-      let cacheKey = computeHash(wrapper + self.v8Version);
+      const cacheKey = computeHash(wrapper + self.v8Version);
       let compiledWrapper = null;
       if (self.cacheStore.has(cacheKey)) {
-        let buffer = self.cacheStore.get(cacheKey);
-        let compilationResult = self.runInThisContextCached(
+        const buffer = self.cacheStore.get(cacheKey);
+        const compilationResult = self.runInThisContextCached(
           wrapper,
           filename,
           buffer
@@ -107,7 +104,7 @@ class NativeCompileCache {
         compiledWrapper = compilationResult.result;
       }
 
-      let args = [
+      const args = [
         moduleSelf.exports,
         require,
         moduleSelf,

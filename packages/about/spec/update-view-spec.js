@@ -11,7 +11,7 @@ describe('UpdateView', () => {
   let scheduler;
 
   beforeEach(async () => {
-    let storage = {};
+    const storage = {};
 
     spyOn(window.localStorage, 'setItem').andCallFake((key, value) => {
       storage[key] = value;
@@ -54,12 +54,12 @@ describe('UpdateView', () => {
 
       it('opens the update instructions page when the instructions link is clicked', async () => {
         spyOn(shell, 'openExternal');
-        let link = aboutElement.querySelector(
+        const link = aboutElement.querySelector(
           '.app-unsupported .about-updates-instructions'
         );
         link.click();
 
-        let args = shell.openExternal.mostRecentCall.args;
+        const args = shell.openExternal.mostRecentCall.args;
         expect(shell.openExternal).toHaveBeenCalled();
         expect(args[0]).toContain('installing-atom');
       });
@@ -196,18 +196,20 @@ describe('UpdateView', () => {
         await scheduler.getNextUpdatePromise();
 
         spyOn(shell, 'openExternal');
-        let link = aboutElement.querySelector(
+        const link = aboutElement.querySelector(
           '.app-update-available-to-install .about-updates-release-notes'
         );
         link.click();
 
-        let args = shell.openExternal.mostRecentCall.args;
+        const args = shell.openExternal.mostRecentCall.args;
         expect(shell.openExternal).toHaveBeenCalled();
         expect(args[0]).toContain('/v1.2.3');
       });
 
       it('executes checkForUpdate() when the check for update button is clicked', () => {
-        let button = aboutElement.querySelector('.about-update-action-button');
+        const button = aboutElement.querySelector(
+          '.about-update-action-button'
+        );
         button.click();
         expect(atom.autoUpdater.checkForUpdate).toHaveBeenCalled();
       });
@@ -217,7 +219,9 @@ describe('UpdateView', () => {
         MockUpdater.finishDownloadingUpdate('42.0.0');
         await scheduler.getNextUpdatePromise();
 
-        let button = aboutElement.querySelector('.about-update-action-button');
+        const button = aboutElement.querySelector(
+          '.about-update-action-button'
+        );
         button.click();
         expect(atom.autoUpdater.restartAndInstallUpdate).toHaveBeenCalled();
       });
@@ -310,7 +314,7 @@ describe('UpdateView', () => {
           ).toBe('Atom will check for updates automatically');
         });
 
-        describe('checking for updates', function() {
+        describe('checking for updates', function () {
           afterEach(() => {
             this.updateView = null;
           });
@@ -319,7 +323,7 @@ describe('UpdateView', () => {
             expect(atom.autoUpdater.checkForUpdate).not.toHaveBeenCalled();
 
             this.updateView = new UpdateView({
-              updateManager: updateManager,
+              updateManager,
               availableVersion: '9999.0.0',
               viewUpdateReleaseNotes: () => {}
             });
@@ -333,7 +337,7 @@ describe('UpdateView', () => {
             expect(atom.autoUpdater.checkForUpdate).not.toHaveBeenCalled();
 
             this.updateView = new UpdateView({
-              updateManager: updateManager,
+              updateManager,
               availableVersion: '9999.0.0',
               viewUpdateReleaseNotes: () => {}
             });
@@ -346,7 +350,7 @@ describe('UpdateView', () => {
             expect(atom.autoUpdater.checkForUpdate).not.toHaveBeenCalled();
 
             this.updateView = new UpdateView({
-              updateManager: updateManager,
+              updateManager,
               availableVersion: '9999.0.0',
               viewUpdateReleaseNotes: () => {}
             });

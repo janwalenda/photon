@@ -84,7 +84,7 @@ module.exports = class GitRepository {
     this.statusRefreshCount = 0;
     this.statuses = {};
     this.upstream = { ahead: 0, behind: 0 };
-    for (let submodulePath in this.repo.submodules) {
+    for (const submodulePath in this.repo.submodules) {
       const submoduleRepo = this.repo.submodules[submodulePath];
       submoduleRepo.upstream = { ahead: 0, behind: 0 };
     }
@@ -372,7 +372,7 @@ module.exports = class GitRepository {
   getDirectoryStatus(directoryPath) {
     directoryPath = `${this.relativize(directoryPath)}/`;
     let directoryStatus = 0;
-    for (let statusPath in this.statuses) {
+    for (const statusPath in this.statuses) {
       const status = this.statuses[statusPath];
       if (statusPath.startsWith(directoryPath)) directoryStatus |= status;
     }
@@ -576,12 +576,12 @@ module.exports = class GitRepository {
       relativeProjectPaths.length > 0
         ? await repo.getStatusAsync(relativeProjectPaths)
         : await repo.getStatusAsync();
-    for (let filePath in repoStatus) {
+    for (const filePath in repoStatus) {
       statuses[filePath] = repoStatus[filePath];
     }
 
     const submodules = {};
-    for (let submodulePath in repo.submodules) {
+    for (const submodulePath in repo.submodules) {
       const submoduleRepo = repo.submodules[submodulePath];
       submodules[submodulePath] = {
         branch: await submoduleRepo.getHeadAsync(),
@@ -590,7 +590,7 @@ module.exports = class GitRepository {
 
       const workingDirectoryPath = submoduleRepo.getWorkingDirectory();
       const submoduleStatus = await submoduleRepo.getStatusAsync();
-      for (let filePath in submoduleStatus) {
+      for (const filePath in submoduleStatus) {
         const absolutePath = path.join(workingDirectoryPath, filePath);
         const relativizePath = repo.relativize(absolutePath);
         statuses[relativizePath] = submoduleStatus[filePath];
@@ -611,7 +611,7 @@ module.exports = class GitRepository {
     this.upstream = upstream;
     this.submodules = submodules;
 
-    for (let submodulePath in repo.submodules) {
+    for (const submodulePath in repo.submodules) {
       repo.submodules[submodulePath].upstream =
         submodules[submodulePath].upstream;
     }

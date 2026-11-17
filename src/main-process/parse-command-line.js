@@ -188,8 +188,8 @@ module.exports = function parseCommandLine(processArgs) {
   const userDataDir = args['user-data-dir'];
   const profileStartup = args['profile-startup'];
   const clearWindowState = args['clear-window-state'];
-  let pathsToOpen = [];
-  let urlsToOpen = [];
+  const pathsToOpen = [];
+  const urlsToOpen = [];
   let devMode = args['dev'];
 
   for (const path of args._) {

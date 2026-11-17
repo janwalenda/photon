@@ -46,7 +46,7 @@ describe('GutterContainer', () => {
   describe('::removeGutter', () => {
     let removedGutters;
 
-    beforeEach(function() {
+    beforeEach(function () {
       gutterContainer = new GutterContainer(fakeTextEditor);
       removedGutters = [];
       gutterContainer.onDidRemoveGutter(gutterName =>

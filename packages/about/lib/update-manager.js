@@ -8,7 +8,7 @@ const UpdateAvailableToInstall = 'update-available';
 const UpToDate = 'no-update-available';
 const ErrorState = 'error';
 
-let UpdateManager = class UpdateManager {
+const UpdateManager = class UpdateManager {
   constructor() {
     this.emitter = new Emitter();
     this.currentVersion = atom.getVersion();
@@ -139,12 +139,12 @@ let UpdateManager = class UpdateManager {
 };
 
 UpdateManager.State = {
-  Unsupported: Unsupported,
-  Idle: Idle,
-  CheckingForUpdate: CheckingForUpdate,
-  DownloadingUpdate: DownloadingUpdate,
-  UpdateAvailableToInstall: UpdateAvailableToInstall,
-  UpToDate: UpToDate,
+  Unsupported,
+  Idle,
+  CheckingForUpdate,
+  DownloadingUpdate,
+  UpdateAvailableToInstall,
+  UpToDate,
   Error: ErrorState
 };
 

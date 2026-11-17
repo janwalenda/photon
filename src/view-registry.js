@@ -157,7 +157,7 @@ module.exports = class ViewRegistry {
       return object[0];
     }
 
-    for (let provider of this.providers) {
+    for (const provider of this.providers) {
       if (provider.modelConstructor === AnyConstructor) {
         element = provider.createView(object, this.atomEnvironment);
         if (element) {
@@ -174,7 +174,7 @@ module.exports = class ViewRegistry {
           return element;
         }
 
-        let ViewConstructor = provider.viewConstructor;
+        const ViewConstructor = provider.viewConstructor;
         if (ViewConstructor) {
           element = new ViewConstructor();
           if (element.initialize) {
@@ -188,7 +188,7 @@ module.exports = class ViewRegistry {
     }
 
     if (object && object.getViewClass) {
-      let ViewConstructor = object.getViewClass();
+      const ViewConstructor = object.getViewClass();
       if (ViewConstructor) {
         const view = new ViewConstructor(object);
         return view[0];

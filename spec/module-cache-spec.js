@@ -4,20 +4,20 @@ const fs = require('fs-plus');
 const temp = require('temp').track();
 const ModuleCache = require('../src/module-cache');
 
-describe('ModuleCache', function() {
+describe('ModuleCache', function () {
   beforeEach(() => spyOn(Module, '_findPath').andCallThrough());
 
-  afterEach(function() {
+  afterEach(function () {
     try {
       temp.cleanupSync();
     } catch (error) {}
   });
 
-  it('resolves Electron module paths without hitting the filesystem', function() {
+  it('resolves Electron module paths without hitting the filesystem', function () {
     const { builtins } = ModuleCache.cache;
     expect(Object.keys(builtins).length).toBeGreaterThan(0);
 
-    for (let builtinName in builtins) {
+    for (const builtinName in builtins) {
       const builtinPath = builtins[builtinName];
       expect(require.resolve(builtinName)).toBe(builtinPath);
       expect(fs.isFileSync(require.resolve(builtinName))).toBeTruthy();
@@ -26,7 +26,7 @@ describe('ModuleCache', function() {
     expect(Module._findPath.callCount).toBe(0);
   });
 
-  it('resolves relative core paths without hitting the filesystem', function() {
+  it('resolves relative core paths without hitting the filesystem', function () {
     ModuleCache.add(atom.getLoadSettings().resourcePath, {
       _atomModuleCache: {
         extensions: {
@@ -38,7 +38,7 @@ describe('ModuleCache', function() {
     expect(Module._findPath.callCount).toBe(0);
   });
 
-  it('resolves module paths when a compatible version is provided by core', function() {
+  it('resolves module paths when a compatible version is provided by core', function () {
     const packagePath = fs.realpathSync(temp.mkdirSync('atom-package'));
     ModuleCache.add(packagePath, {
       _atomModuleCache: {
@@ -83,7 +83,7 @@ exports.load = function() { require('underscore-plus'); };\
     expect(Module._findPath.callCount).toBe(0);
   });
 
-  it('does not resolve module paths when no compatible version is provided by core', function() {
+  it('does not resolve module paths when no compatible version is provided by core', function () {
     const packagePath = fs.realpathSync(temp.mkdirSync('atom-package'));
     ModuleCache.add(packagePath, {
       _atomModuleCache: {

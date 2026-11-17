@@ -32,13 +32,11 @@ class PaneElement extends HTMLElement {
 
   subscribeToDOMEvents() {
     const handleFocus = event => {
-      if (
-        !(
-          this.isActivating ||
-          this.model.isDestroyed() ||
-          this.contains(event.relatedTarget)
-        )
-      ) {
+      if (!(
+        this.isActivating ||
+        this.model.isDestroyed() ||
+        this.contains(event.relatedTarget)
+      )) {
         this.model.focus();
       }
       if (event.target !== this) return;

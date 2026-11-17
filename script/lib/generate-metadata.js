@@ -16,7 +16,7 @@ if (process.platform === 'win32') {
   appName = CONFIG.channel === 'stable' ? 'atom' : `atom-${CONFIG.channel}`;
 }
 
-module.exports = function() {
+module.exports = function () {
   console.log(
     `Generating metadata for ${path.join(
       CONFIG.intermediateAppPath,
@@ -37,7 +37,7 @@ module.exports = function() {
   );
 };
 
-module.exports = function() {
+module.exports = function () {
   console.log(
     `Generating metadata for ${path.join(
       CONFIG.intermediateAppPath,
@@ -58,7 +58,9 @@ module.exports = function() {
 
 function buildBundledPackagesMetadata() {
   const packages = {};
-  for (let packageName of Object.keys(CONFIG.appMetadata.packageDependencies)) {
+  for (const packageName of Object.keys(
+    CONFIG.appMetadata.packageDependencies
+  )) {
     const packagePath = path.join(
       CONFIG.intermediateAppPath,
       'node_modules',
@@ -101,9 +103,8 @@ function buildBundledPackagesMetadata() {
       packageModuleCache.extensions &&
       packageModuleCache.extensions['.json']
     ) {
-      const index = packageModuleCache.extensions['.json'].indexOf(
-        'package.json'
-      );
+      const index =
+        packageModuleCache.extensions['.json'].indexOf('package.json');
       if (index !== -1) {
         packageModuleCache.extensions['.json'].splice(index, 1);
       }
@@ -139,7 +140,7 @@ function buildBundledPackagesMetadata() {
 
     const packageKeymapsPath = path.join(packagePath, 'keymaps');
     if (fs.existsSync(packageKeymapsPath)) {
-      for (let packageKeymapName of fs.readdirSync(packageKeymapsPath)) {
+      for (const packageKeymapName of fs.readdirSync(packageKeymapsPath)) {
         const packageKeymapPath = path.join(
           packageKeymapsPath,
           packageKeymapName
@@ -152,16 +153,15 @@ function buildBundledPackagesMetadata() {
             CONFIG.intermediateAppPath,
             packageKeymapPath
           );
-          packageNewMetadata.keymaps[relativePath] = CSON.readFileSync(
-            packageKeymapPath
-          );
+          packageNewMetadata.keymaps[relativePath] =
+            CSON.readFileSync(packageKeymapPath);
         }
       }
     }
 
     const packageMenusPath = path.join(packagePath, 'menus');
     if (fs.existsSync(packageMenusPath)) {
-      for (let packageMenuName of fs.readdirSync(packageMenusPath)) {
+      for (const packageMenuName of fs.readdirSync(packageMenusPath)) {
         const packageMenuPath = path.join(packageMenusPath, packageMenuName);
         if (
           packageMenuPath.endsWith('.cson') ||
@@ -171,15 +171,14 @@ function buildBundledPackagesMetadata() {
             CONFIG.intermediateAppPath,
             packageMenuPath
           );
-          packageNewMetadata.menus[relativePath] = CSON.readFileSync(
-            packageMenuPath
-          );
+          packageNewMetadata.menus[relativePath] =
+            CSON.readFileSync(packageMenuPath);
         }
       }
     }
 
     const packageGrammarsPath = path.join(packagePath, 'grammars');
-    for (let packageGrammarPath of fs.listSync(packageGrammarsPath, [
+    for (const packageGrammarPath of fs.listSync(packageGrammarsPath, [
       'json',
       'cson'
     ])) {
@@ -191,7 +190,7 @@ function buildBundledPackagesMetadata() {
     }
 
     const packageSettingsPath = path.join(packagePath, 'settings');
-    for (let packageSettingPath of fs.listSync(packageSettingsPath, [
+    for (const packageSettingPath of fs.listSync(packageSettingsPath, [
       'json',
       'cson'
     ])) {
@@ -199,9 +198,8 @@ function buildBundledPackagesMetadata() {
         CONFIG.intermediateAppPath,
         packageSettingPath
       );
-      packageNewMetadata.settings[relativePath] = CSON.readFileSync(
-        packageSettingPath
-      );
+      packageNewMetadata.settings[relativePath] =
+        CSON.readFileSync(packageSettingPath);
     }
 
     const packageStyleSheetsPath = path.join(packagePath, 'styles');
@@ -227,7 +225,7 @@ function buildBundledPackagesMetadata() {
 
     packages[packageMetadata.name] = packageNewMetadata;
     if (packageModuleCache.extensions) {
-      for (let extension of Object.keys(packageModuleCache.extensions)) {
+      for (const extension of Object.keys(packageModuleCache.extensions)) {
         const paths = packageModuleCache.extensions[extension];
         if (paths.length === 0) {
           delete packageModuleCache.extensions[extension];
@@ -261,7 +259,7 @@ function buildPlatformKeymapsMetadata() {
   ].filter(p => p !== process.platform);
   const keymapsPath = path.join(CONFIG.repositoryRootPath, 'keymaps');
   const keymaps = {};
-  for (let keymapName of fs.readdirSync(keymapsPath)) {
+  for (const keymapName of fs.readdirSync(keymapsPath)) {
     const keymapPath = path.join(keymapsPath, keymapName);
     if (keymapPath.endsWith('.cson') || keymapPath.endsWith('.json')) {
       const keymapPlatform = path.basename(
@@ -277,7 +275,7 @@ function buildPlatformKeymapsMetadata() {
 }
 
 function checkDeprecatedPackagesMetadata() {
-  for (let packageName of Object.keys(deprecatedPackagesMetadata)) {
+  for (const packageName of Object.keys(deprecatedPackagesMetadata)) {
     const packageMetadata = deprecatedPackagesMetadata[packageName];
     if (
       packageMetadata.version &&

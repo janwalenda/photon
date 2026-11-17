@@ -2,7 +2,7 @@ const Mocha = require('mocha');
 const fs = require('fs-plus');
 const { assert } = require('chai');
 
-module.exports = function(testPaths) {
+module.exports = function (testPaths) {
   global.assert = assert;
 
   let reporterOptions = {
@@ -23,9 +23,9 @@ module.exports = function(testPaths) {
     reporterOptions
   });
 
-  for (let testPath of testPaths) {
+  for (const testPath of testPaths) {
     if (fs.isDirectorySync(testPath)) {
-      for (let testFilePath of fs.listTreeSync(testPath)) {
+      for (const testFilePath of fs.listTreeSync(testPath)) {
         if (/\.test\.(coffee|js)$/.test(testFilePath)) {
           mocha.addFile(testFilePath);
         }

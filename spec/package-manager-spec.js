@@ -645,9 +645,8 @@ describe('PackageManager', () => {
           const indexModule = require('./fixtures/packages/package-with-index/index');
           spyOn(indexModule, 'activate');
 
-          const pack = await atom.packages.activatePackage(
-            'package-with-index'
-          );
+          const pack =
+            await atom.packages.activatePackage('package-with-index');
           expect(indexModule.activate).toHaveBeenCalled();
           expect(pack.mainModule).toBe(indexModule);
         });
@@ -1357,15 +1356,12 @@ describe('PackageManager', () => {
     describe('stylesheet loading', () => {
       describe("when the metadata contains a 'styleSheets' manifest", () => {
         it('loads style sheets from the styles directory as specified by the manifest', async () => {
-          const one = require.resolve(
-            './fixtures/packages/package-with-style-sheets-manifest/styles/1.css'
-          );
-          const two = require.resolve(
-            './fixtures/packages/package-with-style-sheets-manifest/styles/2.less'
-          );
-          const three = require.resolve(
-            './fixtures/packages/package-with-style-sheets-manifest/styles/3.css'
-          );
+          const one =
+            require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/1.css');
+          const two =
+            require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/2.less');
+          const three =
+            require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/3.css');
 
           expect(atom.themes.stylesheetElementForId(one)).toBeNull();
           expect(atom.themes.stylesheetElementForId(two)).toBeNull();
@@ -1386,18 +1382,14 @@ describe('PackageManager', () => {
 
       describe("when the metadata does not contain a 'styleSheets' manifest", () => {
         it('loads all style sheets from the styles directory', async () => {
-          const one = require.resolve(
-            './fixtures/packages/package-with-styles/styles/1.css'
-          );
-          const two = require.resolve(
-            './fixtures/packages/package-with-styles/styles/2.less'
-          );
-          const three = require.resolve(
-            './fixtures/packages/package-with-styles/styles/3.test-context.css'
-          );
-          const four = require.resolve(
-            './fixtures/packages/package-with-styles/styles/4.css'
-          );
+          const one =
+            require.resolve('./fixtures/packages/package-with-styles/styles/1.css');
+          const two =
+            require.resolve('./fixtures/packages/package-with-styles/styles/2.less');
+          const three =
+            require.resolve('./fixtures/packages/package-with-styles/styles/3.test-context.css');
+          const four =
+            require.resolve('./fixtures/packages/package-with-styles/styles/4.css');
 
           expect(atom.themes.stylesheetElementForId(one)).toBeNull();
           expect(atom.themes.stylesheetElementForId(two)).toBeNull();
@@ -1420,7 +1412,7 @@ describe('PackageManager', () => {
         await atom.packages.activatePackage('package-with-styles');
 
         let count = 0;
-        for (let styleElement of atom.styles.getStyleElements()) {
+        for (const styleElement of atom.styles.getStyleElements()) {
           if (styleElement.sourcePath.match(/1.css/)) {
             expect(styleElement.context).toBe(undefined);
             count++;
@@ -1685,15 +1677,12 @@ describe('PackageManager', () => {
       await atom.packages.activatePackage('package-with-styles');
       await atom.packages.deactivatePackage('package-with-styles');
 
-      const one = require.resolve(
-        './fixtures/packages/package-with-style-sheets-manifest/styles/1.css'
-      );
-      const two = require.resolve(
-        './fixtures/packages/package-with-style-sheets-manifest/styles/2.less'
-      );
-      const three = require.resolve(
-        './fixtures/packages/package-with-style-sheets-manifest/styles/3.css'
-      );
+      const one =
+        require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/1.css');
+      const two =
+        require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/2.less');
+      const three =
+        require.resolve('./fixtures/packages/package-with-style-sheets-manifest/styles/3.css');
       expect(atom.themes.stylesheetElementForId(one)).not.toExist();
       expect(atom.themes.stylesheetElementForId(two)).not.toExist();
       expect(atom.themes.stylesheetElementForId(three)).not.toExist();
@@ -1764,7 +1753,7 @@ describe('PackageManager', () => {
       expect(themeActivator).toHaveBeenCalled();
 
       const packages = packageActivator.mostRecentCall.args[0];
-      for (let pack of packages) {
+      for (const pack of packages) {
         expect(['atom', 'textmate']).toContain(pack.getType());
       }
 

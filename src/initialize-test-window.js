@@ -9,11 +9,11 @@ function cloneObject(object) {
   return clone;
 }
 
-module.exports = async function({ blobStore }) {
+module.exports = async function ({ blobStore }) {
   const { remote } = require('electron');
   const getWindowLoadSettings = require('./get-window-load-settings');
 
-  const exitWithStatusCode = function(status) {
+  const exitWithStatusCode = function (status) {
     remote.app.emit('will-quit');
     remote.process.exit(status);
   };
@@ -59,7 +59,7 @@ module.exports = async function({ blobStore }) {
       remote.getCurrentWindow().show();
     }
 
-    const handleKeydown = function(event) {
+    const handleKeydown = function (event) {
       // Reload: cmd-r / ctrl-r
       if ((event.metaKey || event.ctrlKey) && event.keyCode === 82) {
         ipcHelpers.call('window-method', 'reload');
@@ -121,7 +121,7 @@ module.exports = async function({ blobStore }) {
     const testRunner = requireModule(testRunnerPath);
     const legacyTestRunner = require(legacyTestRunnerPath);
     const buildDefaultApplicationDelegate = () => new ApplicationDelegate();
-    const buildAtomEnvironment = function(params) {
+    const buildAtomEnvironment = function (params) {
       params = cloneObject(params);
       if (!params.hasOwnProperty('clipboard')) {
         params.clipboard = clipboard;

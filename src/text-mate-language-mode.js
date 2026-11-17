@@ -139,9 +139,8 @@ class TextMateLanguageMode {
     const scopeDescriptor = this.scopeDescriptorForPosition(
       new Point(bufferRow, 0)
     );
-    const decreaseIndentRegex = this.decreaseIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
+    const decreaseIndentRegex =
+      this.decreaseIndentRegexForScopeDescriptor(scopeDescriptor);
     if (!decreaseIndentRegex) return;
 
     if (!decreaseIndentRegex.testSync(line)) return;
@@ -152,16 +151,14 @@ class TextMateLanguageMode {
     const precedingLine = this.buffer.lineForRow(precedingRow);
     let desiredIndentLevel = this.indentLevelForLine(precedingLine, tabLength);
 
-    const increaseIndentRegex = this.increaseIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
+    const increaseIndentRegex =
+      this.increaseIndentRegexForScopeDescriptor(scopeDescriptor);
     if (increaseIndentRegex) {
       if (!increaseIndentRegex.testSync(precedingLine)) desiredIndentLevel -= 1;
     }
 
-    const decreaseNextIndentRegex = this.decreaseNextIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
+    const decreaseNextIndentRegex =
+      this.decreaseNextIndentRegexForScopeDescriptor(scopeDescriptor);
     if (decreaseNextIndentRegex) {
       if (decreaseNextIndentRegex.testSync(precedingLine))
         desiredIndentLevel -= 1;
@@ -179,15 +176,12 @@ class TextMateLanguageMode {
     tabLength,
     options
   ) {
-    const increaseIndentRegex = this.increaseIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
-    const decreaseIndentRegex = this.decreaseIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
-    const decreaseNextIndentRegex = this.decreaseNextIndentRegexForScopeDescriptor(
-      scopeDescriptor
-    );
+    const increaseIndentRegex =
+      this.increaseIndentRegexForScopeDescriptor(scopeDescriptor);
+    const decreaseIndentRegex =
+      this.decreaseIndentRegexForScopeDescriptor(scopeDescriptor);
+    const decreaseNextIndentRegex =
+      this.decreaseNextIndentRegexForScopeDescriptor(scopeDescriptor);
 
     let precedingRow;
     if (!options || options.skipBlankLines !== false) {
@@ -279,14 +273,17 @@ class TextMateLanguageMode {
   }
 
   getGrammarSelectionContent() {
-    return this.buffer.getTextInRange([[0, 0], [10, 0]]);
+    return this.buffer.getTextInRange([
+      [0, 0],
+      [10, 0]
+    ]);
   }
 
   updateForInjection(grammar) {
     if (!grammar.injectionSelector) return;
     for (const tokenizedLine of this.tokenizedLines) {
       if (tokenizedLine) {
-        for (let token of tokenizedLine.tokens) {
+        for (const token of tokenizedLine.tokens) {
           if (grammar.injectionSelector.matches(token.scopes)) {
             this.retokenizeLines();
             return;
@@ -631,9 +628,8 @@ class TextMateLanguageMode {
 
   tokenStartPositionForPosition(position) {
     let { row, column } = Point.fromObject(position);
-    column = this.tokenizedLineForRow(row).tokenStartColumnForBufferColumn(
-      column
-    );
+    column =
+      this.tokenizedLineForRow(row).tokenStartColumnForBufferColumn(column);
     return new Point(row, column);
   }
 

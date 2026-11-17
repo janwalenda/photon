@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const npmCheck = require('npm-check');
 
 // this may be updated to use github releases instead
-const apm = async function({ dependencies, packageDependencies }) {
+const apm = async function ({ dependencies, packageDependencies }) {
   try {
     console.log('Checking apm registry...');
     const coreDependencies = Object.keys(dependencies).filter(dependency => {
@@ -42,7 +42,7 @@ const apm = async function({ dependencies, packageDependencies }) {
   }
 };
 
-const npm = async function(cwd) {
+const npm = async function (cwd) {
   try {
     console.log('Checking npm registry...', cwd);
 

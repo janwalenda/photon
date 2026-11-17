@@ -78,7 +78,7 @@ export default class DiffListView {
         ? repository.getLineDiffs(this.editor.getPath(), this.editor.getText())
         : [];
       if (!diffs) diffs = [];
-      for (let diff of diffs) {
+      for (const diff of diffs) {
         const bufferRow = diff.newStart > 0 ? diff.newStart - 1 : diff.newStart;
         const lineText = this.editor.lineTextForBufferRow(bufferRow);
         diff.lineText = lineText ? lineText.trim() : '';

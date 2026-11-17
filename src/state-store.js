@@ -12,7 +12,7 @@ module.exports = class StateStore {
       this._dbPromise = new Promise(resolve => {
         const dbOpenRequest = indexedDB.open(this.databaseName, this.version);
         dbOpenRequest.onupgradeneeded = event => {
-          let db = event.target.result;
+          const db = event.target.result;
           db.onerror = error => {
             atom.notifications.addFatalError('Error loading database', {
               stack: new Error('Error loading database').stack,
@@ -57,7 +57,7 @@ module.exports = class StateStore {
         const request = db
           .transaction(['states'], 'readwrite')
           .objectStore('states')
-          .put({ value: value, storedAt: new Date().toString() }, key);
+          .put({ value, storedAt: new Date().toString() }, key);
 
         request.onsuccess = resolve;
         request.onerror = reject;
@@ -76,7 +76,7 @@ module.exports = class StateStore {
           .get(key);
 
         request.onsuccess = event => {
-          let result = event.target.result;
+          const result = event.target.result;
           if (result && !result.isJSON) {
             resolve(result.value);
           } else {
