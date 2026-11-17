@@ -84,3 +84,8 @@ switch (#8) reformats them.
 | `status-bar`             | 1.8.17  | [atom/status-bar](https://github.com/atom/status-bar)                         | `4edfaa891b5c` | none          |
 | `styleguide`             | 0.49.12 | [atom/styleguide](https://github.com/atom/styleguide)                         | `aa4f682f402f` | none          |
 | `symbols-view`           | 0.118.4 | [atom/symbols-view](https://github.com/atom/symbols-view)                     | `36c4dd4c5a89` | none          |
+| `tabs`                   | 0.110.2 | [atom/tabs](https://github.com/atom/tabs)                                     | `76535053c558` | none          |
+| `timecop`                | 0.36.2  | [atom/timecop](https://github.com/atom/timecop)                               | `f7d954391cf3` | none          |
+| `tree-view`              | 0.229.1 | [atom/tree-view](https://github.com/atom/tree-view)                           | `bc42868def5e` | none          |
+| `whitespace`             | 0.37.8  | [atom/whitespace](https://github.com/atom/whitespace)                         | `53d5ba9728e1` | none          |
+| `wrap-guide`             | 0.41.0  | [atom/wrap-guide](https://github.com/atom/wrap-guide)                         | `6a4f577223eb` | none          |
