@@ -54,3 +54,13 @@ switch (#8) reformats them.
 | `language-javascript`    | 0.134.1 | [atom/language-javascript](https://github.com/atom/language-javascript)       | `c3443f016c07` | none          |
 | `language-json`          | 1.0.5   | [atom/language-json](https://github.com/atom/language-json)                   | `98bf51be7145` | none          |
 | `language-less`          | 0.34.3  | [atom/language-less](https://github.com/atom/language-less)                   | `4a1426a08d40` | none          |
+| `language-make`          | 0.23.0  | [atom/language-make](https://github.com/atom/language-make)                   | `498cbe10cbb4` | none          |
+| `language-mustache`      | 0.14.5  | [atom/language-mustache](https://github.com/atom/language-mustache)           | `ea735f51e3f7` | none          |
+| `language-objective-c`   | 0.16.0  | [atom/language-objective-c](https://github.com/atom/language-objective-c)     | `1c490d387602` | none          |
+| `language-perl`          | 0.38.1  | [atom/language-perl](https://github.com/atom/language-perl)                   | `c3f8900382f7` | none          |
+| `language-php`           | 0.48.1  | [atom/language-php](https://github.com/atom/language-php)                     | `36a073b084be` | none          |
+| `language-property-list` | 0.9.1   | [atom/language-property-list](https://github.com/atom/language-property-list) | `d2abd7d9ada8` | none          |
+| `language-python`        | 0.53.6  | [atom/language-python](https://github.com/atom/language-python)               | `fd7182548b88` | none          |
+| `language-ruby`          | 0.73.0  | [atom/language-ruby](https://github.com/atom/language-ruby)                   | `a8df7251b304` | none          |
+| `language-ruby-on-rails` | 0.25.3  | [atom/language-ruby-on-rails](https://github.com/atom/language-ruby-on-rails) | `c51d37c2c14e` | none          |
+| `language-sass`          | 0.62.1  | [atom/language-sass](https://github.com/atom/language-sass)                   | `32ee25fa7828` | none          |

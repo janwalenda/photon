@@ -40,3 +40,13 @@ node_modules
 /packages/language-javascript/
 /packages/language-json/
 /packages/language-less/
+/packages/language-make/
+/packages/language-mustache/
+/packages/language-objective-c/
+/packages/language-perl/
+/packages/language-php/
+/packages/language-property-list/
+/packages/language-python/
+/packages/language-ruby/
+/packages/language-ruby-on-rails/
+/packages/language-sass/
