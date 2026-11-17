@@ -64,3 +64,13 @@ switch (#8) reformats them.
 | `language-ruby`          | 0.73.0  | [atom/language-ruby](https://github.com/atom/language-ruby)                   | `a8df7251b304` | none          |
 | `language-ruby-on-rails` | 0.25.3  | [atom/language-ruby-on-rails](https://github.com/atom/language-ruby-on-rails) | `c51d37c2c14e` | none          |
 | `language-sass`          | 0.62.1  | [atom/language-sass](https://github.com/atom/language-sass)                   | `32ee25fa7828` | none          |
+| `language-shellscript`   | 0.28.2  | [atom/language-shellscript](https://github.com/atom/language-shellscript)     | `b4e945380ecd` | none          |
+| `language-source`        | 0.9.0   | [atom/language-source](https://github.com/atom/language-source)               | `cb2798ff79ae` | none          |
+| `language-sql`           | 0.25.10 | [atom/language-sql](https://github.com/atom/language-sql)                     | `8ad4e7508513` | none          |
+| `language-text`          | 0.7.4   | [atom/language-text](https://github.com/atom/language-text)                   | `28e0690ebd5d` | none          |
+| `language-todo`          | 0.29.4  | [atom/language-todo](https://github.com/atom/language-todo)                   | `18859d1201f7` | none          |
+| `language-toml`          | 0.20.0  | [atom/language-toml](https://github.com/atom/language-toml)                   | `83510d0cd34a` | none          |
+| `language-typescript`    | 0.6.3   | [atom/language-typescript](https://github.com/atom/language-typescript)       | `08eb09967453` | none          |
+| `language-xml`           | 0.35.3  | [atom/language-xml](https://github.com/atom/language-xml)                     | `c5d2003b4613` | none          |
+| `language-yaml`          | 0.32.0  | [atom/language-yaml](https://github.com/atom/language-yaml)                   | `f8d98ba7d651` | none          |
+| `markdown-preview`       | 0.160.2 | [atom/markdown-preview](https://github.com/atom/markdown-preview)             | `c6df136f67f4` | none          |
