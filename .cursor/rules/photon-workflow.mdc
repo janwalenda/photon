@@ -89,6 +89,16 @@ Never commit directly to `main` or `develop`. Changes land through pull requests
 - Prettier configuration: `.prettierrc`. ESLint configuration: `.eslintrc.json`.
 - Do not bypass the hook with `--no-verify`.
 
+## Building and running
+
+- Requirements: Node 24 (`.nvmrc`), Python 3.10+, Xcode command line tools (macOS arm64).
+- `script/bootstrap` installs dependencies, `script/build` creates `out/Atom Dev.app`,
+  `script/test --core-main --core-renderer` runs the core specs.
+- Terminals inside VS Code and Cursor set `ELECTRON_RUN_AS_NODE=1`, which makes the app start
+  as plain Node. Run the app and specs with `env -u ELECTRON_RUN_AS_NODE ...`.
+- Vendored third-party packages in `packages/` are listed in `.eslintignore` and
+  `.prettierignore`; keep their upstream style.
+
 ## CHANGELOG
 
 - `CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and SemVer.
