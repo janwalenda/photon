@@ -47,6 +47,13 @@ git flow release start <version>
 git flow hotfix start <version>
 ```
 
+AI agents (Claude Code, Cursor) always commit with the author and committer email
+`log@janwalenda.de`, without changing the repo's git config:
+
+```sh
+GIT_AUTHOR_EMAIL=log@janwalenda.de GIT_COMMITTER_EMAIL=log@janwalenda.de git commit ...
+```
+
 Never commit directly to `main` or `develop`. Changes land through pull requests
 (target `develop`; releases and hotfixes also target `main`).
 
