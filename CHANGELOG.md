@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub issue templates (Feature, Bug, Task).
 - `.nvmrc` and `engines` pin Node 24 for development.
 - Vendored `tree-sitter` 0.17.1, `superstring` 2.4.4, `git-utils` 5.7.1 and `github` 0.36.10 into `packages/`, with fixes for the current macOS SDK.
+- Imported the bundled Atom packages from archived `github.com/atom/*` repositories into `packages/`; origins are listed in `packages/VENDORED.md`.
 
 ### Changed
 
