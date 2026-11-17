@@ -15,3 +15,13 @@ packages/autosave/
 packages/background-tips/
 packages/bookmarks/
 packages/bracket-matcher/
+packages/command-palette/
+packages/encoding-selector/
+packages/find-and-replace/
+packages/fuzzy-finder/
+packages/image-view/
+packages/keybinding-resolver/
+packages/language-c/
+packages/language-clojure/
+packages/language-coffee-script/
+packages/language-csharp/
