@@ -25,13 +25,13 @@ All docs, notes, commit messages, issues, PRs and Notion entries are written in 
   - `plan`: needs a plan in Notion before work starts
 - Branch names start with the issue number: `feature/<issue>-<short-name>`, e.g. `feature/3-rebrand-photon`.
 - Commits and PRs reference the issue (`Refs #3`, in the PR `Closes #3`).
-- GitHub only auto-closes issues when a PR is merged into the default branch (`main`).
-  After merging into `develop`, close the issue by hand.
+- `develop` is the default branch on GitHub, so `Closes #n` closes the issue when the PR is
+  merged into `develop`, and new PRs target `develop` by default.
 
 ## Branching: git flow
 
 - `main`: published releases only; every merge is tagged (`v<version>`).
-- `develop`: integration branch and the base for all work.
+- `develop`: integration branch, base for all work, and default branch on GitHub.
 - `feature/<name>`: new features, from `develop`, back into `develop`.
 - `bugfix/<name>`: fixes for `develop`, from `develop`, back into `develop`.
 - `release/<version>`: release preparation, from `develop`, into `main` and `develop`.
@@ -89,4 +89,4 @@ Space "Photon": https://app.notion.com/p/41ba3c986bc98107a990e81cc28112a1
 3. Implement, add an entry under `Unreleased` in `CHANGELOG.md`.
 4. Run `node script/lint`, fix errors, commit with `Refs #<issue>`.
 5. Open a PR following the template (`Closes #<issue>`), add or update the Work Log entry.
-6. After merging, close the issue and set the plan and Work Log entry to done.
+6. After merging, check that the issue was closed and set the plan and Work Log entry to done.

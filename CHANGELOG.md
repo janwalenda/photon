@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Renamed the repository to `photon` and switched to git flow (`main` for releases, `develop` as the base).
+- Renamed the repository to `photon` and switched to git flow (`main` for releases, `develop` as the base and default branch).
 - Switched the CHANGELOG to the Keep a Changelog format.
 
 ## History
