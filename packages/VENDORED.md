@@ -74,3 +74,13 @@ switch (#8) reformats them.
 | `language-xml`           | 0.35.3  | [atom/language-xml](https://github.com/atom/language-xml)                     | `c5d2003b4613` | none          |
 | `language-yaml`          | 0.32.0  | [atom/language-yaml](https://github.com/atom/language-yaml)                   | `f8d98ba7d651` | none          |
 | `markdown-preview`       | 0.160.2 | [atom/markdown-preview](https://github.com/atom/markdown-preview)             | `c6df136f67f4` | none          |
+| `metrics`                | 1.8.1   | [atom/metrics](https://github.com/atom/metrics)                               | `d35d0345cac8` | none          |
+| `notifications`          | 0.72.1  | [atom/notifications](https://github.com/atom/notifications)                   | `47da1756c8ca` | none          |
+| `open-on-github`         | 1.3.2   | [atom/open-on-github](https://github.com/atom/open-on-github)                 | `c12ffbefcb79` | none          |
+| `package-generator`      | 1.3.0   | [atom/package-generator](https://github.com/atom/package-generator)           | `5c45f8007153` | none          |
+| `settings-view`          | 0.261.8 | [atom/settings-view](https://github.com/atom/settings-view)                   | `94418d66db1b` | none          |
+| `snippets`               | 1.5.1   | [atom/snippets](https://github.com/atom/snippets)                             | `e8e6b895a7af` | none          |
+| `spell-check`            | 0.77.1  | [atom/spell-check](https://github.com/atom/spell-check)                       | `df4dfebdf55c` | none          |
+| `status-bar`             | 1.8.17  | [atom/status-bar](https://github.com/atom/status-bar)                         | `4edfaa891b5c` | none          |
+| `styleguide`             | 0.49.12 | [atom/styleguide](https://github.com/atom/styleguide)                         | `aa4f682f402f` | none          |
+| `symbols-view`           | 0.118.4 | [atom/symbols-view](https://github.com/atom/symbols-view)                     | `36c4dd4c5a89` | none          |

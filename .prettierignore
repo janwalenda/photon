@@ -55,3 +55,13 @@ packages/language-typescript/
 packages/language-xml/
 packages/language-yaml/
 packages/markdown-preview/
+packages/metrics/
+packages/notifications/
+packages/open-on-github/
+packages/package-generator/
+packages/settings-view/
+packages/snippets/
+packages/spell-check/
+packages/status-bar/
+packages/styleguide/
+packages/symbols-view/
