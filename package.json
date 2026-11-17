@@ -12,6 +12,9 @@
     "url": "https://github.com/atom/atom/issues"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
   "electronVersion": "11.5.0",
   "dependencies": {
     "@atom/fuzzy-native": "^1.2.1",
