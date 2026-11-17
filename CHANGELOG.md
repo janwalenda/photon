@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Switched the CHANGELOG to the Keep a Changelog format.
 - `script/bootstrap` now requires Node 24 or newer.
 - `script/bootstrap` installs dependencies with the system npm instead of the bundled apm, which cannot run on Apple Silicon. It requires Python 3.10 or newer.
+- `packages/*` are npm workspaces; the `overrides` for the patched `superstring` and `git-utils` are no longer needed.
+- The packaged app no longer contains packages that `package-lock.json` marks as development-only (about 210 MB smaller).
 
 ### Removed
 
