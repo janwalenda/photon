@@ -13,7 +13,7 @@ const {
   checkCIstatus,
   mergePR
 } = require('./pull-request');
-const runApmInstall = require('../run-apm-install');
+const runNpmInstall = require('../run-npm-install');
 const {
   makeBranch,
   createCommit,
@@ -59,7 +59,7 @@ module.exports = async function() {
         }
       } else {
         await updatePackageJson(dependency);
-        runApmInstall(repositoryRootPath, false);
+        runNpmInstall(repositoryRootPath, false);
         await createCommit(dependency);
         await publishBranch(newBranch);
         pendingPRs.push({

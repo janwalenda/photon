@@ -2,3 +2,9 @@
 node_modules
 /vendor/
 /out/
+
+# Vendored third-party packages, kept as upstream until reworked (#7)
+/packages/github/
+/packages/tree-sitter/
+/packages/superstring/
+/packages/git-utils/

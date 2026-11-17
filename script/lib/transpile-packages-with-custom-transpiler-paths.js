@@ -6,8 +6,6 @@ const glob = require('glob');
 const path = require('path');
 
 const CONFIG = require('../config');
-const backupNodeModules = require('./backup-node-modules');
-const runApmInstall = require('./run-apm-install');
 
 require('colors');
 
@@ -18,11 +16,6 @@ module.exports = function() {
     }`
   );
   for (let packageName of Object.keys(CONFIG.appMetadata.packageDependencies)) {
-    const rootPackagePath = path.join(
-      CONFIG.repositoryRootPath,
-      'node_modules',
-      packageName
-    );
     const intermediatePackagePath = path.join(
       CONFIG.intermediateAppPath,
       'node_modules',
@@ -34,21 +27,8 @@ module.exports = function() {
 
     if (metadata.atomTranspilers) {
       console.log(' transpiling for package '.cyan + packageName.cyan);
-      const rootPackageBackup = backupNodeModules(rootPackagePath);
-      const intermediatePackageBackup = backupNodeModules(
-        intermediatePackagePath
-      );
-
-      // Run `apm install` in the *root* package's path, so we get devDeps w/o apm's weird caching
-      // Then copy this folder into the intermediate package's path so we can run the transpilation in-line.
-      runApmInstall(rootPackagePath);
-      if (fs.existsSync(intermediatePackageBackup.nodeModulesPath)) {
-        fs.removeSync(intermediatePackageBackup.nodeModulesPath);
-      }
-      fs.copySync(
-        rootPackageBackup.nodeModulesPath,
-        intermediatePackageBackup.nodeModulesPath
-      );
+      // Transpiler dependencies are regular dependencies, installed (and
+      // hoisted) by bootstrap, so no separate install in the package is needed.
 
       CompileCache.addTranspilerConfigForPath(
         intermediatePackagePath,
@@ -74,8 +54,6 @@ module.exports = function() {
       );
 
       CompileCache.removeTranspilerConfigForPath(intermediatePackagePath);
-      rootPackageBackup.restore();
-      intermediatePackageBackup.restore();
     }
   }
 };

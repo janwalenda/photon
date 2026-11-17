@@ -34,10 +34,9 @@ module.exports = {
       /\.\d+$/,
       ''
     );
-    const apmVersion = CONFIG.apmMetadata.dependencies['atom-package-manager'];
     const body =
       electronVersion +
-      apmVersion +
+      'npm' +
       process.platform +
       process.version +
       process.arch;

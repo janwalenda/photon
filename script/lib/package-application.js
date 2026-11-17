@@ -25,7 +25,7 @@ module.exports = function() {
     appBundleId: 'com.github.atom',
     appCopyright: `Copyright © 2014-${new Date().getFullYear()} GitHub, Inc. All rights reserved.`,
     appVersion: CONFIG.appMetadata.version,
-    arch: process.platform === 'darwin' ? 'x64' : HOST_ARCH, // OS X is 64-bit only
+    arch: HOST_ARCH,
     asar: { unpack: buildAsarUnpackGlobExpression() },
     buildVersion: CONFIG.appMetadata.version,
     derefSymlinks: false,
@@ -84,17 +84,24 @@ module.exports = function() {
 
 function copyNonASARResources(packagedAppPath, bundledResourcesPath) {
   console.log(`Copying non-ASAR resources to ${bundledResourcesPath}`);
-  fs.copySync(
-    path.join(
-      CONFIG.repositoryRootPath,
-      'apm',
-      'node_modules',
-      'atom-package-manager'
-    ),
-    path.join(bundledResourcesPath, 'app', 'apm'),
-    { filter: includePathInPackagedApp }
+  const apmSourcePath = path.join(
+    CONFIG.repositoryRootPath,
+    'apm',
+    'node_modules',
+    'atom-package-manager'
   );
-  if (process.platform !== 'win32') {
+  // The bundled apm is no longer installed by bootstrap (it cannot run on
+  // Apple Silicon). Until Photon has a new in-app package manager, package
+  // the app without it.
+  const bundleApm = fs.existsSync(apmSourcePath);
+  if (bundleApm) {
+    fs.copySync(apmSourcePath, path.join(bundledResourcesPath, 'app', 'apm'), {
+      filter: includePathInPackagedApp
+    });
+  } else {
+    console.warn('Skipping bundled apm: apm/node_modules is not installed.');
+  }
+  if (bundleApm && process.platform !== 'win32') {
     // Existing symlinks on user systems point to an outdated path, so just symlink it to the real location of the apm binary.
     // TODO: Change command installer to point to appropriate path and remove this fallback after a few releases.
     fs.symlinkSync(
@@ -108,6 +115,8 @@ function copyNonASARResources(packagedAppPath, bundledResourcesPath) {
         'apm'
       )
     );
+  }
+  if (process.platform !== 'win32') {
     fs.copySync(
       path.join(CONFIG.repositoryRootPath, 'atom.sh'),
       path.join(bundledResourcesPath, 'app', 'atom.sh')
