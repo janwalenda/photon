@@ -1,0 +1,36 @@
+#!/bin/sh
+# Photon pre-commit hook: linter and Prettier must pass before every commit.
+# Enable with: git config core.hooksPath .githooks
+
+root="$(git rev-parse --show-toplevel)"
+cd "$root" || exit 1
+
+if [ ! -x script/node_modules/.bin/eslint ]; then
+  echo "pre-commit: script/node_modules is missing. Run 'script/bootstrap' first." >&2
+  exit 1
+fi
+
+# Prettier for staged files that ESLint does not cover (JSON, Markdown, Less/CSS)
+staged="$(git diff --cached --name-only --diff-filter=ACMR -- '*.json' '*.md' '*.less' '*.css' \
+  ':!**/package-lock.json' ':!**/node_modules/**' ':!vendor/**' ':!spec/fixtures/**')"
+if [ -n "$staged" ]; then
+  # shellcheck disable=SC2086
+  if ! echo "$staged" | xargs script/node_modules/.bin/prettier --list-different; then
+    echo "pre-commit: Prettier differences in the files listed above." >&2
+    echo "  Fix with: script/node_modules/.bin/prettier --write <file>" >&2
+    exit 1
+  fi
+fi
+
+echo "pre-commit: node script/lint ..."
+if ! node script/lint; then
+  echo "pre-commit: lint errors. 'node script/lint --fix' fixes many of them automatically." >&2
+  exit 1
+fi
+
+# CHANGELOG reminder (warning only)
+if ! git diff --cached --name-only | grep -qx 'CHANGELOG.md'; then
+  echo "pre-commit: note: CHANGELOG.md is not staged. Does this change belong under [Unreleased]?" >&2
+fi
+
+exit 0
