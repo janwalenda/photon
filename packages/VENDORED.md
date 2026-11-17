@@ -44,3 +44,13 @@ switch (#8) reformats them.
 | `language-clojure`       | 0.22.8  | [atom/language-clojure](https://github.com/atom/language-clojure)             | `54cde5069ea4` | none          |
 | `language-coffee-script` | 0.50.0  | [atom/language-coffee-script](https://github.com/atom/language-coffee-script) | `b76b47f7d3fc` | none          |
 | `language-csharp`        | 1.1.0   | [atom/language-csharp](https://github.com/atom/language-csharp)               | `c2fea34f343b` | none          |
+| `language-css`           | 0.45.1  | [atom/language-css](https://github.com/atom/language-css)                     | `01cfa5a2e6da` | none          |
+| `language-gfm`           | 0.90.8  | [atom/language-gfm](https://github.com/atom/language-gfm)                     | `ce39df9b892a` | none          |
+| `language-git`           | 0.19.1  | [atom/language-git](https://github.com/atom/language-git)                     | `738a90031421` | none          |
+| `language-go`            | 0.47.2  | [atom/language-go](https://github.com/atom/language-go)                       | `16c8071aecf7` | none          |
+| `language-html`          | 0.53.1  | [atom/language-html](https://github.com/atom/language-html)                   | `8ab471db6a9c` | none          |
+| `language-hyperlink`     | 0.17.1  | [atom/language-hyperlink](https://github.com/atom/language-hyperlink)         | `96bda003585e` | none          |
+| `language-java`          | 0.32.1  | [atom/language-java](https://github.com/atom/language-java)                   | `5f2f89060975` | none          |
+| `language-javascript`    | 0.134.1 | [atom/language-javascript](https://github.com/atom/language-javascript)       | `c3443f016c07` | none          |
+| `language-json`          | 1.0.5   | [atom/language-json](https://github.com/atom/language-json)                   | `98bf51be7145` | none          |
+| `language-less`          | 0.34.3  | [atom/language-less](https://github.com/atom/language-less)                   | `4a1426a08d40` | none          |

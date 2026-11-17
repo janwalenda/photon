@@ -30,3 +30,13 @@ node_modules
 /packages/language-clojure/
 /packages/language-coffee-script/
 /packages/language-csharp/
+/packages/language-css/
+/packages/language-gfm/
+/packages/language-git/
+/packages/language-go/
+/packages/language-html/
+/packages/language-hyperlink/
+/packages/language-java/
+/packages/language-javascript/
+/packages/language-json/
+/packages/language-less/
