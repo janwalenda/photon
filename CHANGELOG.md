@@ -1,25 +1,26 @@
 # Changelog
 
-Alle nennenswerten Änderungen an Photon werden in dieser Datei festgehalten.
+All notable changes to Photon are documented in this file.
 
-Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
-und das Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
 
-- Arbeitsregeln für Claude Code (`CLAUDE.md`) und Cursor (`.cursor/rules/photon-workflow.mdc`).
-- Pre-Commit-Hook (`.githooks/pre-commit`), der Linter und Prettier vor jedem Commit ausführt.
+- Working rules for Claude Code (`CLAUDE.md`) and Cursor (`.cursor/rules/photon-workflow.mdc`).
+- Pre-commit hook (`.githooks/pre-commit`) that runs the linter and Prettier before every commit.
+- GitHub issue templates (Feature, Bug, Task).
 
 ### Changed
 
-- Repository in `photon` umbenannt; Workflow auf git flow umgestellt (`main` für Releases, `develop` als Basis).
-- CHANGELOG auf das Format „Keep a Changelog“ umgestellt.
+- Renamed the repository to `photon` and switched to git flow (`main` for releases, `develop` as the base).
+- Switched the CHANGELOG to the Keep a Changelog format.
 
-## Historie
+## History
 
-Photon basiert auf Atom 1.65.0-dev. Die Release-Historie von Atom bis 1.64 steht unter
+Photon is based on Atom 1.65.0-dev. Atom's release history up to 1.64 is at
 https://github.com/atom/atom/releases.
 
 [unreleased]: https://github.com/janwalenda/photon/compare/main...develop
