@@ -3,7 +3,7 @@
 const donna = require('donna');
 const tello = require('tello');
 const joanna = require('joanna');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -19,7 +19,7 @@ module.exports = function () {
   const oldWorkingDirectoryPath = process.cwd();
   process.chdir(CONFIG.repositoryRootPath);
   const coffeeMetadata = donna.generateMetadata(['.'])[0];
-  const jsMetadata = joanna(glob.sync(`src/**/*.js`));
+  const jsMetadata = joanna(globSync(`src/**/*.js`));
   process.chdir(oldWorkingDirectoryPath);
 
   const metadata = {
@@ -38,7 +38,7 @@ module.exports = function () {
 
 function getAPIDocsForDependencies() {
   const classes = {};
-  for (const apiJSONPath of glob.sync(
+  for (const apiJSONPath of globSync(
     `${CONFIG.repositoryRootPath}/node_modules/*/api.json`
   )) {
     Object.assign(classes, require(apiJSONPath).classes);

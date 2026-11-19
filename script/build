@@ -16,7 +16,9 @@ require('colors')
 
 const path = require('path')
 const yargs = require('yargs')
-const argv = yargs
+const { hideBin } = require('yargs/helpers')
+const cli = yargs(hideBin(process.argv))
+const argv = cli
   .usage('Usage: $0 [options]')
   .help('help')
   .describe('existing-binaries', 'Use existing Atom binaries (skip clean/transpile/cache)')
@@ -30,7 +32,7 @@ const argv = yargs
   .describe('install', 'Install Atom')
   .string('install')
   .describe('ci', 'Install dependencies quickly (package-lock.json files must be up to date)')
-  .wrap(yargs.terminalWidth())
+  .wrap(cli.terminalWidth())
   .argv
 
 const checkChromedriverVersion = require('./lib/check-chromedriver-version')

@@ -8,7 +8,7 @@ module.exports = function () {
   // dependencies only makes sense if dependencies have been installed at least
   // once.
   const fs = require('fs-extra');
-  const glob = require('glob');
+  const globSync = require('./glob-sync');
 
   const apmDependenciesPath = path.join(CONFIG.apmRootPath, 'node_modules');
   console.log(`Cleaning ${apmDependenciesPath}`);
@@ -34,7 +34,7 @@ module.exports = function () {
     '**',
     'node_modules'
   );
-  for (const bundledPackageDependencyPath of glob.sync(
+  for (const bundledPackageDependencyPath of globSync(
     bundledPackageDependenciesPaths
   )) {
     fs.removeSync(bundledPackageDependencyPath);

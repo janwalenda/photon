@@ -1,10 +1,12 @@
 'use strict';
 
-const glob = require('glob');
+const globSync = require('../lib/glob-sync');
 const uploadToAzure = require('./lib/upload-to-azure-blob');
 
 const yargs = require('yargs');
-const argv = yargs
+const { hideBin } = require('yargs/helpers');
+const cli = yargs(hideBin(process.argv));
+const argv = cli
   .usage('Usage: $0 [options]')
   .help('help')
   .describe(
@@ -15,11 +17,11 @@ const argv = yargs
     'azure-blob-path',
     'Indicates the azure blob storage path in which the crash reports should be uploaded'
   )
-  .wrap(yargs.terminalWidth()).argv;
+  .wrap(cli.terminalWidth()).argv;
 
 async function uploadCrashReports() {
   const crashesPath = argv.crashReportPath;
-  const crashes = glob.sync('/*.dmp', { root: crashesPath });
+  const crashes = globSync('/*.dmp', { root: crashesPath });
   const azureBlobPath = argv.azureBlobPath;
 
   if (crashes && crashes.length > 0) {

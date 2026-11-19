@@ -267,16 +267,16 @@ module.exports = function (packagedAppPath) {
         requiredModuleRelativePath === path.join('..', 'src', 'startup-time.js')
       );
     }
-  }).then(({ snapshotScript }) => {
+  }).then(async ({ snapshotScript }) => {
     process.stdout.write('\n');
 
     process.stdout.write('Minifying startup script');
-    const minification = terser.minify(snapshotScript, {
+    // terser 5 returns a promise and rejects on errors.
+    const minification = await terser.minify(snapshotScript, {
       keep_fnames: true,
       keep_classnames: true,
       compress: { keep_fargs: true, keep_infinity: true }
     });
-    if (minification.error) throw minification.error;
     process.stdout.write('\n');
     fs.writeFileSync(snapshotScriptPath, minification.code);
 

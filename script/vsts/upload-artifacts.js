@@ -3,7 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const glob = require('glob');
+const globSync = require('../lib/glob-sync');
 const spawnSync = require('../lib/spawn-sync');
 const publishRelease = require('publish-release');
 const releaseNotes = require('./lib/release-notes');
@@ -13,7 +13,9 @@ const uploadLinuxPackages = require('./lib/upload-linux-packages');
 const CONFIG = require('../config');
 
 const yargs = require('yargs');
-const argv = yargs
+const { hideBin } = require('yargs/helpers');
+const cli = yargs(hideBin(process.argv));
+const argv = cli
   .usage('Usage: $0 [options]')
   .help('help')
   .describe(
@@ -32,14 +34,14 @@ const argv = yargs
     'linux-repo-name',
     'If specified, uploads Linux packages to the given repo name on packagecloud'
   )
-  .wrap(yargs.terminalWidth()).argv;
+  .wrap(cli.terminalWidth()).argv;
 
 const releaseVersion = CONFIG.computedAppVersion;
 const isNightlyRelease = CONFIG.channel === 'nightly';
 const assetsPath = argv.assetsPath || CONFIG.buildOutputPath;
 const assetsPattern =
   '/**/*(*.exe|*.zip|*.nupkg|*.tar.gz|*.rpm|*.deb|RELEASES*|atom-api.json)';
-const assets = glob.sync(assetsPattern, { root: assetsPath, nodir: true });
+const assets = globSync(assetsPattern, { root: assetsPath, nodir: true });
 const azureBlobPath = argv.azureBlobPath || `releases/v${releaseVersion}/`;
 
 if (!assets || assets.length === 0) {
