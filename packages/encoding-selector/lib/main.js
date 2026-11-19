@@ -1,5 +1,5 @@
-const EncodingListView = require('./encoding-list-view')
-const EncodingStatusView = require('./encoding-status-view')
+const EncodingListView = require('./encoding-list-view');
+const EncodingStatusView = require('./encoding-status-view');
 
 const encodings = {
   utf8: {
@@ -154,7 +154,7 @@ const encodings = {
     list: 'Korean (EUC-KR)',
     status: 'EUC-KR'
   }
-}
+};
 
 const posixOnlyEncodings = {
   iso885914: {
@@ -165,37 +165,42 @@ const posixOnlyEncodings = {
     list: 'Nordic (ISO 8859-10)',
     status: 'ISO 8859-10'
   }
-}
+};
 
-let encodingListView = null
-let encodingStatusView = null
-let commandSubscription = null
+let encodingListView = null;
+let encodingStatusView = null;
+let commandSubscription = null;
 
 module.exports = {
-  activate () {
+  activate() {
     if (process.platform !== 'win32') {
-      Object.assign(encodings, posixOnlyEncodings)
+      Object.assign(encodings, posixOnlyEncodings);
     }
 
-    commandSubscription = atom.commands.add('atom-text-editor', 'encoding-selector:show', () => {
-      if (!encodingListView) encodingListView = new EncodingListView(encodings)
-      encodingListView.toggle()
-    })
+    commandSubscription = atom.commands.add(
+      'atom-text-editor',
+      'encoding-selector:show',
+      () => {
+        if (!encodingListView)
+          encodingListView = new EncodingListView(encodings);
+        encodingListView.toggle();
+      }
+    );
   },
 
-  deactivate () {
-    if (commandSubscription) commandSubscription.dispose()
-    commandSubscription = null
+  deactivate() {
+    if (commandSubscription) commandSubscription.dispose();
+    commandSubscription = null;
 
-    if (encodingStatusView) encodingStatusView.destroy()
-    encodingStatusView = null
+    if (encodingStatusView) encodingStatusView.destroy();
+    encodingStatusView = null;
 
-    if (encodingListView) encodingListView.destroy()
-    encodingListView = null
+    if (encodingListView) encodingListView.destroy();
+    encodingListView = null;
   },
 
-  consumeStatusBar (statusBar) {
-    encodingStatusView = new EncodingStatusView(statusBar, encodings)
-    encodingStatusView.attach()
+  consumeStatusBar(statusBar) {
+    encodingStatusView = new EncodingStatusView(statusBar, encodings);
+    encodingStatusView.attach();
   }
-}
+};

@@ -2,13 +2,13 @@ const etch = require('etch');
 const $ = etch.dom;
 
 module.exports = class ListView {
-  constructor({items, heightForItem, itemComponent, className}) {
+  constructor({ items, heightForItem, itemComponent, className }) {
     this.items = items;
     this.heightForItem = heightForItem;
     this.itemComponent = itemComponent;
     this.className = className;
-    this.previousScrollTop = 0
-    this.previousClientHeight = 0
+    this.previousScrollTop = 0;
+    this.previousClientHeight = 0;
     etch.initialize(this);
 
     const resizeObserver = new ResizeObserver(() => etch.update(this));
@@ -16,12 +16,12 @@ module.exports = class ListView {
     this.element.addEventListener('scroll', () => etch.update(this));
   }
 
-  update({items, heightForItem, itemComponent, className} = {}) {
+  update({ items, heightForItem, itemComponent, className } = {}) {
     if (items) this.items = items;
     if (heightForItem) this.heightForItem = heightForItem;
     if (itemComponent) this.itemComponent = itemComponent;
     if (className) this.className = className;
-    return etch.update(this)
+    return etch.update(this);
   }
 
   render() {
@@ -29,13 +29,13 @@ module.exports = class ListView {
     let itemTopPosition = 0;
 
     if (this.element) {
-      let {scrollTop, clientHeight} = this.element;
+      let { scrollTop, clientHeight } = this.element;
       if (clientHeight > 0) {
-        this.previousScrollTop = scrollTop
-        this.previousClientHeight = clientHeight
+        this.previousScrollTop = scrollTop;
+        this.previousClientHeight = clientHeight;
       } else {
-        scrollTop = this.previousScrollTop
-        clientHeight = this.previousClientHeight
+        scrollTop = this.previousScrollTop;
+        clientHeight = this.previousClientHeight;
       }
 
       const scrollBottom = scrollTop + clientHeight;
@@ -43,7 +43,8 @@ module.exports = class ListView {
       let i = 0;
 
       for (; i < this.items.length; i++) {
-        let itemBottomPosition = itemTopPosition + this.heightForItem(this.items[i], i);
+        let itemBottomPosition =
+          itemTopPosition + this.heightForItem(this.items[i], i);
         if (itemBottomPosition > scrollTop) break;
         itemTopPosition = itemBottomPosition;
       }
@@ -72,7 +73,7 @@ module.exports = class ListView {
 
         itemTopPosition += itemHeight;
         if (itemTopPosition >= scrollBottom) {
-          i++
+          i++;
           break;
         }
       }
@@ -87,14 +88,14 @@ module.exports = class ListView {
         style: {
           position: 'relative',
           height: '100%',
-          overflow: 'auto',
+          overflow: 'auto'
         }
       },
       $.ol(
         {
           ref: 'list',
           className: this.className,
-          style: {height: `${itemTopPosition}px`}
+          style: { height: `${itemTopPosition}px` }
         },
         ...children
       )

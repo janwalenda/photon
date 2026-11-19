@@ -1,4 +1,5 @@
 # Ruby language support in Atom
+
 ![ci](https://github.com/atom/language-ruby/workflows/ci/badge.svg)
 [![Dependency Status](https://david-dm.org/atom/language-ruby.svg)](https://david-dm.org/atom/language-ruby)
 

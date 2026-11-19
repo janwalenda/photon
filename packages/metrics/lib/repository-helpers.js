@@ -5,13 +5,13 @@ const getDomain = function (gitURL) {
     [/(https:\/\/|@)bitbucket\.org/, 'bitbucket.org'],
     [/(https:\/\/|@).*\.visualstudio\.com/, 'visualstudio.com'],
     [/(https:\/\/|@)git-codecommit\..*\.amazonaws\.com/, 'amazonaws.com']
-  ]
+  ];
 
   for (let [pattern, domain] of patternsToDomains) {
-    if (pattern.test(gitURL)) return domain
+    if (pattern.test(gitURL)) return domain;
   }
 
-  return 'other'
-}
+  return 'other';
+};
 
-module.exports = {getDomain}
+module.exports = { getDomain };

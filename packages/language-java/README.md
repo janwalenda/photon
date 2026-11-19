@@ -1,4 +1,5 @@
 # Java language support in Atom
+
 ![build](https://github.com/atom/language-java/workflows/build/badge.svg)
 [![Dependency Status](https://david-dm.org/atom/language-java.svg)](https://david-dm.org/atom/language-java)
 

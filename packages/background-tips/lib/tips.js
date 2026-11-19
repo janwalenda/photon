@@ -11,4 +11,4 @@ module.exports = [
   'You can split a pane with {pane:split-right-and-copy-active-item}',
   'You can jump to a method in the editor using {symbols-view:toggle-file-symbols}',
   'You can install packages and themes from the Settings View {settings-view:open}'
-]
+];
