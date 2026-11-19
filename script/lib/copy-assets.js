@@ -6,7 +6,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const CONFIG = require('../config');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const includePathInPackagedApp = require('./include-path-in-packaged-app');
 
 module.exports = function () {
@@ -21,7 +21,7 @@ module.exports = function () {
     path.join(CONFIG.repositoryRootPath, 'vendor')
   ];
   srcPaths = srcPaths.concat(
-    glob.sync(path.join(CONFIG.repositoryRootPath, 'spec', '*.*'), {
+    globSync(path.join(CONFIG.repositoryRootPath, 'spec', '*.*'), {
       ignore: path.join('**', '*-spec.*')
     })
   );
@@ -40,8 +40,7 @@ module.exports = function () {
   const devOnlyPaths = getDevOnlyPaths();
   const includeInApp = filePath =>
     !devOnlyPaths.has(filePath) && includePathInPackagedApp(filePath);
-  glob
-    .sync(path.join(nodeModulesPath, '{*,@*/*}'))
+  globSync(path.join(nodeModulesPath, '{*,@*/*}'))
     .filter(p => !path.basename(p).startsWith('@'))
     .filter(p => !devOnlyPaths.has(p))
     .map(p =>

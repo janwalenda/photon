@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const klawSync = require('klaw-sync');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const path = require('path');
 const LessCache = require('less-cache');
 
@@ -121,7 +121,7 @@ module.exports = function () {
       }
 
       // Cache all styles in static; don't append variable imports
-      for (const lessFilePath of glob.sync(
+      for (const lessFilePath of globSync(
         path.join(CONFIG.intermediateAppPath, 'static', '**', '*.less')
       )) {
         cacheCompiledCSS(lessCache, lessFilePath, false);
@@ -129,7 +129,7 @@ module.exports = function () {
 
       // Cache styles for all bundled non-theme packages
       for (const nonThemePackage of nonThemePackages) {
-        for (const lessFilePath of glob.sync(
+        for (const lessFilePath of globSync(
           path.join(
             CONFIG.intermediateAppPath,
             'node_modules',
@@ -150,7 +150,7 @@ module.exports = function () {
         'index.less'
       );
       cacheCompiledCSS(lessCache, uiThemeMainPath, true);
-      for (const lessFilePath of glob.sync(
+      for (const lessFilePath of globSync(
         path.join(
           CONFIG.intermediateAppPath,
           'node_modules',
@@ -175,7 +175,7 @@ module.exports = function () {
         'index.less'
       );
       cacheCompiledCSS(lessCache, syntaxThemeMainPath, true);
-      for (const lessFilePath of glob.sync(
+      for (const lessFilePath of globSync(
         path.join(
           CONFIG.intermediateAppPath,
           'node_modules',
@@ -194,7 +194,7 @@ module.exports = function () {
     }
   }
 
-  for (const lessFilePath of glob.sync(
+  for (const lessFilePath of globSync(
     path.join(
       CONFIG.intermediateAppPath,
       'node_modules',

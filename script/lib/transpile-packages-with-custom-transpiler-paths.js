@@ -2,7 +2,7 @@
 
 const CompileCache = require('../../src/compile-cache');
 const fs = require('fs-extra');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const path = require('path');
 
 const CONFIG = require('../config');
@@ -39,7 +39,7 @@ module.exports = function () {
         metadata.atomTranspilers
       );
       for (const config of metadata.atomTranspilers) {
-        const pathsToCompile = glob.sync(
+        const pathsToCompile = globSync(
           path.join(intermediatePackagePath, config.glob),
           { nodir: true }
         );

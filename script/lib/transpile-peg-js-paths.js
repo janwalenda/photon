@@ -2,7 +2,7 @@
 
 const peg = require('pegjs');
 const fs = require('fs');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const path = require('path');
 
 const CONFIG = require('../config');
@@ -20,7 +20,7 @@ function getPathsToTranspile() {
     CONFIG.appMetadata.packageDependencies
   )) {
     paths = paths.concat(
-      glob.sync(
+      globSync(
         path.join(
           CONFIG.intermediateAppPath,
           'node_modules',

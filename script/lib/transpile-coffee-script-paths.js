@@ -2,7 +2,7 @@
 
 const CompileCache = require('../../src/compile-cache');
 const fs = require('fs');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const path = require('path');
 
 const CONFIG = require('../config');
@@ -19,12 +19,12 @@ module.exports = function () {
 function getPathsToTranspile() {
   let paths = [];
   paths = paths.concat(
-    glob.sync(path.join(CONFIG.intermediateAppPath, 'src', '**', '*.coffee'), {
+    globSync(path.join(CONFIG.intermediateAppPath, 'src', '**', '*.coffee'), {
       nodir: true
     })
   );
   paths = paths.concat(
-    glob.sync(path.join(CONFIG.intermediateAppPath, 'spec', '*.coffee'), {
+    globSync(path.join(CONFIG.intermediateAppPath, 'spec', '*.coffee'), {
       nodir: true
     })
   );
@@ -32,7 +32,7 @@ function getPathsToTranspile() {
     CONFIG.appMetadata.packageDependencies
   )) {
     paths = paths.concat(
-      glob.sync(
+      globSync(
         path.join(
           CONFIG.intermediateAppPath,
           'node_modules',

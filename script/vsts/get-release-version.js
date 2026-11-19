@@ -5,11 +5,13 @@ const repositoryRootPath = path.resolve(__dirname, '..', '..');
 const appMetadata = require(path.join(repositoryRootPath, 'package.json'));
 
 const yargs = require('yargs');
-const argv = yargs
+const { hideBin } = require('yargs/helpers');
+const cli = yargs(hideBin(process.argv));
+const argv = cli
   .usage('Usage: $0 [options]')
   .help('help')
   .describe('nightly', 'Indicates that a nightly version should be produced')
-  .wrap(yargs.terminalWidth()).argv;
+  .wrap(cli.terminalWidth()).argv;
 
 function getAppName(version) {
   const match = version.match(/\d+\.\d+\.\d+(-([a-z]+)(\d+|-\w{4,})?)?$/);

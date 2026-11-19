@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The packaged app no longer contains packages that `package-lock.json` marks as development-only (about 210 MB smaller).
 - Linting uses ESLint 10 with a flat config (`eslint.config.js`, `neostandard` without style rules) and Prettier 3; the existing formatting is kept (`trailingComma: none`, `arrowParens: avoid`).
 - Stylesheets are linted with Stylelint 18 (`stylelint-config-standard` 41, `postcss-less`). Rules that misread Less or require CSS that Electron 11 does not support are off until the Electron upgrade.
+- Build scripts use current `glob` 14, `yargs` 18, `semver` 7, `fs-extra` 11 and `terser` 5, and `minidump` 0.25 (the last version that installs without Yarn); the unused `mkdirp` dependency is gone.
 
 ### Removed
 

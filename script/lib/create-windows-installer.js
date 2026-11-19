@@ -2,7 +2,7 @@
 
 const electronInstaller = require('@atom/electron-winstaller');
 const fs = require('fs');
-const glob = require('glob');
+const globSync = require('./glob-sync');
 const path = require('path');
 
 const CONFIG = require('../config');
@@ -49,7 +49,7 @@ module.exports = packagedAppPath => {
 
     const appName =
       CONFIG.channel === 'stable' ? 'atom' : `atom-${CONFIG.channel}`;
-    for (const nupkgPath of glob.sync(
+    for (const nupkgPath of globSync(
       `${CONFIG.buildOutputPath}/${appName}-*.nupkg`
     )) {
       if (!nupkgPath.includes(CONFIG.computedAppVersion)) {
