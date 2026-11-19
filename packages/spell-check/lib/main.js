@@ -10,7 +10,7 @@ let log = str => {};
 module.exports = {
   activate() {
     if (atom.config.get('spell-check.enableDebug')) {
-      debug = require('debug');
+      const debug = require('debug');
       log = debug('spell-check');
     }
 

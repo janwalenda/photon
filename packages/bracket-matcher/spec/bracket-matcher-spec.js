@@ -1304,7 +1304,7 @@ describe('bracket matching', () => {
         });
 
         let lastPosition = null;
-        const sub = editor.getBuffer().onDidChange(() => {
+        editor.getBuffer().onDidChange(() => {
           expect(lastPosition).toBeNull();
           lastPosition = editor.getLastCursor().getBufferPosition();
         });

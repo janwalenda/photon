@@ -3,12 +3,9 @@ const env = require('../lib/checker-env');
 const { sep } = require('path');
 const {
   it,
-  fit,
-  ffit,
   beforeEach,
   afterEach,
-  conditionPromise,
-  timeoutPromise
+  conditionPromise
 } = require('./async-spec-helpers');
 
 describe('Spell check', function () {
@@ -27,8 +24,8 @@ describe('Spell check', function () {
     await atom.packages.activatePackage('language-text');
     await atom.packages.activatePackage('language-javascript');
     await atom.workspace.open(`${__dirname}${sep}sample.js`);
-    const package = await atom.packages.activatePackage('spell-check');
-    spellCheckModule = package.mainModule;
+    const pack = await atom.packages.activatePackage('spell-check');
+    spellCheckModule = pack.mainModule;
 
     // Disable the grammers so nothing is done until we turn it back on.
     atom.config.set('spell-check.grammars', []);
@@ -214,7 +211,6 @@ describe('Spell check', function () {
       atom.config.set('spell-check.grammars', ['source.js']);
 
       await conditionPromise(() => getMisspellingMarkers().length === 1);
-      const misspellingMarkers = getMisspellingMarkers();
       editor.setGrammar(atom.grammars.selectGrammar('.txt'));
       expect(getMisspellingMarkers().length).toBe(0);
     }));
@@ -359,8 +355,8 @@ describe('Spell check', function () {
           const correctionMenuItem = atom.contextMenu.itemSets.filter(
             item => item.items[0].label === menuItemLabel
           )[0];
-          expect(correctionCommand).toBeDefined;
-          expect(correctionMenuItem).toBeDefined;
+          expect(correctionCommand).toBeDefined();
+          expect(correctionMenuItem).toBeDefined();
         }
 
         atom.commands.dispatch(editorElement, commandName);
@@ -613,7 +609,7 @@ describe('Spell check', function () {
         atom.config.set('spell-check.grammars', ['source.js']);
 
         await conditionPromise(() => {
-          markers = getMisspellingMarkers();
+          const markers = getMisspellingMarkers();
           console.log(markers);
           return (
             markers.length === 1 &&
@@ -632,7 +628,7 @@ describe('Spell check', function () {
         atom.config.set('spell-check.grammars', ['source.js']);
 
         await conditionPromise(() => {
-          markers = getMisspellingMarkers();
+          const markers = getMisspellingMarkers();
           return (
             markers.length === 3 &&
             markers[0].getBufferRange().start.column === 7 &&

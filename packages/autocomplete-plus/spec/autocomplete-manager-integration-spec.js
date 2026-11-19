@@ -1,4 +1,3 @@
-/* eslint-env jasmine */
 /* eslint-disable no-template-curly-in-string */
 
 const { TextEditor } = require('atom');

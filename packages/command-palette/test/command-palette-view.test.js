@@ -39,7 +39,7 @@ describe('CommandPaletteView', () => {
         for (const item of atom.commands.findCommands({
           target: editor.element
         })) {
-          const { name, description, displayName, tags } = item;
+          const { name, description, displayName } = item;
           const eventLi = workspaceElement.querySelector(
             `[data-event-name='${name}']`
           );
@@ -183,14 +183,10 @@ describe('CommandPaletteView', () => {
 
   describe('hidden commands', () => {
     it('does not show commands that are marked as `hiddenInCommandPalette` by default, then *only* shows those commands when showHiddenCommands is invoked', async () => {
-      const commandsDisposable = atom.commands.add(
-        '*',
-        'foo:hidden-in-command-palette',
-        {
-          hiddenInCommandPalette: true,
-          didDispatch() {}
-        }
-      );
+      atom.commands.add('*', 'foo:hidden-in-command-palette', {
+        hiddenInCommandPalette: true,
+        didDispatch() {}
+      });
 
       const commandPalette = new CommandPaletteView();
       await commandPalette.toggle();

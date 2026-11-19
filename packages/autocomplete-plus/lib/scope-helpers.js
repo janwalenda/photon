@@ -20,7 +20,6 @@ const setCachedMatch = (selector, scopeChain, match) => {
     cachedMatchesBySelector[selector] = cachedMatchesByScopeChain;
   }
   cachedMatchesByScopeChain[scopeChain] = match;
-  cachedMatchesByScopeChain[scopeChain];
 };
 
 const parseScopeChain = scopeChain => {

@@ -2369,8 +2369,6 @@ describe('FindView', () => {
     });
 
     describe('when there is history', () => {
-      const [oneRange, twoRange, threeRange] = [];
-
       beforeEach(() => {
         atom.commands.dispatch(editorView, 'find-and-replace:show');
         editor.setText('zero\none\ntwo\nthree\n');

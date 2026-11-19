@@ -1,11 +1,5 @@
 const SelectList = require('atom-select-list');
-const {
-  it,
-  fit,
-  ffit,
-  beforeEach,
-  afterEach
-} = require('./async-spec-helpers'); // eslint-disable-line
+const { it, beforeEach, afterEach } = require('./async-spec-helpers');
 
 describe('EncodingSelector', () => {
   let editor;

@@ -48,6 +48,7 @@ module.exports = class ResultsPaneView {
           break;
         case this.refs.incrementTrailingContextLines:
           this.incrementTrailingContextLines();
+          break;
         case this.refs.dontOverrideTab:
           this.dontOverrideTab();
           break;
@@ -105,7 +106,9 @@ module.exports = class ResultsPaneView {
         $.button(
           {
             ref: 'dontOverrideTab',
-            style: { display: matchCount == 0 || this.isLoading ? 'none' : '' },
+            style: {
+              display: matchCount === 0 || this.isLoading ? 'none' : ''
+            },
             className: 'btn'
           },
           "Don't override this tab"

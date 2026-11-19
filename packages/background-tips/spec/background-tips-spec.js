@@ -1,11 +1,4 @@
-const {
-  it,
-  fit,
-  ffit,
-  afterEach,
-  beforeEach,
-  emitterEventPromise
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+const { it, beforeEach, emitterEventPromise } = require('./async-spec-helpers');
 
 describe('BackgroundTips', () => {
   let workspaceElement;

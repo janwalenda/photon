@@ -106,7 +106,7 @@ describe('ResultsModel', () => {
 
       advanceClock(editor.buffer.stoppedChangingDelay);
       editor.getBuffer().destroy();
-      result = resultsModel.getResult(editor.getPath());
+      let result = resultsModel.getResult(editor.getPath());
       expect(result.matches[0].lineText).toBe('  var sort = function(items) {');
     });
   });
@@ -145,7 +145,7 @@ describe('ResultsModel', () => {
 
       advanceClock(editor.buffer.stoppedChangingDelay);
       editor.getBuffer().destroy();
-      result = resultsModel.getResult(editor.getPath());
+      resultsModel.getResult(editor.getPath());
 
       expect(
         Number.isInteger(reporterSpy.sendSearchEvent.calls[0].args[0])

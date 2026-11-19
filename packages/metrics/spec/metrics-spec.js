@@ -2,13 +2,10 @@
 
 import {
   it,
-  fit,
-  ffit,
-  fffit,
   beforeEach,
   afterEach,
   conditionPromise
-} from './helpers/async-spec-helpers'; // eslint-disable-line no-unused-vars
+} from './helpers/async-spec-helpers';
 import Reporter from '../lib/reporter';
 import fs from 'fs-plus';
 import grim from 'grim';

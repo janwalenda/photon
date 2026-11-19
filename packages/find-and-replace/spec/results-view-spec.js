@@ -3,7 +3,6 @@
 const _ = require('underscore-plus');
 const path = require('path');
 const temp = require('temp');
-const fs = require('fs');
 const etch = require('etch');
 const ResultsPaneView = require('../lib/project/results-pane');
 const getIconServices = require('../lib/get-icon-services');
@@ -275,7 +274,7 @@ describe('ResultsView', () => {
       return resultsView.refs.listView.element.querySelector('.selected');
     }
 
-    function getRecursivePosition(element, substract_scroll) {
+    function getRecursivePosition(element, subtractScroll) {
       let x = 0;
       let y = 0;
       while (
@@ -285,17 +284,13 @@ describe('ResultsView', () => {
       ) {
         x += element.offsetLeft;
         y += element.offsetTop;
-        if (substract_scroll) {
+        if (subtractScroll) {
           x -= element.scrollLeft;
           y -= element.scrollTop;
         }
         element = element.offsetParent;
       }
       return { top: y, left: x };
-    }
-
-    function getSelectedOffset() {
-      return getRecursivePosition(getSelectedItem(), true).top;
     }
 
     function getSelectedPosition() {
@@ -315,7 +310,6 @@ describe('ResultsView', () => {
       ).toHaveClass('selected');
 
       let initiallySelectedItem = getSelectedItem();
-      let initiallySelectedOffset = getSelectedOffset();
       let initiallySelectedPosition = getSelectedPosition();
 
       await resultsView.pageDown();
@@ -324,7 +318,6 @@ describe('ResultsView', () => {
       expect(getSelectedPosition()).toBeGreaterThan(initiallySelectedPosition);
 
       initiallySelectedItem = getSelectedItem();
-      initiallySelectedOffset = getSelectedOffset();
       initiallySelectedPosition = getSelectedPosition();
 
       await resultsView.pageDown();
@@ -351,7 +344,6 @@ describe('ResultsView', () => {
       const { listView } = resultsView.refs;
 
       let initiallySelectedItem = getSelectedItem();
-      let initiallySelectedOffset = getSelectedOffset();
       let initiallySelectedPosition = getSelectedPosition();
 
       await resultsView.pageUp();
@@ -360,7 +352,6 @@ describe('ResultsView', () => {
       expect(getSelectedPosition()).toBeLessThan(initiallySelectedPosition);
 
       initiallySelectedItem = getSelectedItem();
-      initiallySelectedOffset = getSelectedOffset();
       initiallySelectedPosition = getSelectedPosition();
 
       await resultsView.pageUp();
@@ -504,7 +495,6 @@ describe('ResultsView', () => {
 
       // remove the first result
       const firstPath = resultsView.model.getPaths()[0];
-      const firstResult = resultsView.model.getResult(firstPath);
       resultsView.model.removeResult(firstPath);
 
       // Check that the first result is not collapsed
@@ -1123,7 +1113,7 @@ describe('ResultsView', () => {
       atom.commands.dispatch(projectFindView.element, 'core:confirm');
       await searchPromise;
 
-      resultsPane = getResultsPane();
+      const resultsPane = getResultsPane();
       await etch.update(resultsPane);
       expect(resultsPane.refs.previewCount.textContent).toContain('3 files');
 
@@ -1333,7 +1323,7 @@ function clickOn(element) {
 }
 
 function delayFor(ms) {
-  return new Promise(done => {
-    setTimeout(() => done(), ms);
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), ms);
   });
 }

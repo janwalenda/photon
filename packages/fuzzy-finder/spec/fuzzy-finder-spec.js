@@ -16,12 +16,10 @@ const { Disposable } = require('atom');
 
 const {
   it,
-  fit,
-  ffit,
   afterEach,
   beforeEach,
   conditionPromise
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+} = require('./async-spec-helpers');
 
 function rmrf(_path) {
   if (fs.statSync(_path).isDirectory()) {
@@ -686,8 +684,8 @@ describe('FuzzyFinder', () => {
               atom.workspace
                 .getActivePane()
                 .splitRight({ copyActiveItem: true });
-              const [editor1, editor2, editor3] =
-                atom.workspace.getTextEditors(); // eslint-disable-line no-unused-vars
+              const [_editor1, _editor2, editor3] =
+                atom.workspace.getTextEditors();
               expect(atom.workspace.getActivePaneItem()).toBe(editor3);
 
               expect(atom.views.getView(editor3)).toHaveFocus();

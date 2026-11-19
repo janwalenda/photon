@@ -276,7 +276,7 @@ module.exports = class Whitespace {
     let fileTabSize = editor.getTabLength();
 
     let userTabSize = atom.config.get('editor.tabLength', {
-      scope: scope
+      scope
     });
 
     let regex = new RegExp(' '.repeat(fileTabSize), 'g');

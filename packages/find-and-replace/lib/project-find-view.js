@@ -1,10 +1,8 @@
-const fs = require('fs-plus');
 const path = require('path');
 const _ = require('underscore-plus');
 const { TextEditor, Disposable, CompositeDisposable } = require('atom');
 const etch = require('etch');
 const Util = require('./project/util');
-const ResultsModel = require('./project/results-model');
 const ResultsPaneView = require('./project/results-pane');
 const $ = etch.dom;
 
@@ -465,7 +463,7 @@ module.exports = class ProjectFindView {
     let pathsPattern = this.pathsEditor.getText();
     let replacePattern = this.replaceEditor.getText();
 
-    let { onlyRunIfActive, onlyRunIfChanged } = options;
+    let { onlyRunIfActive } = options;
     if ((onlyRunIfActive && !this.model.active) || !findPattern)
       return Promise.resolve();
 
@@ -595,7 +593,7 @@ module.exports = class ProjectFindView {
     const canReplace =
       results &&
       results.matchCount &&
-      results.findPattern == this.findEditor.getText();
+      results.findPattern === this.findEditor.getText();
     if (
       canReplace &&
       !this.refs.replaceAllButton.classList.contains('disabled')

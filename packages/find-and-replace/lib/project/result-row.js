@@ -149,13 +149,12 @@ class ResultRowGroup {
 
     let prevRow = null;
     for (const row of this.rows) {
-      row.data.separator =
+      row.data.separator = !!(
         prevRow &&
         row.data.lineNumber != null &&
         prevRow.data.lineNumber != null &&
         row.data.lineNumber > prevRow.data.lineNumber + 1
-          ? true
-          : false;
+      );
       prevRow = row;
     }
   }

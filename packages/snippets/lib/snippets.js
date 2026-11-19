@@ -153,7 +153,7 @@ module.exports = {
 
   loadUserSnippets(callback) {
     const userSnippetsPath = this.getUserSnippetsPath();
-    fs.stat(userSnippetsPath, (error, stat) => {
+    fs.stat(userSnippetsPath, (_error, stat) => {
       if (stat != null && stat.isFile()) {
         this.loadSnippetsFile(userSnippetsPath, snippets => {
           const result = {};
@@ -168,7 +168,7 @@ module.exports = {
 
   watchUserSnippets(callback) {
     const userSnippetsPath = this.getUserSnippetsPath();
-    fs.stat(userSnippetsPath, (error, stat) => {
+    fs.stat(userSnippetsPath, (_error, stat) => {
       if (stat != null && stat.isFile()) {
         const userSnippetsFileDisposable = new CompositeDisposable();
         const userSnippetsFile = new File(userSnippetsPath);
@@ -283,7 +283,7 @@ module.exports = {
     async.map(
       snippetsDirPaths,
       this.loadSnippetsDirectory.bind(this),
-      (error, results) => {
+      (_error, results) => {
         const zipped = [];
         for (const key in results) {
           zipped.push({ result: results[key], pack: packages[key] });
@@ -355,7 +355,7 @@ module.exports = {
               done(null, { filePath, snippets })
             );
           },
-          (error, results) => {
+          (_error, results) => {
             const snippetsByPath = {};
             for (const { filePath, snippets } of results) {
               snippetsByPath[filePath] = snippets;

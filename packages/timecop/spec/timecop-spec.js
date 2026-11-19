@@ -6,13 +6,7 @@ const CSON = require(
   path.join(atom.getLoadSettings().resourcePath, 'node_modules', 'season')
 );
 
-const {
-  it,
-  fit,
-  ffit,
-  beforeEach,
-  afterEach
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+const { it, beforeEach, afterEach } = require('./async-spec-helpers');
 
 describe('Timecop', () => {
   beforeEach(async () => {

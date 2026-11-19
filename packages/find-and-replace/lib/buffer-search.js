@@ -1,10 +1,4 @@
-const {
-  Point,
-  Range,
-  Emitter,
-  CompositeDisposable,
-  TextBuffer
-} = require('atom');
+const { Point, Range, Emitter, CompositeDisposable } = require('atom');
 const FindOptions = require('./find-options');
 const escapeHelper = require('./escape-helper');
 const Util = require('./project/util');

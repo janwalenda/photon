@@ -4,8 +4,7 @@ const {
   LeadingContextRow,
   TrailingContextRow,
   ResultPathRow,
-  MatchRow,
-  ResultRowGroup
+  MatchRow
 } = require('./result-row');
 const { showIf } = require('./util');
 

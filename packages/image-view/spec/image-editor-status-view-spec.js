@@ -1,12 +1,9 @@
 const {
   it,
-  fit,
-  ffit,
   beforeEach,
-  afterEach,
   conditionPromise,
   emitterEventPromise
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+} = require('./async-spec-helpers');
 
 const fs = require('fs-plus');
 
