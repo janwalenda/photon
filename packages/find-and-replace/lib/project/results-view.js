@@ -1,4 +1,4 @@
-const { Range, CompositeDisposable, Disposable } = require('atom');
+const { CompositeDisposable } = require('atom');
 const ResultRowView = require('./result-row-view');
 const {
   LeadingContextRow,
@@ -125,8 +125,8 @@ module.exports = class ResultsView {
   render() {
     this.maintainPreviousScrollPosition();
 
-    let regex = null,
-      replacePattern = null;
+    let regex = null;
+    let replacePattern = null;
     if (this.model.replacedPathCount == null) {
       regex = this.model.regex;
       replacePattern = this.model.getFindOptions().replacePattern;
@@ -232,8 +232,6 @@ module.exports = class ResultsView {
   }
 
   invalidateRowGroup(firstRowIndex, groupIndex) {
-    const { leadingContextLineCount, trailingContextLineCount } =
-      this.model.getFindOptions();
     const rowGroup = this.resultRowGroups[groupIndex];
 
     if (!rowGroup.data.isCollapsed) {
@@ -413,8 +411,6 @@ module.exports = class ResultsView {
 
   selectResultAtPosition(position) {
     if (this.refs.listView && this.model.getPathCount() > 0) {
-      const { clientHeight } = this.refs.listView.element;
-
       let top = 0;
       for (let i = 0; i < this.resultRows.length; i++) {
         const bottom = top + this.getRowHeight(this.resultRows[i]);
@@ -571,7 +567,7 @@ module.exports = class ResultsView {
         let editor;
         const editors = atom.workspace.getTextEditors();
         const filepath = result.group.result.filePath;
-        const exists = _.some(editors, editor => editor.getPath() == filepath);
+        const exists = _.some(editors, editor => editor.getPath() === filepath);
 
         if (!exists) {
           editor = await atom.workspace.open(filepath, {

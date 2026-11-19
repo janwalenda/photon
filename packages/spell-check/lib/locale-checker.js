@@ -22,7 +22,7 @@ class LocaleChecker {
     this.hasSystemChecker = hasSystemChecker;
     this.inferredLocale = inferredLocale;
     if (atom.config.get('spell-check.enableDebug')) {
-      debug = require('debug');
+      const debug = require('debug');
       this.log = debug('spell-check:locale-checker').extend(locale);
     } else {
       this.log = str => {};

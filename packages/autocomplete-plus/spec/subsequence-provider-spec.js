@@ -1,5 +1,3 @@
-/* eslint-env jasmine */
-
 const { conditionPromise } = require('./spec-helper');
 
 let suggestionsForPrefix = async (provider, editor, prefix, options) => {

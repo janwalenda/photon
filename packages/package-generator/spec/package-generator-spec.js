@@ -5,12 +5,10 @@ const PackageGeneratorView = require('../lib/package-generator-view');
 
 const {
   it,
-  fit,
-  ffit,
   afterEach,
   beforeEach,
   conditionPromise
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+} = require('./async-spec-helpers');
 
 describe('Package Generator', () => {
   let packageGeneratorView = null;

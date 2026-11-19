@@ -9,7 +9,7 @@ export default class CommandPaletteView {
   constructor(initiallyVisibleItemCount = 10) {
     this.keyBindingsForActiveElement = [];
     this.selectListView = new SelectListView({
-      initiallyVisibleItemCount: initiallyVisibleItemCount, // just for being able to disable visible-on-render in spec
+      initiallyVisibleItemCount, // just for being able to disable visible-on-render in spec
       items: [],
       filter: this.filter,
       emptyMessage: 'No matches found',

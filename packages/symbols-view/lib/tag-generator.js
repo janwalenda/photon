@@ -137,8 +137,8 @@ export default class TagGenerator {
     return new Promise(resolve => {
       let result, tag;
       return new BufferedProcess({
-        command: command,
-        args: args,
+        command,
+        args,
         stdout: lines => {
           return (() => {
             result = [];

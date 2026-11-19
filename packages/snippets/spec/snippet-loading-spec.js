@@ -93,10 +93,10 @@ describe('Snippet Loading', () => {
       expect(snippet.prefix).toBe('testhtmllabels');
       expect(snippet.body).toBe('testing 456');
       expect(snippet.leftLabelHTML).toBe(
-        '<span style=\"color:red\">Label</span>'
+        '<span style="color:red">Label</span>'
       );
       expect(snippet.rightLabelHTML).toBe(
-        '<span style=\"color:white\">Label</span>'
+        '<span style="color:white">Label</span>'
       );
     });
   });

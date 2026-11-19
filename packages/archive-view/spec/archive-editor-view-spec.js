@@ -1,14 +1,6 @@
 const { Disposable, File } = require('atom');
 const getIconServices = require('../lib/get-icon-services');
-const {
-  it,
-  fit,
-  ffit,
-  fffit,
-  beforeEach,
-  afterEach,
-  conditionPromise
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+const { it, beforeEach, conditionPromise } = require('./async-spec-helpers');
 
 async function condition(handler) {
   if (jasmine.isSpy(window.setTimeout)) {

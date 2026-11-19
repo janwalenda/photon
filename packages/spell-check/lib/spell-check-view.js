@@ -1,11 +1,10 @@
-let SpellCheckView;
 const _ = require('underscore-plus');
 const { CompositeDisposable } = require('atom');
 const SpellCheckTask = require('./spell-check-task');
 
 let CorrectionsView = null;
 
-module.exports = SpellCheckView = class SpellCheckView {
+module.exports = class SpellCheckView {
   constructor(editor, spellCheckModule, manager) {
     this.addContextMenuEntries = this.addContextMenuEntries.bind(this);
     this.makeCorrection = this.makeCorrection.bind(this);

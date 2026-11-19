@@ -97,7 +97,8 @@ class SpellCheckerManager {
     // the coders to export it as `default` since we don't have another
     // way of figuring out which object to instantiate.
     if (checker.default) {
-      checker = new checker.default();
+      const Checker = checker.default;
+      checker = new Checker();
     }
 
     // Add in the resulting checker.
@@ -423,7 +424,7 @@ class SpellCheckerManager {
   init() {
     // Set up logging.
     if (atom.config.get('spell-check.enableDebug')) {
-      debug = require('debug');
+      const debug = require('debug');
       this.log = debug('spell-check:spell-check-manager');
     } else {
       this.log = str => {};

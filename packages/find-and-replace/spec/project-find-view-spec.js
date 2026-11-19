@@ -1607,12 +1607,12 @@ for (const ripgrep of [false, true]) {
           await searchPromise;
         });
         it('opens new search results in new panel', async () => {
-          const result_pane = getExistingResultsPane();
-          result_pane.dontOverrideTab();
+          const resultPane = getExistingResultsPane();
+          resultPane.dontOverrideTab();
           projectFindView.findEditor.setText('items2');
           atom.commands.dispatch(projectFindView.element, 'core:confirm');
           await searchPromise;
-          expect(result_pane).not.toBe(getExistingResultsPane());
+          expect(resultPane).not.toBe(getExistingResultsPane());
         });
       });
     });
@@ -1907,7 +1907,7 @@ for (const ripgrep of [false, true]) {
             expect(atom.beep).toHaveBeenCalled();
             expect(
               projectFindView.refs.descriptionLabel.textContent.replace(
-                /(  )/g,
+                /( {2})/g,
                 ' '
               )
             ).toContain('No results');

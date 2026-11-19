@@ -1,17 +1,11 @@
 const { getWrapGuides, getLeftPosition } = require('./helpers');
 
-const {
-  it,
-  fit,
-  ffit,
-  afterEach,
-  beforeEach
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+const { it, beforeEach } = require('./async-spec-helpers');
 
 describe('Wrap Guide', () => {
-  let editor,
-    editorElement,
-    wrapGuide = [];
+  let editor;
+  let editorElement;
+  let wrapGuide = [];
 
   beforeEach(async () => {
     await atom.packages.activatePackage('wrap-guide');
@@ -37,7 +31,7 @@ describe('Wrap Guide', () => {
     });
 
     it('positions the guide at the configured column', () => {
-      width = editor.getDefaultCharWidth() * wrapGuide.getDefaultColumn();
+      const width = editor.getDefaultCharWidth() * wrapGuide.getDefaultColumn();
       expect(width).toBeGreaterThan(0);
       expect(
         Math.abs(getLeftPosition(wrapGuide.firstChild) - width)

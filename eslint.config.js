@@ -23,73 +23,7 @@ module.exports = [
       'packages/github/**',
       'packages/tree-sitter/**',
       'packages/superstring/**',
-      'packages/git-utils/**',
-      // Imported Atom packages, upstream formatting until the Prettier 3 switch (#8)
-      'packages/archive-view/**',
-      'packages/autocomplete-atom-api/**',
-      'packages/autocomplete-css/**',
-      'packages/autocomplete-html/**',
-      'packages/autocomplete-plus/**',
-      'packages/autocomplete-snippets/**',
-      'packages/autosave/**',
-      'packages/background-tips/**',
-      'packages/bookmarks/**',
-      'packages/bracket-matcher/**',
-      'packages/command-palette/**',
-      'packages/encoding-selector/**',
-      'packages/find-and-replace/**',
-      'packages/fuzzy-finder/**',
-      'packages/image-view/**',
-      'packages/keybinding-resolver/**',
-      'packages/language-c/**',
-      'packages/language-clojure/**',
-      'packages/language-coffee-script/**',
-      'packages/language-csharp/**',
-      'packages/language-css/**',
-      'packages/language-gfm/**',
-      'packages/language-git/**',
-      'packages/language-go/**',
-      'packages/language-html/**',
-      'packages/language-hyperlink/**',
-      'packages/language-java/**',
-      'packages/language-javascript/**',
-      'packages/language-json/**',
-      'packages/language-less/**',
-      'packages/language-make/**',
-      'packages/language-mustache/**',
-      'packages/language-objective-c/**',
-      'packages/language-perl/**',
-      'packages/language-php/**',
-      'packages/language-property-list/**',
-      'packages/language-python/**',
-      'packages/language-ruby/**',
-      'packages/language-ruby-on-rails/**',
-      'packages/language-sass/**',
-      'packages/language-shellscript/**',
-      'packages/language-source/**',
-      'packages/language-sql/**',
-      'packages/language-text/**',
-      'packages/language-todo/**',
-      'packages/language-toml/**',
-      'packages/language-typescript/**',
-      'packages/language-xml/**',
-      'packages/language-yaml/**',
-      'packages/markdown-preview/**',
-      'packages/metrics/**',
-      'packages/notifications/**',
-      'packages/open-on-github/**',
-      'packages/package-generator/**',
-      'packages/settings-view/**',
-      'packages/snippets/**',
-      'packages/spell-check/**',
-      'packages/status-bar/**',
-      'packages/styleguide/**',
-      'packages/symbols-view/**',
-      'packages/tabs/**',
-      'packages/timecop/**',
-      'packages/tree-view/**',
-      'packages/whitespace/**',
-      'packages/wrap-guide/**'
+      'packages/git-utils/**'
     ]
   },
 
@@ -111,6 +45,18 @@ module.exports = [
     rules: {
       'n/no-callback-literal': 'off',
       'n/no-deprecated-api': 'off',
+      // As in neostandard, plus `_` for unused positions in array patterns
+      // (regex groups, for example).
+      'no-unused-vars': [
+        'error',
+        {
+          args: 'none',
+          caughtErrors: 'none',
+          destructuredArrayIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+          vars: 'all'
+        }
+      ],
       // Rules that the previous config (standard 12) did not have. Existing
       // violations would need logic changes in core, so they are enabled
       // again while core is rewritten in TypeScript (#15).
@@ -131,7 +77,7 @@ module.exports = [
   },
 
   {
-    files: ['spec/**', '**/*-spec.js', '**/*.test.js'],
+    files: ['spec/**', 'packages/*/spec/**', '**/*-spec.js', '**/*.test.js'],
     languageOptions: {
       globals: {
         ...globals.jasmine,
@@ -141,6 +87,12 @@ module.exports = [
         waitsForPromise: 'readonly'
       }
     }
+  },
+
+  // Snippet bodies use ${1:placeholder} syntax inside plain strings.
+  {
+    files: ['packages/snippets/spec/**', 'packages/bracket-matcher/spec/**'],
+    rules: { 'no-template-curly-in-string': 'off' }
   },
 
   prettierRecommended

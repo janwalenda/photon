@@ -378,7 +378,7 @@ export default class SettingsView {
 
       if (path1 === 'packages' && path2 != null) {
         this.showPanel(path2, {
-          uri: uri,
+          uri,
           pack: { name: path2 },
           back: atom.packages.getLoadedPackage(path2) ? 'Packages' : null
         });

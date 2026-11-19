@@ -29,6 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build scripts use current `glob` 14, `yargs` 18, `semver` 7, `fs-extra` 11 and `terser` 5, and `minidump` 0.25 (the last version that installs without Yarn); the unused `mkdirp` dependency is gone.
 - The bundled Atom packages in `packages/` are formatted with Prettier like the rest of the repository; only the vendored `github`, `git-utils`, `superstring` and `tree-sitter` keep their upstream style.
 
+### Fixed
+
+- find-and-replace: the button that adds trailing context lines in the project results no longer also toggles "Don't override tab".
+- spell-check: debug logging no longer creates a global `debug` variable.
+
 ### Removed
 
 - The bundled apm is no longer installed by `script/bootstrap` or packaged with the app.

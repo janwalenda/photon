@@ -64,7 +64,7 @@ module.exports = class ListView {
               key: i
             },
             etch.dom(this.itemComponent, {
-              item: item,
+              item,
               top: Math.max(0, scrollTop - itemTopPosition),
               bottom: Math.min(itemHeight, scrollBottom - itemTopPosition)
             })

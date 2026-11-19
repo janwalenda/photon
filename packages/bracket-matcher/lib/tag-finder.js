@@ -105,13 +105,13 @@ module.exports = class TagFinder {
         if (this.isRangeCommented(range)) return;
 
         const [
-          entireMatch,
+          _entireMatch,
           isStartTag,
           tagName,
-          attributes,
-          suffix,
+          _attributes,
+          _suffix,
           isSelfClosingTag,
-          isEndTag
+          _isEndTag
         ] = match;
 
         if (isSelfClosingTag) return;
@@ -153,13 +153,13 @@ module.exports = class TagFinder {
         if (this.isRangeCommented(range)) return;
 
         const [
-          entireMatch,
+          _entireMatch,
           isStartTag,
-          tagName,
-          attributes,
-          suffix,
+          _tagName,
+          _attributes,
+          _suffix,
           isSelfClosingTag,
-          isEndTag
+          _isEndTag
         ] = match;
 
         if (isSelfClosingTag) return;
@@ -195,12 +195,12 @@ module.exports = class TagFinder {
         stop();
 
         const [
-          entireMatch,
+          _entireMatch,
           prefix,
           isClosingTag,
           tagName,
-          attributes,
-          suffix,
+          _attributes,
+          _suffix,
           isSelfClosingTag
         ] = Array.from(match);
 

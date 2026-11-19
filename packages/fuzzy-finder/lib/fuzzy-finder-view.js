@@ -75,8 +75,8 @@ module.exports = class FuzzyFinderView {
 
           this.selectListView.update({
             items: [],
-            emptyMessage: emptyMessage,
-            errorMessage: errorMessage
+            emptyMessage,
+            errorMessage
           });
         } else if (this.previousQueryWasLineJump) {
           this.previousQueryWasLineJump = false;
@@ -98,7 +98,7 @@ module.exports = class FuzzyFinderView {
           case SCORING_SYSTEMS.STANDARD:
             matches = fuzzaldrin.match(label, filterQuery);
             break;
-          case SCORING_SYSTEMS.FAST:
+          case SCORING_SYSTEMS.FAST: {
             this.nativeFuzzyForResults.setCandidates([0], [label]);
             const items = this.nativeFuzzyForResults.match(filterQuery, {
               maxResults: 1,
@@ -106,6 +106,7 @@ module.exports = class FuzzyFinderView {
             });
             matches = items.length ? items[0].matchIndexes : [];
             break;
+          }
           default:
             matches = fuzzaldrinPlus.match(label, filterQuery);
             break;

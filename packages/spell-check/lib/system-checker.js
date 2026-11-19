@@ -1,6 +1,5 @@
 let instance;
 const spellchecker = require('spellchecker');
-const pathspec = require('atom-pathspec');
 const env = require('./checker-env');
 
 // Initialize the global spell checker which can take some time. We also force
@@ -24,7 +23,7 @@ if (env.isSystemSupported()) {
 class SystemChecker {
   constructor() {
     if (atom.config.get('spell-check.enableDebug')) {
-      debug = require('debug');
+      const debug = require('debug');
       this.log = debug('spell-check:system-checker');
     } else {
       this.log = str => {};

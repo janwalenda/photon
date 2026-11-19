@@ -1,7 +1,6 @@
 /** @babel */
 
 const path = require('path');
-const SelectNext = require('../lib/select-next');
 const dedent = require('dedent');
 
 describe('SelectNext', () => {

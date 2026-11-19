@@ -1,10 +1,4 @@
-const {
-  it,
-  fit,
-  ffit,
-  beforeEach,
-  afterEach
-} = require('./async-spec-helpers'); // eslint-disable-line no-unused-vars
+const { it, beforeEach } = require('./async-spec-helpers');
 
 const path = require('path');
 

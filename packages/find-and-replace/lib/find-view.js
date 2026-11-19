@@ -1,5 +1,5 @@
 const _ = require('underscore-plus');
-const { TextBuffer, TextEditor, CompositeDisposable } = require('atom');
+const { TextEditor, CompositeDisposable } = require('atom');
 const Util = require('./project/util');
 const etch = require('etch');
 const $ = etch.dom;

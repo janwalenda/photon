@@ -1,5 +1,3 @@
-/* eslint-env jasmine */
-
 const {
   waitForAutocomplete,
   timeoutPromise,

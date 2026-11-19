@@ -134,7 +134,7 @@ export default class PackageSnippetsView {
         );
       }
     } else {
-      callback([]); // eslint-disable-line standard/no-callback-literal
+      callback([]);
     }
   }
 

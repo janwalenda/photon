@@ -1,5 +1,4 @@
 /** @babel */
-/* eslint-env jasmine */
 
 import path from 'path';
 import etch from 'etch';
@@ -8,15 +7,7 @@ import temp from 'temp';
 import SymbolsView from '../lib/symbols-view';
 import TagGenerator from '../lib/tag-generator';
 
-import {
-  it,
-  fit,
-  ffit,
-  fffit,
-  beforeEach,
-  afterEach,
-  conditionPromise
-} from './async-spec-helpers';
+import { it, beforeEach, conditionPromise } from './async-spec-helpers';
 
 describe('SymbolsView', () => {
   let [symbolsView, activationPromise, editor, directory] = [];
