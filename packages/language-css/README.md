@@ -1,4 +1,5 @@
 # CSS language support in Atom
+
 ![CI Status](https://github.com/atom/language-css/actions/workflows/main.yml/badge.svg)
 
 Adds syntax highlighting, completions, and snippets to CSS files in Atom.

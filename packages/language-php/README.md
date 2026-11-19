@@ -1,4 +1,5 @@
 # PHP language support in Atom
+
 ![CI Status](https://github.com/atom/language-php/actions/workflows/main.yml/badge.svg)
 
 Adds syntax highlighting and snippets to PHP files in Atom.

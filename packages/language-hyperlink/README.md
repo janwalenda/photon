@@ -1,4 +1,5 @@
 # Hyperlink colorization in Atom
+
 [![macOS Build Status](https://travis-ci.org/atom/language-hyperlink.svg?branch=master)](https://travis-ci.org/atom/language-hyperlink)
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/5tgvhph394r684l8/branch/master?svg=true)](https://ci.appveyor.com/project/Atom/language-hyperlink/branch/master)
 [![Dependency Status](https://david-dm.org/atom/language-hyperlink.svg)](https://david-dm.org/atom/language-hyperlink)

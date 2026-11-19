@@ -37,7 +37,7 @@ export default class FileView extends SymbolsView {
     return super.destroy();
   }
 
-  elementForItem({position, name}) {
+  elementForItem({ position, name }) {
     // Style matched characters in search results
     const matches = match(name, this.selectListView.getFilterQuery());
 
@@ -93,11 +93,11 @@ export default class FileView extends SymbolsView {
 
     return {
       bufferRanges: editor.getSelectedBufferRanges(),
-      scrollTop,
+      scrollTop
     };
   }
 
-  deserializeEditorState(editor, {bufferRanges, scrollTop}) {
+  deserializeEditorState(editor, { bufferRanges, scrollTop }) {
     const editorElement = atom.views.getView(editor);
 
     editor.setSelectedBufferRanges(bufferRanges);
@@ -125,15 +125,15 @@ export default class FileView extends SymbolsView {
   async populate(filePath) {
     const tags = this.cachedTags[filePath];
     if (tags) {
-      await this.selectListView.update({items: tags});
+      await this.selectListView.update({ items: tags });
     } else {
       await this.selectListView.update({
         items: [],
-        loadingMessage: 'Generating symbols\u2026',
+        loadingMessage: 'Generating symbols\u2026'
       });
       await this.selectListView.update({
         items: await this.generateTags(filePath),
-        loadingMessage: null,
+        loadingMessage: null
       });
     }
   }

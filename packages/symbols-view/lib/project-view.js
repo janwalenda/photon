@@ -29,7 +29,7 @@ export default class ProjectView extends SymbolsView {
 
   async populate() {
     if (this.tags) {
-      await this.selectListView.update({items: this.tags});
+      await this.selectListView.update({ items: this.tags });
     }
 
     if (this.reloadTags) {
@@ -38,17 +38,19 @@ export default class ProjectView extends SymbolsView {
 
       if (this.tags) {
         await this.selectListView.update({
-          loadingMessage: 'Reloading project symbols\u2026',
+          loadingMessage: 'Reloading project symbols\u2026'
         });
       } else {
         await this.selectListView.update({
           loadingMessage: 'Loading project symbols\u2026',
-          loadingBadge: 0,
+          loadingBadge: 0
         });
         let tagsRead = 0;
         this.loadTagsTask.on('tags', tags => {
           tagsRead += tags.length;
-          this.selectListView.update({loadingBadge: humanize.intComma(tagsRead)});
+          this.selectListView.update({
+            loadingBadge: humanize.intComma(tagsRead)
+          });
         });
       }
     }
@@ -69,7 +71,7 @@ export default class ProjectView extends SymbolsView {
       this.selectListView.update({
         loadingMessage: null,
         loadingBadge: null,
-        items: this.tags,
+        items: this.tags
       });
     });
 
