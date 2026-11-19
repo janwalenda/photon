@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Linting uses ESLint 10 with a flat config (`eslint.config.js`, `neostandard` without style rules) and Prettier 3; the existing formatting is kept (`trailingComma: none`, `arrowParens: avoid`).
 - Stylesheets are linted with Stylelint 18 (`stylelint-config-standard` 41, `postcss-less`). Rules that misread Less or require CSS that Electron 11 does not support are off until the Electron upgrade.
 - Build scripts use current `glob` 14, `yargs` 18, `semver` 7, `fs-extra` 11 and `terser` 5, and `minidump` 0.25 (the last version that installs without Yarn); the unused `mkdirp` dependency is gone.
-- The bundled Atom packages in `packages/` are formatted with Prettier like the rest of the repository; only the vendored `github`, `git-utils`, `superstring` and `tree-sitter` keep their upstream style.
+- The bundled Atom packages in `packages/` are formatted with Prettier and linted with ESLint like the rest of the repository; only the vendored `github`, `git-utils`, `superstring` and `tree-sitter` keep their upstream style.
 
 ### Fixed
 
