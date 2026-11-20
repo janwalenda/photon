@@ -7,14 +7,14 @@ const { hideBin } = require('yargs/helpers');
 const argv = require('yargs')(hideBin(process.argv))
   .option('core-main', {
     describe: 'Run core main process tests',
-    boolean: true,
-    default: false
+    boolean: true
   })
   .option('skip-main', {
     describe:
       'Skip main process tests if they would otherwise run on your platform',
     boolean: true,
-    default: false,
+    // core-main and skip-main have no default: yargs 17+ counts default
+    // values for `conflicts`.
     conflicts: 'core-main'
   })
   .option('core-renderer', {
@@ -463,7 +463,7 @@ function requestedTestSuites(platform) {
     suites.push(runBenchmarkTests);
   }
 
-  if (argv.skipMainProcessTests) {
+  if (argv.skipMain) {
     suites = suites.filter(suite => suite !== runCoreMainProcessTests);
   }
 
