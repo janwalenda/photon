@@ -58,6 +58,10 @@ jobs:
 
       - name: Bootstrap
         run: script/bootstrap --ci
+        env:
+          # vscode-ripgrep looks up its binary through the GitHub API, which
+          # rate-limits unauthenticated requests from shared runners.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
         id: build
