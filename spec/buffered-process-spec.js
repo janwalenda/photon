@@ -4,6 +4,15 @@ const path = require('path');
 const fs = require('fs-plus');
 const BufferedProcess = require('../src/buffered-process');
 
+// A short-lived process that writes a known line to stderr: Electron itself,
+// run as plain Node. (These specs used to run `apm -h`, which is no longer
+// bundled.)
+const stderrProcess = {
+  command: process.execPath,
+  args: ['-e', "process.stderr.write('stderr from test process\\n')"],
+  options: { env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' } }
+};
+
 describe('BufferedProcess', function () {
   describe('when a bad command is specified', function () {
     let [oldOnError] = [];
@@ -97,11 +106,9 @@ describe('BufferedProcess', function () {
       let stdout = '';
       let stderr = '';
       const exitCallback = jasmine.createSpy('exit callback');
-      const apmProcess = new BufferedProcess({
+      const testProcess = new BufferedProcess({
         autoStart: false,
-        command: atom.packages.getApmPath(),
-        args: ['-h'],
-        options: {},
+        ...stderrProcess,
         stdout(lines) {
           stdout += lines;
         },
@@ -111,13 +118,13 @@ describe('BufferedProcess', function () {
         exit: exitCallback
       });
 
-      expect(apmProcess.started).not.toBe(true);
-      apmProcess.start();
-      expect(apmProcess.started).toBe(true);
+      expect(testProcess.started).not.toBe(true);
+      testProcess.start();
+      expect(testProcess.started).toBe(true);
 
       waitsFor(() => exitCallback.callCount === 1);
       runs(function () {
-        expect(stderr).toContain('apm - Atom Package Manager');
+        expect(stderr).toContain('stderr from test process');
         expect(stdout).toEqual('');
       });
     }));
@@ -127,9 +134,7 @@ describe('BufferedProcess', function () {
     let stderr = '';
     const exitCallback = jasmine.createSpy('exit callback');
     new BufferedProcess({
-      command: atom.packages.getApmPath(),
-      args: ['-h'],
-      options: {},
+      ...stderrProcess,
       stdout(lines) {
         stdout += lines;
       },
@@ -142,7 +147,7 @@ describe('BufferedProcess', function () {
     waitsFor(() => exitCallback.callCount === 1);
 
     runs(function () {
-      expect(stderr).toContain('apm - Atom Package Manager');
+      expect(stderr).toContain('stderr from test process');
       expect(stdout).toEqual('');
     });
   });
