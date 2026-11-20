@@ -196,16 +196,20 @@ module.exports = class PackageManager {
 
     const commandName = process.platform === 'win32' ? 'apm.cmd' : 'apm';
     const apmRoot = path.join(process.resourcesPath, 'app', 'apm');
-    this.apmPath = path.join(apmRoot, 'bin', commandName);
-    if (!fs.isFileSync(this.apmPath)) {
-      this.apmPath = path.join(
-        apmRoot,
-        'node_modules',
-        'atom-package-manager',
-        'bin',
-        commandName
-      );
-    }
+    const binPath = path.join(apmRoot, 'bin', commandName);
+    const modulePath = path.join(
+      apmRoot,
+      'node_modules',
+      'atom-package-manager',
+      'bin',
+      commandName
+    );
+    // apm is no longer bundled (#22). Only use the module path when it exists,
+    // so a missing apm is reported at its canonical location.
+    this.apmPath =
+      !fs.isFileSync(binPath) && fs.isFileSync(modulePath)
+        ? modulePath
+        : binPath;
     return this.apmPath;
   }
 

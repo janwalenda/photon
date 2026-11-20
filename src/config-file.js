@@ -1,4 +1,3 @@
-const _ = require('underscore-plus');
 const fs = require('fs-plus');
 const dedent = require('dedent');
 const { Disposable, Emitter } = require('event-kit');
@@ -6,6 +5,7 @@ const { watchPath } = require('./path-watcher');
 const CSON = require('season');
 const Path = require('path');
 const asyncQueue = require('async/queue');
+const debounce = require('./debounce');
 
 const EVENT_TYPES = new Set(['created', 'modified', 'renamed']);
 
@@ -48,8 +48,8 @@ module.exports = class ConfigFile {
       })
     );
 
-    this.requestLoad = _.debounce(() => this.reload(), 200);
-    this.requestSave = _.debounce(data => writeQueue.push(data), 200);
+    this.requestLoad = debounce(() => this.reload(), 200);
+    this.requestSave = debounce(data => writeQueue.push(data), 200);
   }
 
   get() {
@@ -81,6 +81,8 @@ module.exports = class ConfigFile {
         'did-error',
         dedent`
         Unable to watch path: \`${Path.basename(this.path)}\`.
+
+        ${error.message}
 
         Make sure you have permissions to \`${this.path}\`.
         On linux there are currently problems with watch sizes.
