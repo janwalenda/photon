@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: script/package-lock.json
+
+      # Only the lint tools are needed; the install scripts download
+      # Electron binaries for the build.
+      - name: Install script dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: script
+
+      - name: Lint
+        run: node script/lint
+
+  build-and-test:
+    name: Build and test (macOS arm64)
+    runs-on: macos-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            script/package-lock.json
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # `npm ci` always starts from an empty node_modules, so a cache only
+      # helps if bootstrap is skipped on an exact hit. The key covers
+      # everything bootstrap installs from. The cache is saved right after
+      # bootstrap, so a later failing step does not prevent it.
+      - name: Restore dependencies
+        id: deps
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            script/node_modules
+            electron
+          key: deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.nvmrc', 'package-lock.json', 'script/package-lock.json') }}
+
+      - name: Bootstrap
+        if: steps.deps.outputs.cache-hit != 'true'
+        run: script/bootstrap --ci
+        env:
+          # vscode-ripgrep looks up its binary through the GitHub API, which
+          # rate-limits unauthenticated requests from shared runners.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            script/node_modules
+            electron
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+
+      - name: Build
+        id: build
+        run: script/build --no-bootstrap
+
+      - name: Core main process specs
+        timeout-minutes: 10
+        run: script/test --core-main
+
+      # Runs after failing main process specs too, as long as the app was built.
+      - name: Core renderer specs
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        timeout-minutes: 45
+        run: script/test --core-renderer
+
+      - name: Package app
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: ditto -c -k --keepParent out/*.app photon-macos-arm64.zip
+
+      - uses: actions/upload-artifact@v6
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        with:
+          name: photon-macos-arm64
+          path: photon-macos-arm64.zip
+          retention-days: 7
+          if-no-files-found: error

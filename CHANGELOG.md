@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.nvmrc` and `engines` pin Node 24 for development.
 - Vendored `tree-sitter` 0.17.1, `superstring` 2.4.4, `git-utils` 5.7.1 and `github` 0.36.10 into `packages/`, with fixes for the current macOS SDK.
 - Imported the bundled Atom packages from archived `github.com/atom/*` repositories into `packages/`; origins are listed in `packages/VENDORED.md`.
+- GitHub Actions CI (`.github/workflows/ci.yml`): lint on Ubuntu; bootstrap, build, core main and renderer specs and the app as an artifact on macOS arm64.
 
 ### Changed
 
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Linting uses ESLint 10 with a flat config (`eslint.config.js`, `neostandard` without style rules) and Prettier 3; the existing formatting is kept (`trailingComma: none`, `arrowParens: avoid`).
 - Stylesheets are linted with Stylelint 18 (`stylelint-config-standard` 41, `postcss-less`). Rules that misread Less or require CSS that Electron 11 does not support are off until the Electron upgrade.
 - Build scripts use current `glob` 14, `yargs` 18, `semver` 7, `fs-extra` 11 and `terser` 5, and `minidump` 0.25 (the last version that installs without Yarn); the unused `mkdirp` dependency is gone.
+- `minidump` is an optional script dependency: if its Breakpad build fails (as with Xcode 26), bootstrap continues and symbol dumping is skipped.
 - The bundled Atom packages in `packages/` are formatted with Prettier and linted with ESLint like the rest of the repository; only the vendored `github`, `git-utils`, `superstring` and `tree-sitter` keep their upstream style.
 
 ### Fixed
@@ -38,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - The bundled apm is no longer installed by `script/bootstrap` or packaged with the app.
+- Atom's Azure Pipelines (`script/vsts/`, `script/postprocess-junit-results`) and the Probot configs in `.github/` (lock, move, no-response, stale).
 
 ## History
 

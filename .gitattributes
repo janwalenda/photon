@@ -22,6 +22,5 @@ script/build text eol=lf
 script/cibuild text eol=lf
 script/clean text eol=lf
 script/lint text eol=lf
-script/postprocess-junit-results text eol=lf
 script/test text eol=lf
 script/verify-snapshot-script text eol=lf

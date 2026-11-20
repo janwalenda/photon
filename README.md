@@ -1,6 +1,6 @@
 # Atom
 
-[![Build status](https://dev.azure.com/github/Atom/_apis/build/status/Atom%20Production%20Branches?branchName=master)](https://dev.azure.com/github/Atom/_build/latest?definitionId=32&branchName=master)
+[![CI](https://github.com/janwalenda/photon/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/janwalenda/photon/actions/workflows/ci.yml)
 
 > Atom and all repositories under Atom will be archived on December 15, 2022. Learn more in our [official announcement](https://github.blog/2022-06-08-sunsetting-atom/)
 
@@ -27,6 +27,7 @@ The [API reference](https://atom.io/docs/api) for developing packages is also do
 ## Installing
 
 ### Prerequisites
+
 - [Git](https://git-scm.com)
 
 ### macOS
@@ -50,7 +51,7 @@ Using [Chocolatey](https://chocolatey.org)? Run `cinst Atom` to install the late
 
 Atom is only available for 64-bit Linux systems.
 
-Configure your distribution's package manager to install and update Atom by following the [Linux installation instructions](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux) in the Flight Manual.  You will also find instructions on how to install Atom's official Linux packages without using a package repository, though you will not get automatic updates after installing Atom this way.
+Configure your distribution's package manager to install and update Atom by following the [Linux installation instructions](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux) in the Flight Manual. You will also find instructions on how to install Atom's official Linux packages without using a package repository, though you will not get automatic updates after installing Atom this way.
 
 #### Archive extraction
 
@@ -60,9 +61,11 @@ This version enables you to install multiple Atom versions in parallel. It has b
 but should be compatible with other Linux distributions.
 
 1. Install dependencies (on Ubuntu):
+
 ```sh
 sudo apt install git libasound2 libcurl4 libgbm1 libgcrypt20 libgtk-3-0 libnotify4 libnss3 libglib2.0-bin xdg-utils libx11-xcb1 libxcb-dri3-0 libxss1 libxtst6 libxkbfile1
 ```
+
 2. Download `atom-amd64.tar.gz` from the [Atom releases page](https://github.com/atom/atom/releases/latest).
 3. Run `tar xf atom-amd64.tar.gz` in the directory where you want to extract the Atom folder.
 4. Launch Atom using the installed `atom` command from the newly extracted directory.
@@ -72,13 +75,13 @@ repeat these steps to upgrade to future releases.
 
 ## Building
 
-* [Linux](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-linux)
-* [macOS](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-mac)
-* [Windows](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-windows)
+- [Linux](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-linux)
+- [macOS](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-mac)
+- [Windows](https://flight-manual.atom.io/hacking-atom/sections/hacking-on-atom-core/#platform-windows)
 
 ## Discussion
 
-* Discuss Atom on [GitHub Discussions](https://github.com/atom/atom/discussions)
+- Discuss Atom on [GitHub Discussions](https://github.com/atom/atom/discussions)
 
 ## License
 
