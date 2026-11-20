@@ -4,6 +4,7 @@ const util = require('util');
 const { ipcRenderer } = require('electron');
 
 const _ = require('underscore-plus');
+const debounce = require('./debounce');
 const { deprecate } = require('grim');
 const { CompositeDisposable, Disposable, Emitter } = require('event-kit');
 const fs = require('fs-plus');
@@ -335,7 +336,7 @@ class AtomEnvironment {
   }
 
   attachSaveStateListeners() {
-    const saveState = _.debounce(() => {
+    const saveState = debounce(() => {
       this.window.requestIdleCallback(() => {
         if (!this.unloading) this.saveState({ isUnloading: false });
       });

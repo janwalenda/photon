@@ -10,6 +10,7 @@ const {
 const Color = require('./color');
 const ScopedPropertyStore = require('scoped-property-store');
 const ScopeDescriptor = require('./scope-descriptor');
+const debounce = require('./debounce');
 
 const schemaEnforcers = {};
 
@@ -461,7 +462,7 @@ class Config {
     this.transactDepth = 0;
     this.pendingOperations = [];
     this.legacyScopeAliases = new Map();
-    this.requestSave = _.debounce(() => this.save(), 1);
+    this.requestSave = debounce(() => this.save(), 1);
   }
 
   /*
