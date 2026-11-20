@@ -3,7 +3,6 @@ const path = require('path');
 
 const { Emitter, Disposable, CompositeDisposable } = require('event-kit');
 const nsfw = require('@atom/nsfw');
-const watcher = require('@atom/watcher');
 const { NativeWatcherRegistry } = require('./native-watcher-registry');
 
 // Private: Associate native watcher action flags with descriptive String equivalents.
@@ -665,19 +664,11 @@ class PathWatcherManager {
 
     if (setting === 'atom') {
       initLocal(AtomNativeWatcher);
-    } else if (setting === 'experimental') {
-      //
-    } else if (setting === 'poll') {
-      //
     } else {
       initLocal(NSFWNativeWatcher);
     }
 
     this.isShuttingDown = false;
-  }
-
-  useExperimentalWatcher() {
-    return this.setting === 'experimental' || this.setting === 'poll';
   }
 
   // Private: Create a {PathWatcher} tied to this global state. See {watchPath} for detailed arguments.
@@ -691,16 +682,6 @@ class PathWatcherManager {
       );
     }
 
-    if (this.useExperimentalWatcher()) {
-      if (this.setting === 'poll') {
-        options.poll = true;
-      }
-
-      const w = await watcher.watchPath(rootPath, options, eventCallback);
-      this.live.set(rootPath, w.native);
-      return w;
-    }
-
     const w = new PathWatcher(this.nativeRegistry, rootPath, options);
     w.onDidChange(eventCallback);
     await w.getStartPromise();
@@ -709,28 +690,11 @@ class PathWatcherManager {
 
   // Private: Directly access the {NativeWatcherRegistry}.
   getRegistry() {
-    if (this.useExperimentalWatcher()) {
-      return watcher.getRegistry();
-    }
-
     return this.nativeRegistry;
-  }
-
-  // Private: Sample watcher usage statistics. Only available for experimental watchers.
-  status() {
-    if (this.useExperimentalWatcher()) {
-      return watcher.status();
-    }
-
-    return {};
   }
 
   // Private: Return a {String} depicting the currently active native watchers.
   print() {
-    if (this.useExperimentalWatcher()) {
-      return watcher.printWatchers();
-    }
-
     return this.nativeRegistry.print();
   }
 
@@ -738,10 +702,6 @@ class PathWatcherManager {
   //
   // Returns a {Promise} that resolves when all native watcher resources are disposed.
   stopAllWatchers() {
-    if (this.useExperimentalWatcher()) {
-      return watcher.stopAllWatchers();
-    }
-
     return Promise.all(Array.from(this.live, ([, w]) => w.stop()));
   }
 }
@@ -807,16 +767,6 @@ watchPath.printWatchers = function () {
 // Private: Access the active {NativeWatcherRegistry}.
 watchPath.getRegistry = function () {
   return PathWatcherManager.active().getRegistry();
-};
-
-// Private: Sample usage statistics for the active watcher.
-watchPath.status = function () {
-  return PathWatcherManager.active().status();
-};
-
-// Private: Configure @atom/watcher ("experimental") directly.
-watchPath.configure = function (...args) {
-  return watcher.configure(...args);
 };
 
 module.exports = { watchPath, stopAllWatchers };
