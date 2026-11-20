@@ -14,7 +14,7 @@ module.exports = function () {
     return Promise.resolve();
   } else if (!hasDumpSymsBinary()) {
     console.log(
-      `Skipping symbol dumping because minidump has no dump_syms binary for ${
+      `Skipping symbol dumping because minidump is not installed or has no dump_syms binary for ${
         process.platform
       }-${process.arch}`.gray
     );
@@ -29,7 +29,14 @@ module.exports = function () {
 };
 
 function hasDumpSymsBinary() {
-  const minidumpPath = path.dirname(require.resolve('minidump/package.json'));
+  // minidump is an optional dependency: its install builds Breakpad from
+  // source, which can fail with newer Xcode versions.
+  let minidumpPath;
+  try {
+    minidumpPath = path.dirname(require.resolve('minidump/package.json'));
+  } catch (error) {
+    return false;
+  }
   return fs.existsSync(
     path.join(
       minidumpPath,

@@ -29,7 +29,6 @@
     "legal-eagle": "0.14.0",
     "lodash.startcase": "4.4.0",
     "lodash.template": "4.5.0",
-    "minidump": "^0.25.0",
     "neostandard": "^0.14.1",
     "nock": "^13.0.2",
     "node-fetch": "^2.6.7",
@@ -51,6 +50,9 @@
     "terser": "^5.51.2",
     "webdriverio": "^5.9.2",
     "yargs": "^18.2.0"
+  },
+  "optionalDependencies": {
+    "minidump": "^0.25.0"
   },
   "scripts": {
     "postinstall": "node ./redownload-electron-bins.js"

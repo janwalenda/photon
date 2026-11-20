@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -42,9 +42,9 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -52,7 +52,7 @@ jobs:
             package-lock.json
             script/package-lock.json
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -60,21 +60,23 @@ jobs:
         run: script/bootstrap --ci
 
       - name: Build
+        id: build
         run: script/build --no-bootstrap
 
       - name: Core main process specs
         run: script/test --core-main
 
+      # Runs after failing main process specs too, as long as the app was built.
       - name: Core renderer specs
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: script/test --core-renderer
 
       - name: Package app
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: ditto -c -k --keepParent out/*.app photon-macos-arm64.zip
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+      - uses: actions/upload-artifact@v6
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         with:
           name: photon-macos-arm64
           path: photon-macos-arm64.zip
