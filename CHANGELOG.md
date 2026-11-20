@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - find-and-replace: the button that adds trailing context lines in the project results no longer also toggles "Don't override tab".
 - spell-check: debug logging no longer creates a global `debug` variable.
+- The "Unable to watch path" notification for `config.cson` now includes the underlying error.
 
 ### Removed
 

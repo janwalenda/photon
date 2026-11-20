@@ -5650,6 +5650,10 @@ describe('TextEditorComponent', () => {
         text: '',
         chromeVersion: 57
       });
+      // Every simulated input of one scenario below must land in one undo
+      // step. With the default 300 ms grouping interval and the real clock,
+      // a slow machine (CI) splits them.
+      editor.update({ undoGroupingInterval: 60 * 60 * 1000 });
       editor.insertText('x');
       editor.setCursorBufferPosition([0, 1]);
 
