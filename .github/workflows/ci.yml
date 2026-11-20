@@ -56,23 +56,52 @@ jobs:
         with:
           python-version: '3.12'
 
+      # `npm ci` always starts from an empty node_modules, so a cache only
+      # helps if bootstrap is skipped on an exact hit. The key covers
+      # everything bootstrap installs from. The cache is saved right after
+      # bootstrap, so a later failing step does not prevent it.
+      - name: Restore dependencies
+        id: deps
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            script/node_modules
+            electron
+          key: deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.nvmrc', 'package-lock.json', 'script/package-lock.json') }}
+
       - name: Bootstrap
+        if: steps.deps.outputs.cache-hit != 'true'
         run: script/bootstrap --ci
         env:
           # vscode-ripgrep looks up its binary through the GitHub API, which
           # rate-limits unauthenticated requests from shared runners.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Save dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            script/node_modules
+            electron
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+
       - name: Build
         id: build
         run: script/build --no-bootstrap
 
       - name: Core main process specs
+        timeout-minutes: 10
         run: script/test --core-main
 
       # Runs after failing main process specs too, as long as the app was built.
       - name: Core renderer specs
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        timeout-minutes: 45
         run: script/test --core-renderer
 
       - name: Package app
