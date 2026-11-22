@@ -589,21 +589,35 @@ class PathWatcher {
   }
 }
 
+// Private: The {Config} that selects the watcher implementation. Renderer
+// windows have the global `atom`; the main process, which watches the config
+// file, only has `atomApplication`.
+function getConfig() {
+  if (typeof atom !== 'undefined' && atom.config) return atom.config;
+  if (global.atomApplication && global.atomApplication.config) {
+    return global.atomApplication.config;
+  }
+  return null;
+}
+
 // Private: Globally tracked state used to de-duplicate related [PathWatchers]{PathWatcher} backed by emulated Atom
 // events or NSFW.
 class PathWatcherManager {
   // Private: Access the currently active manager instance, creating one if necessary.
   static active() {
     if (!this.activeManager) {
+      const config = getConfig();
       this.activeManager = new PathWatcherManager(
-        atom.config.get('core.fileSystemWatcher')
+        config ? config.get('core.fileSystemWatcher') : 'native'
       );
-      this.sub = atom.config.onDidChange(
-        'core.fileSystemWatcher',
-        ({ newValue }) => {
-          this.transitionTo(newValue);
-        }
-      );
+      if (config) {
+        this.sub = config.onDidChange(
+          'core.fileSystemWatcher',
+          ({ newValue }) => {
+            this.transitionTo(newValue);
+          }
+        );
+      }
     }
     return this.activeManager;
   }

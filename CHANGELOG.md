@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - find-and-replace: the button that adds trailing context lines in the project results no longer also toggles "Don't override tab".
 - spell-check: debug logging no longer creates a global `debug` variable.
 - The "Unable to watch path" notification for `config.cson` now includes the underlying error.
+- Changes to `config.cson` made outside Photon are applied while it runs again. The file watcher in the main process looked for the window-only global `atom` and always failed with "Unable to watch path".
 
 ### Removed
 
