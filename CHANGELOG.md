@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build scripts use current `glob` 14, `yargs` 18, `semver` 7, `fs-extra` 11 and `terser` 5, and `minidump` 0.25 (the last version that installs without Yarn); the unused `mkdirp` dependency is gone.
 - `minidump` is an optional script dependency: if its Breakpad build fails (as with Xcode 26), bootstrap continues and symbol dumping is skipped.
 - The bundled Atom packages in `packages/` are formatted with Prettier and linted with ESLint like the rest of the repository; only the vendored `github`, `git-utils`, `superstring` and `tree-sitter` keep their upstream style.
+- Editor windows use `@electron/remote` instead of Electron's built-in remote module, which is turned off (`enableRemoteModule: false`) and removed in Electron 14. Packages that use `require('electron').remote` get `@electron/remote` and keep working. `contextIsolation` is set to `false` explicitly.
 
 ### Fixed
 
@@ -41,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The bundled apm is no longer installed by `script/bootstrap` or packaged with the app.
 - Atom's Azure Pipelines (`script/vsts/`, `script/postprocess-junit-results`) and the Probot configs in `.github/` (lock, move, no-response, stale).
+- The `experimental` and `poll` options of the _File System Watcher_ setting, which ran on the unmaintained `@atom/watcher`. A stored value falls back to `native`.
 
 ## History
 

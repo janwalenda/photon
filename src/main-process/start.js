@@ -40,6 +40,10 @@ module.exports = function start(resourcePath, devResourcePath, startTime) {
   // TodoElectronIssue this should be set to true before Electron 12 - https://github.com/electron/electron/issues/18397
   app.allowRendererProcessReuse = false;
 
+  // Serves `@electron/remote` in the renderer, which replaces the built-in
+  // remote module (removed in Electron 14).
+  require('@electron/remote/main').initialize();
+
   app.commandLine.appendSwitch('enable-experimental-web-platform-features');
 
   const args = parseCommandLine(process.argv.slice(1));
